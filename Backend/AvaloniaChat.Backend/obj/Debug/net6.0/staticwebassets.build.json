@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "lT8Cv3Eg0OqaC4jiqCA+hkjnaaXfHQNPqBn8o1ULpPA=",
+  "Source": "AvaloniaChat.Backend",
+  "BasePath": "_content/AvaloniaChat.Backend",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}

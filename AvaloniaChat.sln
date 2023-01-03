@@ -1,0 +1,45 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32616.157
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Backend", "Backend", "{7359B2A2-9B1B-4A33-87B5-0274F0256C55}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Frontend", "Frontend", "{C12369D2-CCD7-4E33-B654-2945E1A7F5DA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Desktop", "Desktop", "{997FE4FC-D7F0-4E63-9ACF-A2F527366DB8}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AvaloniaChat.Backend", "Backend\AvaloniaChat.Backend\AvaloniaChat.Backend.csproj", "{BD259665-3465-4DEE-A06E-A8FCE0858522}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Mobile", "Mobile", "{90E92884-0975-4F64-8C40-A77AAD3D341F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AvaloniaChat.Desktop", "Frontend\Desktop\AvaloniaChat.Desktop\AvaloniaChat.Desktop.csproj", "{4BDE8344-2773-4279-B20C-32349E9A25AA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BD259665-3465-4DEE-A06E-A8FCE0858522}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BD259665-3465-4DEE-A06E-A8FCE0858522}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BD259665-3465-4DEE-A06E-A8FCE0858522}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BD259665-3465-4DEE-A06E-A8FCE0858522}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4BDE8344-2773-4279-B20C-32349E9A25AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4BDE8344-2773-4279-B20C-32349E9A25AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4BDE8344-2773-4279-B20C-32349E9A25AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4BDE8344-2773-4279-B20C-32349E9A25AA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{997FE4FC-D7F0-4E63-9ACF-A2F527366DB8} = {C12369D2-CCD7-4E33-B654-2945E1A7F5DA}
+		{BD259665-3465-4DEE-A06E-A8FCE0858522} = {7359B2A2-9B1B-4A33-87B5-0274F0256C55}
+		{90E92884-0975-4F64-8C40-A77AAD3D341F} = {C12369D2-CCD7-4E33-B654-2945E1A7F5DA}
+		{4BDE8344-2773-4279-B20C-32349E9A25AA} = {997FE4FC-D7F0-4E63-9ACF-A2F527366DB8}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A7769A6A-39F0-49E4-9499-F2A43B0305A1}
+	EndGlobalSection
+EndGlobal
