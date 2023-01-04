@@ -3,16 +3,15 @@ using Avalonia.Markup.Xaml;
 
 namespace AvaloniaChat.Desktop.Views
 {
-    public partial class MainWindow : Window
+    public partial class RegistrationPage : UserControl
     {
-        
-        public MainWindow()
+        public RegistrationPage()
         {
             InitializeComponent();
         }
         private void InitializeComponent()
         {
-            AvaloniaXamlLoader.Load(obj:this);
+            AvaloniaXamlLoader.Load(obj: this);
         }
     }
 }

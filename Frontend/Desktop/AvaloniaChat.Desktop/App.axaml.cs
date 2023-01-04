@@ -19,7 +19,7 @@ namespace AvaloniaChat.Desktop
             {
                 desktop.MainWindow = new MainWindow
                 {
-                    DataContext = new MainWindowViewModel(),
+                    DataContext = new MainViewmodel(),
                 };
             }
 

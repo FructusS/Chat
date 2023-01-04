@@ -1,6 +1,7 @@
 <Window xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:vm="using:AvaloniaChat.Desktop.ViewModels"
+		xmlns:viewModels="clr-namespace:AvaloniaChat.Desktop.ViewModels"
+		xmlns:views="clr-namespace:AvaloniaChat.Desktop.Views"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
@@ -8,10 +9,12 @@
         Icon="/Assets/avalonia-logo.ico"
         Title="AvaloniaChat.Desktop">
 
-    <Design.DataContext>
-        <vm:MainWindowViewModel/>
-    </Design.DataContext>
-
-    <TextBlock Text="{Binding Greeting}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-
+	<ContentControl Content="{Binding CurrentPage}">
+		<ContentControl.DataTemplates>
+			<DataTemplate DataType="{x:Type TypeName=viewModels:RegistrationViewmodel}">
+				<views:RegistrationPage/>
+			</DataTemplate>
+		</ContentControl.DataTemplates>
+	</ContentControl>
+	
 </Window>
