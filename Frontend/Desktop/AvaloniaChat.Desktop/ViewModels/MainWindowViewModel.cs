@@ -6,8 +6,12 @@ namespace AvaloniaChat.Desktop.ViewModels
 {
     public class MainWindowViewModel : ViewModelBase
     {
-        public string Greeting => "Welcome to Avalonia!";
-        
+        public object CurrentPage { get; set; }
+
+        public MainWindowViewModel()
+        {
+            CurrentPage = new RegistrationViewModel();
+        }
 
     }
 }

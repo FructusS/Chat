@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\clown\\Downloads\\AvaloniaChat-main\\AvaloniaChat-main\\Frontend\\Desktop\\AvaloniaChat.Desktop\\AvaloniaChat.Desktop.csproj": {}
+    "C:\\Users\\clown\\Desktop\\Новая папка\\AvaloniaChat\\Frontend\\Desktop\\AvaloniaChat.Desktop\\AvaloniaChat.Desktop.csproj": {}
   },
   "projects": {
-    "C:\\Users\\clown\\Downloads\\AvaloniaChat-main\\AvaloniaChat-main\\Frontend\\Desktop\\AvaloniaChat.Desktop\\AvaloniaChat.Desktop.csproj": {
+    "C:\\Users\\clown\\Desktop\\Новая папка\\AvaloniaChat\\Frontend\\Desktop\\AvaloniaChat.Desktop\\AvaloniaChat.Desktop.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\clown\\Downloads\\AvaloniaChat-main\\AvaloniaChat-main\\Frontend\\Desktop\\AvaloniaChat.Desktop\\AvaloniaChat.Desktop.csproj",
+        "projectUniqueName": "C:\\Users\\clown\\Desktop\\Новая папка\\AvaloniaChat\\Frontend\\Desktop\\AvaloniaChat.Desktop\\AvaloniaChat.Desktop.csproj",
         "projectName": "AvaloniaChat.Desktop",
-        "projectPath": "C:\\Users\\clown\\Downloads\\AvaloniaChat-main\\AvaloniaChat-main\\Frontend\\Desktop\\AvaloniaChat.Desktop\\AvaloniaChat.Desktop.csproj",
+        "projectPath": "C:\\Users\\clown\\Desktop\\Новая папка\\AvaloniaChat\\Frontend\\Desktop\\AvaloniaChat.Desktop\\AvaloniaChat.Desktop.csproj",
         "packagesPath": "C:\\Users\\clown\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\clown\\Downloads\\AvaloniaChat-main\\AvaloniaChat-main\\Frontend\\Desktop\\AvaloniaChat.Desktop\\obj\\",
+        "outputPath": "C:\\Users\\clown\\Desktop\\Новая папка\\AvaloniaChat\\Frontend\\Desktop\\AvaloniaChat.Desktop\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

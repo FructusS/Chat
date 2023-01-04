@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "9PBrarQ6rPubxh929JFsmkJHluvUSfEYCR7QRZoTQJXXNCHSfqbrrrlgMVhHLG8EnuoiCojw0f/exDKbZu8n+g==",
+  "dgSpecHash": "BC/hrKy80ZNpcoR5UUWyptu48/9fvPZA6/5nF8FxGWBLmevdkXmPfeh00rH8CoE6V6zmwaw+mT2lMRA0oAVUyw==",
   "success": true,
-  "projectFilePath": "C:\\Users\\clown\\Downloads\\AvaloniaChat-main\\AvaloniaChat-main\\Frontend\\Desktop\\AvaloniaChat.Desktop\\AvaloniaChat.Desktop.csproj",
+  "projectFilePath": "C:\\Users\\clown\\Desktop\\Новая папка\\AvaloniaChat\\Frontend\\Desktop\\AvaloniaChat.Desktop\\AvaloniaChat.Desktop.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\clown\\.nuget\\packages\\avalonia\\0.10.18\\avalonia.0.10.18.nupkg.sha512",
     "C:\\Users\\clown\\.nuget\\packages\\avalonia.angle.windows.natives\\2.1.0.2020091801\\avalonia.angle.windows.natives.2.1.0.2020091801.nupkg.sha512",
