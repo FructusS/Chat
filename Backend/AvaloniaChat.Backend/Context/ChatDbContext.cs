@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using AvaloniaChat.Backend.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -9,6 +10,7 @@ public partial class ChatDbContext : DbContext
 {
     public ChatDbContext()
     {
+        
     }
 
     public ChatDbContext(DbContextOptions<ChatDbContext> options)
