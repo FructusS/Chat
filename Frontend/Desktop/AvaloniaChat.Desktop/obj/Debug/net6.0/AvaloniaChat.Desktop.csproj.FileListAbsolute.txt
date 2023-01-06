@@ -454,3 +454,4 @@ C:\Users\clown\Desktop\Новая папка\AvaloniaChat\Frontend\Desktop\Avalo
 C:\Users\clown\Desktop\Новая папка\AvaloniaChat\Frontend\Desktop\AvaloniaChat.Desktop\obj\Debug\net6.0\AvaloniaChat.Desktop.pdb
 C:\Users\clown\Desktop\Новая папка\AvaloniaChat\Frontend\Desktop\AvaloniaChat.Desktop\obj\Debug\net6.0\AvaloniaChat.Desktop.genruntimeconfig.cache
 C:\Users\clown\Desktop\Новая папка\AvaloniaChat\Frontend\Desktop\AvaloniaChat.Desktop\obj\Debug\net6.0\ref\AvaloniaChat.Desktop.dll
+C:\Users\clown\Desktop\Новая папка\AvaloniaChat\Frontend\Desktop\AvaloniaChat.Desktop\bin\Debug\net6.0\Prism.dll

@@ -17,6 +17,12 @@ build_property.ProjectDir = C:\Users\clown\Desktop\Новая папка\Avaloni
 [C:/Users/clown/Desktop/Новая папка/AvaloniaChat/Frontend/Desktop/AvaloniaChat.Desktop/App.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
+[C:/Users/clown/Desktop/Новая папка/AvaloniaChat/Frontend/Desktop/AvaloniaChat.Desktop/Views/ChatPage.axaml]
+build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
+
+[C:/Users/clown/Desktop/Новая папка/AvaloniaChat/Frontend/Desktop/AvaloniaChat.Desktop/Views/LoginPage.axaml]
+build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
+
 [C:/Users/clown/Desktop/Новая папка/AvaloniaChat/Frontend/Desktop/AvaloniaChat.Desktop/Views/MainWindow.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 

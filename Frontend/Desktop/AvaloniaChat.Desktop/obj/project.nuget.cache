@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "BC/hrKy80ZNpcoR5UUWyptu48/9fvPZA6/5nF8FxGWBLmevdkXmPfeh00rH8CoE6V6zmwaw+mT2lMRA0oAVUyw==",
+  "dgSpecHash": "AgnfULk699ngDqP8scIuc73XDeRn65giccgZX6BOAxK6hUL71kbnnWGY5hAY+RbQ4EIebjFLHL6ua3bmtenxkA==",
   "success": true,
   "projectFilePath": "C:\\Users\\clown\\Desktop\\Новая папка\\AvaloniaChat\\Frontend\\Desktop\\AvaloniaChat.Desktop\\AvaloniaChat.Desktop.csproj",
   "expectedPackageFiles": [
@@ -46,6 +46,7 @@
     "C:\\Users\\clown\\.nuget\\packages\\microsoft.netcore.platforms\\2.1.2\\microsoft.netcore.platforms.2.1.2.nupkg.sha512",
     "C:\\Users\\clown\\.nuget\\packages\\microsoft.netcore.targets\\1.1.0\\microsoft.netcore.targets.1.1.0.nupkg.sha512",
     "C:\\Users\\clown\\.nuget\\packages\\microsoft.win32.systemevents\\4.5.0\\microsoft.win32.systemevents.4.5.0.nupkg.sha512",
+    "C:\\Users\\clown\\.nuget\\packages\\prism.core\\8.1.97\\prism.core.8.1.97.nupkg.sha512",
     "C:\\Users\\clown\\.nuget\\packages\\reactiveui\\13.2.10\\reactiveui.13.2.10.nupkg.sha512",
     "C:\\Users\\clown\\.nuget\\packages\\skiasharp\\2.88.1-preview.108\\skiasharp.2.88.1-preview.108.nupkg.sha512",
     "C:\\Users\\clown\\.nuget\\packages\\skiasharp.nativeassets.linux\\2.88.1-preview.108\\skiasharp.nativeassets.linux.2.88.1-preview.108.nupkg.sha512",

@@ -1,0 +1,66 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="AvaloniaChat.Desktop.Views.LoginPage">
+	<UserControl.Styles>
+		<Style Selector="TextBox">
+			<Setter Property="Margin" 
+					Value="0 0 0 10">
+			</Setter>
+		</Style>
+	<Style Selector="Button">
+			<Setter Property="Margin" 
+					Value="5 0">
+			</Setter>
+		</Style>
+	</UserControl.Styles>
+<Grid RowDefinitions="* * *">
+		<TextBlock Text="Авторизация"
+				   FontSize="32"
+				   HorizontalAlignment="Center"
+				   VerticalAlignment="Bottom"
+				   Margin="0 0 0 25"/>
+			<Grid RowDefinitions="auto auto auto"
+				  ColumnDefinitions="* * *"
+				  Grid.Row="1">
+			<TextBox HorizontalAlignment="Stretch"
+					 Watermark="Логин"
+					 Grid.Column="1"
+					 Text="{Binding Login}"
+					 Grid.Row="0"/>
+			<TextBox Text="{Binding Email}"
+					 Watermark="Почта"
+					 Grid.Column="1"
+					 Grid.Row="1"/>
+			<TextBox Text="{Binding Password}"
+					 Watermark="Пароль"
+					 PasswordChar="*"
+					 VerticalContentAlignment="Center"
+					 Grid.Column="1"
+					 Grid.Row="2"/>
+			</Grid>
+			<Grid ColumnDefinitions="* * * * * *"
+				  RowDefinitions="* *"
+				  Grid.Row="2">
+				<Button Content="Войти"
+						VerticalAlignment="Top"
+						Grid.Column="2"
+						HorizontalAlignment="Stretch"
+						HorizontalContentAlignment="Center"
+						Command="{Binding LoginCommand}"/>
+				<Button Content="Зарегестрироваться"
+						VerticalAlignment="Top"
+						Grid.Column="3"
+						HorizontalAlignment="Stretch"
+						HorizontalContentAlignment="Center"
+						Command="{Binding RegistrationCommand}"/>
+			<TextBlock Name="ErrorBox"
+					   Grid.Column="2"
+					   Grid.ColumnSpan="2"
+				       Grid.Row="1"
+					   Margin="10"/>
+			</Grid>
+</Grid>
+</UserControl>

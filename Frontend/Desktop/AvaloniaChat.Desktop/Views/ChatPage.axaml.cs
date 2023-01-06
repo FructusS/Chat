@@ -1,14 +1,14 @@
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
-using System;
 
 namespace AvaloniaChat.Desktop.Views
 {
-    public partial class RegistrationPage : UserControl
+    public partial class ChatPage : UserControl
     {
-        public RegistrationPage()
+        public ChatPage()
         {
             InitializeComponent();
         }
+
     }
 }

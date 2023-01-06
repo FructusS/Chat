@@ -3,6 +3,7 @@ using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
 using AvaloniaChat.Desktop.ViewModels;
 using AvaloniaChat.Desktop.Views;
+using Prism.Events;
 
 namespace AvaloniaChat.Desktop
 {
@@ -17,9 +18,10 @@ namespace AvaloniaChat.Desktop
         {
             if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
             {
+                
                 desktop.MainWindow = new MainWindow
                 {
-                    DataContext = new MainWindowViewModel(),
+                    DataContext = new MainWindowViewModel(new EventAggregator()),
                 };
             }
 
