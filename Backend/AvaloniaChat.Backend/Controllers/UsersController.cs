@@ -2,6 +2,8 @@
 using AvaloniaChat.Backend.Interfaces;
 using AvaloniaChat.Backend.Models.Login;
 using AvaloniaChat.Backend.Models.Registration;
+using AvaloniaChat.Backend.Models.UserModels;
+using AvaloniaChat.Backend.Services.Implimentations;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -24,56 +26,60 @@ namespace AvaloniaChat.Backend.Controllers
 
 
         [HttpPost]
-        [Route("login")]
-        public async Task<ActionResult> LoginUser([FromBody] LoginRequest request)
+        [Route("registraion")]
+        public async Task<IActionResult> CreateUser([FromBody] CreateUserModel createUserModel)
         {
-            if (string.IsNullOrEmpty(request.Username) || string.IsNullOrEmpty(request.Password))
+
+            if (createUserModel is null)
             {
-                return BadRequest(new { errorText = "Invalid username or password." });
+                return BadRequest("Invalid data");
             }
-            var loginresponse = await _userService.LoginUser(request);
+            var registraionResponse = await _userService.CreateUser(createUserModel);
 
-            if (loginresponse == null)
+            if (registraionResponse == null)
             {
-                return BadRequest(new { errorText = "Invalid username or password." });
+                return NotFound("User already exist");
             }
+            else
+            {
+                return Ok(registraionResponse);
 
-            return Ok(loginresponse.Token);
+            }
         }
 
 
-        [HttpPost]
-        [Route("registration")]
-        public async Task<ActionResult> RegistrationUser([FromBody] RegistrationRequest request)
-        {
-          
-                if (await CheckEmailUser(request.Email))
-                {
-                    return BadRequest("email is already use");
-                } 
-                if (await CheckUserName(request.Username))
-                {
-                    return BadRequest("username already exist");
-                }
-                var response = await _userService.RegistrationUser(request);
-                if (response == null)
-                {
-                    return BadRequest(new { errorText = "User is exist." });
-                }
-               
-                return Ok();
-                
-            
-        }
+        //[HttpPost]
+        //[Route("registration")]
+        //public async Task<IActionResult> RegistrationUser([FromBody] CreateUserModel request)
+        //{
 
-        private async Task<bool> CheckEmailUser(string userEmail)
-        {
-            return await _chatDbContext.Users.AnyAsync(x => x.Email.ToLower() == userEmail.ToLower());
-        }  
-        private async Task<bool> CheckUserName(string username)
-        {
-            return await _chatDbContext.Users.AnyAsync(x => x.Username == username);
-        }
-      
+        //        if (await CheckEmailUser(request.Email))
+        //        {
+        //            return BadRequest("email is already use");
+        //        } 
+        //        if (await CheckUserName(request.Username))
+        //        {
+        //            return BadRequest("username already exist");
+        //        }
+        //        var response = await _userService.RegistrationUser(request);
+        //        if (response == null)
+        //        {
+        //            return BadRequest(new { errorText = "User is exist." });
+        //        }
+
+        //        return Ok(response);
+
+
+        //}
+
+        //private async Task<bool> CheckEmailUser(string userEmail)
+        //{
+        //    return await _chatDbContext.Users.AnyAsync(x => x.Email.ToLower() == userEmail.ToLower());
+        //}  
+        //private async Task<bool> CheckUserName(string username)
+        //{
+        //    return await _chatDbContext.Users.AnyAsync(x => x.Username == username);
+        //}
+
     }
 }
