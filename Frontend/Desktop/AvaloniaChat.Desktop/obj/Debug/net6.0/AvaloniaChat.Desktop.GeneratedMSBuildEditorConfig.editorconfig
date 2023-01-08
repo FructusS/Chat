@@ -9,22 +9,21 @@ build_property.UsingMicrosoftNETSdkWeb =
 build_property.ProjectTypeGuids = 
 build_property.InvariantGlobalization = 
 build_property.PlatformNeutralAssembly = 
-build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = AvaloniaChat.Desktop
-build_property.ProjectDir = C:\Users\clown\Desktop\Новая папка\AvaloniaChat\Frontend\Desktop\AvaloniaChat.Desktop\
+build_property.ProjectDir = C:\Users\PC\Desktop\AvaloniaChat\Frontend\Desktop\AvaloniaChat.Desktop\
 
-[C:/Users/clown/Desktop/Новая папка/AvaloniaChat/Frontend/Desktop/AvaloniaChat.Desktop/App.axaml]
+[C:/Users/PC/Desktop/AvaloniaChat/Frontend/Desktop/AvaloniaChat.Desktop/App.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
-[C:/Users/clown/Desktop/Новая папка/AvaloniaChat/Frontend/Desktop/AvaloniaChat.Desktop/Views/ChatPage.axaml]
+[C:/Users/PC/Desktop/AvaloniaChat/Frontend/Desktop/AvaloniaChat.Desktop/Views/ChatPage.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
-[C:/Users/clown/Desktop/Новая папка/AvaloniaChat/Frontend/Desktop/AvaloniaChat.Desktop/Views/LoginPage.axaml]
+[C:/Users/PC/Desktop/AvaloniaChat/Frontend/Desktop/AvaloniaChat.Desktop/Views/LoginPage.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
-[C:/Users/clown/Desktop/Новая папка/AvaloniaChat/Frontend/Desktop/AvaloniaChat.Desktop/Views/MainWindow.axaml]
+[C:/Users/PC/Desktop/AvaloniaChat/Frontend/Desktop/AvaloniaChat.Desktop/Views/MainWindow.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
-[C:/Users/clown/Desktop/Новая папка/AvaloniaChat/Frontend/Desktop/AvaloniaChat.Desktop/Views/RegistrationPage.axaml]
+[C:/Users/PC/Desktop/AvaloniaChat/Frontend/Desktop/AvaloniaChat.Desktop/Views/RegistrationPage.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
