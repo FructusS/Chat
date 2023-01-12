@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using AvaloniaChat.Backend.Models;
-
+using AvaloniaChat.Backend.Models.UserModels;
 
 namespace AvaloniaChat.Backend.Configs
 {
@@ -8,7 +8,9 @@ namespace AvaloniaChat.Backend.Configs
     {
         public MappingProfile()
         {
-           // CreateMap<UpdateUserModel, User>().ReverseMap();
+            CreateMap<UpdateUserModel, User>().ReverseMap();
+
+
         }
     }
 }
