@@ -6,7 +6,7 @@ namespace AvaloniaChat.Backend.Interfaces
     public interface IUserService
     {
         Task<User> CreateUser(CreateUserModel createUser);
-        Task<User> UpdateUser(UpdateUserModel updateUser);
+        Task<User> UpdateUser(int userId,User updateUser);
         Task DeleteUser(int id);
     }
 }
