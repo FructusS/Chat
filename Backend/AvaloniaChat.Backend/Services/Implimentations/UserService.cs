@@ -1,4 +1,5 @@
-﻿using AvaloniaChat.Backend.Context;
+﻿using AutoMapper;
+using AvaloniaChat.Backend.Context;
 using AvaloniaChat.Backend.Interfaces;
 using AvaloniaChat.Backend.Models;
 using AvaloniaChat.Backend.Models.UserModels;
@@ -9,11 +10,9 @@ namespace AvaloniaChat.Backend.Services.Implimentations
     public class UserService : IUserService
     {
         private readonly ChatDbContext _chatDbContext;
-        private readonly IConfiguration _config;
-        public UserService(ChatDbContext chatDbContext, IConfiguration config)
+        public UserService(ChatDbContext chatDbContext)
         {
-            _chatDbContext = chatDbContext;
-            _config = config;
+            _chatDbContext = chatDbContext;        
         }
         
         public async Task<User> CreateUser(CreateUserModel createUser)
@@ -41,12 +40,22 @@ namespace AvaloniaChat.Backend.Services.Implimentations
             _chatDbContext.SaveChanges();
         }
 
-        public Task<User> UpdateUser(UpdateUserModel createUser)
+        public async Task<User> UpdateUser(int userId,User updateDataUser)
         {
-            return null;
+            var user = await GetUserById(userId);
+
+            if (!await CheckUserName(updateDataUser.Username))
+            {
+                user.Username = updateDataUser.Username;
+            }
+            user.Email = updateDataUser.Email ?? user.Email;
+            user.FirstName = updateDataUser.FirstName ?? user.FirstName;
+            user.LastName = updateDataUser.LastName ?? user.LastName;
+            user.Logo = string.IsNullOrEmpty(updateDataUser.Logo.ToString()) ? user.Logo : updateDataUser.Logo;
+            await _chatDbContext.SaveChangesAsync();
+            return user;
+
         }
-
-
 
         public async Task<bool> GetUserByLoginEmail(string username,string email)
         {
@@ -57,52 +66,13 @@ namespace AvaloniaChat.Backend.Services.Implimentations
             return await _chatDbContext.Users.SingleAsync(x => x.UserId == id);
         }
 
-        //public async Task<LoginResponse> LoginUser(LoginRequest loginRequest)
-        //{
-        //    var user = _chatDbContext.Users.FirstOrDefault(x => x.Username == loginRequest.Username);
-        //    if (user == null || !BCrypt.Net.BCrypt.Verify(loginRequest.Password, user.PasswordHash))
-        //    {
-        //        return null;
-        //    }
-        //    string? token = GenerateToken(user);
-        //    return new LoginResponse { Token = token };
-        //}
-
-        //public async Task<RegistrationResponse> RegistrationUser(CreateUserRequest registrationRequest)
-        //{
-        //    if (_chatDbContext.Users.FirstOrDefault(x => x.Username == registrationRequest.Username) != null)
-        //    {
-        //        return null;
-        //    }
-
-        //    User user = new User
-        //    {
-        //        Username = registrationRequest.Username,
-        //        PasswordHash = BCrypt.Net.BCrypt.HashPassword(registrationRequest.Password)
-        //    };
-        //    _chatDbContext.Users.Add(user);
-        //    _chatDbContext.SaveChanges();
-        //    return new RegistrationResponse { UserName = user.Username, Email = user.Email };
-        //}
-        //public string GenerateToken(User user)
-        //{
-        //    var claims = new List<Claim> {
-        //        new Claim(ClaimsIdentity.DefaultNameClaimType, user.Username)
-
-        //    };
-        //    ClaimsIdentity claimsIdentity = new ClaimsIdentity(claims, "Token", ClaimsIdentity.DefaultNameClaimType, ClaimsIdentity.DefaultRoleClaimType);
-
-
-
-        //    // создаем JWT-токен
-        //    var jwt = new JwtSecurityToken(
-        //            issuer: _config["Jwt:Issuer"],
-        //            audience: _config["Jwt:Audience"],
-        //            claims: claimsIdentity.Claims,
-        //            expires: DateTime.Now.AddMinutes(30),
-        //            signingCredentials: new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"])), SecurityAlgorithms.HmacSha256));
-        //    var encodedJwt = new JwtSecurityTokenHandler().WriteToken(jwt);
-        //    return encodedJwt;
-        //}
+        private async Task<bool> CheckEmailUser(string userEmail)
+        {
+            return await _chatDbContext.Users.AnyAsync(x => x.Email.ToLower() == userEmail.ToLower());
+        }
+        private async Task<bool> CheckUserName(string username)
+        {
+            return await _chatDbContext.Users.AnyAsync(x => x.Username == username);
+        }
     }
 }
