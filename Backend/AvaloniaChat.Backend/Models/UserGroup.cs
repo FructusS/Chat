@@ -1,19 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
-namespace AvaloniaChat.Backend.Models;
-
-public partial class UserGroup
+namespace AvaloniaChat.Backend.Models
 {
-    public int? UserId { get; set; }
+    public partial class UserGroup
+    {
+        public UserGroup()
+        {
+            Messages = new HashSet<Message>();
+        }
 
-    public int? GroupId { get; set; }
-
-    public string UsergroupId { get; set; } = null!;
-
-    public virtual Group? Group { get; set; }
-
-    public virtual ICollection<Message> Messages { get; } = new List<Message>();
-
-    public virtual User? User { get; set; }
+        public int? UserId { get; set; }
+        public int? GroupId { get; set; }
+        public int UsergroupId { get; set; }
+        [JsonIgnore]
+        public virtual Group? Group { get; set; }
+        [JsonIgnore]
+        public virtual User? User { get; set; }
+        [JsonIgnore]
+        public virtual ICollection<Message> Messages { get; set; }
+    }
 }
