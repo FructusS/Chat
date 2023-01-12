@@ -3,10 +3,10 @@ using AvaloniaChat.Backend.Context;
 using AvaloniaChat.Backend.Hubs;
 using AvaloniaChat.Backend.Interfaces;
 using AvaloniaChat.Backend.Services.Implimentations;
+using AvaloniaChat.Backend.Services.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,12 +19,15 @@ builder.Services.AddSignalR();
 
 builder.Services.AddDbContext<ChatDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("SqlServer")));
 
-
 builder.Services.AddTransient<IUserService, UserService>();
+builder.Services.AddTransient<IAuthService, AuthService>();
 builder.Services.AddTransient<IGroupService, GroupService>();
 
+builder.Services.AddAutoMapper(typeof(MappingProfile));
 
-builder.Services.Configure<JwtConfig>(builder.Configuration.GetSection("Jwt"));
+var getJwtSection = builder.Configuration.GetSection(JwtConfig.Position);
+var jwtConfig = getJwtSection.Get<JwtConfig>();
+builder.Services.Configure<JwtConfig>(getJwtSection);
 
 builder.Services
     .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -37,12 +40,9 @@ builder.Services
             ValidateIssuerSigningKey = true,
             ValidateAudience = true,
             ValidateLifetime = true,
-            ValidIssuer = builder.Configuration["Jwt:Issuer"],
-            ValidAudience = builder.Configuration["Jwt:Audience"],
-            IssuerSigningKey = new
-                SymmetricSecurityKey
-                (Encoding.UTF8.GetBytes
-                (builder.Configuration["Jwt:Key"]))
+            ValidIssuer = jwtConfig.Issuer,
+            ValidAudience = jwtConfig.Audience,
+            IssuerSigningKey = jwtConfig.SymmetricSecurityKey()
         };
     });
 
