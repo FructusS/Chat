@@ -25,6 +25,17 @@ namespace AvaloniaChat.Backend.Hubs
             await Clients.Group(groupname).SendAsync("ReceiveMessage", user, message);
 
         }
+        public async Task JoinChat(string user)
+        {
 
+            await Clients.Group(groupname).SendAsync("Join", user);
+
+        }
+        public async Task LeaveChat(string user)
+        {
+
+            await Clients.Group(groupname).SendAsync("Leave", user);
+
+        }
     }
 }
