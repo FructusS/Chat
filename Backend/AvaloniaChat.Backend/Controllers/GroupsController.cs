@@ -1,12 +1,15 @@
 ﻿using AvaloniaChat.Backend.Interfaces;
 using AvaloniaChat.Backend.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AvaloniaChat.Backend.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
+ 
     public class GroupsController : ControllerBase
     {
         private readonly IGroupService _groupService;
