@@ -8,7 +8,13 @@ namespace AvaloniaChat.Backend.Configs
     {
         public MappingProfile()
         {
-            CreateMap<UpdateUserModel, User>().ReverseMap();
+            CreateMap<User, User>()
+                .ForMember("Logo",opt => opt.MapFrom(c=>c.Logo))
+                .ForMember("FirstName", opt => opt.MapFrom(c => c.FirstName))
+                .ForMember("LastName", opt => opt.MapFrom(c => c.LastName))
+                .ForMember("Email", opt => opt.MapFrom(c => c.Email))
+                .ReverseMap();
+            
 
 
         }
