@@ -11,6 +11,11 @@ namespace AvaloniaChat.Backend.Hubs
     {
         private string groupname = "tets";
 
+        private readonly ChatDbContext _chatDbContext;
+        public ChatHub(ChatDbContext chatDbContext)
+        {
+            _chatDbContext = chatDbContext;
+        }
         public Task JoinUserGroup()
         {
             return Groups.AddToGroupAsync(Context.ConnectionId, groupname);
@@ -20,9 +25,15 @@ namespace AvaloniaChat.Backend.Hubs
             return Groups.RemoveFromGroupAsync(Context.ConnectionId, groupname);
         }
 
-        public async Task SendMessage(string user, string message)
+        public async Task SendMessage(string user, string message, int groupId)
         {
-            await Clients.Group(groupname).SendAsync("ReceiveMessage", user, message);
+            await Clients.Group(groupId.ToString()).SendAsync("ReceiveMessage", user, message);
+            _chatDbContext.Messages.Add(new Message
+            {
+                MessageText = message,
+                UsergroupId = groupId               
+                
+            });
 
         }
         public async Task JoinChat(string user)
