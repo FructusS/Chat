@@ -19,11 +19,13 @@ builder.Services.AddSignalR();
 
 builder.Services.AddDbContext<ChatDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("SqlServer")));
 
+builder.Services.AddAutoMapper(typeof(MappingProfile));
+
 builder.Services.AddTransient<IUserService, UserService>();
 builder.Services.AddTransient<IAuthService, AuthService>();
 builder.Services.AddTransient<IGroupService, GroupService>();
+builder.Services.AddTransient<IUserGroupService, UserGroupService>();
 
-builder.Services.AddAutoMapper(typeof(MappingProfile));
 
 var getJwtSection = builder.Configuration.GetSection(JwtConfig.Position);
 var jwtConfig = getJwtSection.Get<JwtConfig>();
