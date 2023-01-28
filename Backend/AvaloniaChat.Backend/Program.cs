@@ -25,6 +25,7 @@ builder.Services.AddTransient<IUserService, UserService>();
 builder.Services.AddTransient<IAuthService, AuthService>();
 builder.Services.AddTransient<IGroupService, GroupService>();
 builder.Services.AddTransient<IUserGroupService, UserGroupService>();
+builder.Services.AddTransient<IMessageService, MessageService>();
 
 
 var getJwtSection = builder.Configuration.GetSection(JwtConfig.Position);
