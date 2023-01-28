@@ -14,11 +14,11 @@ namespace AvaloniaChat.Backend.Controllers
         {
             _userGroupService = userGroupService;
         }
-
         [HttpPost]
         [Route("adduser")]
         public async Task<UserGroup> AddUserFromGroup([FromQuery]int userId, [FromQuery]int groupId)
         {
+
             return await _userGroupService.AddUserFromGroup(userId, groupId);
         }
         [HttpPost]
