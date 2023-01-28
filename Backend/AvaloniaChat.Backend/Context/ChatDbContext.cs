@@ -49,6 +49,8 @@ public partial class ChatDbContext : DbContext
 
             entity.Property(e => e.MessageText).HasColumnName("message_text");
 
+            entity.Property(e => e.UserId).HasColumnName("user_id");
+
             entity.Property(e => e.UsergroupId).HasColumnName("usergroup_id");
 
             entity.HasOne(d => d.Usergroup)
