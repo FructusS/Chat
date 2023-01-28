@@ -25,16 +25,16 @@ namespace AvaloniaChat.Backend.Hubs
             return Groups.RemoveFromGroupAsync(Context.ConnectionId, groupname);
         }
 
-        public async Task SendMessage(string user, string message, int groupId)
+        public async Task SendMessage(string user, string message, int groupId, int userId)
         {
             await Clients.Group(groupId.ToString()).SendAsync("ReceiveMessage", user, message);
             _chatDbContext.Messages.Add(new Message
             {
                 MessageText = message,
-                UsergroupId = groupId               
+                UsergroupId = groupId,
+                UserId = userId
                 
             });
-
         }
         public async Task JoinChat(string user)
         {
