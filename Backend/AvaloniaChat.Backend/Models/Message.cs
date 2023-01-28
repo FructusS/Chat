@@ -8,6 +8,7 @@ namespace AvaloniaChat.Backend.Models
         public int MessageId { get; set; }
         public int UsergroupId { get; set; }
         public string MessageText { get; set; } = null!;
+        public int UserId { get; set; }
 
         public virtual UserGroup Usergroup { get; set; } = null!;
     }
