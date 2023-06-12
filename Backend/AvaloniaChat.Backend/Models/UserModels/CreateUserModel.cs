@@ -4,8 +4,6 @@ namespace AvaloniaChat.Backend.Models.UserModels
 {
     public class CreateUserModel
     {
-        [Required, MaxLength(60), MinLength(7)]        
-        public string Email { get; set; } = null!;
 
         [Required, MaxLength(20), MinLength(3)]
         public string Username { get; set; } = null!;
