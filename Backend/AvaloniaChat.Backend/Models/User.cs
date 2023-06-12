@@ -15,7 +15,6 @@ namespace AvaloniaChat.Backend.Models
         public string Username { get; set; } = null!;
         [JsonIgnore]
         public string PasswordHash { get; set; } = null!;
-        public string? Email { get; set; }
         public string? FirstName { get; set; }
         public byte[]? Logo { get; set; }
         public string? LastName { get; set; }
