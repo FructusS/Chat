@@ -2,6 +2,7 @@ using AvaloniaChat.Backend.Configs;
 using AvaloniaChat.Backend.Context;
 using AvaloniaChat.Backend.Hubs;
 using AvaloniaChat.Backend.Interfaces;
+using AvaloniaChat.Backend.Mapping;
 using AvaloniaChat.Backend.Services.Implimentations;
 using AvaloniaChat.Backend.Services.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -17,7 +18,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddSignalR();
 
-builder.Services.AddDbContext<ChatDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("SqlServer")));
+builder.Services.AddDbContext<ChatDbContext>(options => options.UseNpgsql(builder.Configuration.GetConnectionString("PostgreSQL")));
 
 builder.Services.AddAutoMapper(typeof(MappingProfile));
 
