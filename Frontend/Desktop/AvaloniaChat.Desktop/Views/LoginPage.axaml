@@ -55,7 +55,7 @@
 						Grid.Column="3"
 						HorizontalAlignment="Stretch"
 						HorizontalContentAlignment="Center"
-						Command="{Binding RegistrationCommand}"/>
+						Command="{Binding NavigateToRegistrationCommand}"/>
 			<TextBlock Name="ErrorBox"
 					   Grid.Column="2"
 					   Grid.ColumnSpan="2"
