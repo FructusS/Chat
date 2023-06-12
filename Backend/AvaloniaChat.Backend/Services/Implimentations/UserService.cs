@@ -17,14 +17,13 @@ namespace AvaloniaChat.Backend.Services.Implimentations
         
         public async Task<User> CreateUser(CreateUserModel createUser)
         {
-            if (await GetUserByLoginEmail(createUser.Username, createUser.Email))
+            if (await GetUserByLoginEmail(createUser.Username))
             {
                 return null;
             }
            
             User userCreated =  new User
             {
-                Email = createUser.Email,
                 Username = createUser.Username,
                 PasswordHash = BCrypt.Net.BCrypt.HashPassword(createUser.Password)
             }; 
@@ -48,7 +47,6 @@ namespace AvaloniaChat.Backend.Services.Implimentations
             {
                 user.Username = updateDataUser.Username;
             }
-            user.Email = updateDataUser.Email ?? user.Email;
             user.FirstName = updateDataUser.FirstName ?? user.FirstName;
             user.LastName = updateDataUser.LastName ?? user.LastName;
             user.Logo = string.IsNullOrEmpty(updateDataUser.Logo.ToString()) ? user.Logo : updateDataUser.Logo;
@@ -57,18 +55,13 @@ namespace AvaloniaChat.Backend.Services.Implimentations
 
         }
 
-        public async Task<bool> GetUserByLoginEmail(string username,string email)
+        public async Task<bool> GetUserByLoginEmail(string username)
         {
-            return await _chatDbContext.Users.AnyAsync(x => x.Username == username && x.Email == email);
+            return await _chatDbContext.Users.AnyAsync(x => x.Username == username);
         }
         public async Task<User> GetUserById(int id)
         {
             return await _chatDbContext.Users.SingleAsync(x => x.UserId == id);
-        }
-
-        private async Task<bool> CheckEmailUser(string userEmail)
-        {
-            return await _chatDbContext.Users.AnyAsync(x => x.Email.ToLower() == userEmail.ToLower());
         }
         private async Task<bool> CheckUserName(string username)
         {
