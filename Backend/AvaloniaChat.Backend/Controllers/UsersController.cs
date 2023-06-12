@@ -33,6 +33,7 @@ namespace AvaloniaChat.Backend.Controllers
             {
                 return BadRequest("Invalid data");
             }
+
             var registraionResponse = await _userService.CreateUser(createUserModel);
 
             if (registraionResponse == null)
@@ -42,7 +43,6 @@ namespace AvaloniaChat.Backend.Controllers
             else
             {
                 return Ok(registraionResponse);
-
             }
         } 
         [HttpPatch("{userId}")]
@@ -75,40 +75,5 @@ namespace AvaloniaChat.Backend.Controllers
             await _userService.DeleteUser(id);
             return Ok();
         }
-
-
-        //[HttpPost]
-        //[Route("registration")]
-        //public async Task<IActionResult> RegistrationUser([FromBody] CreateUserModel request)
-        //{
-
-        //        if (await CheckEmailUser(request.Email))
-        //        {
-        //            return BadRequest("email is already use");
-        //        } 
-        //        if (await CheckUserName(request.Username))
-        //        {
-        //            return BadRequest("username already exist");
-        //        }
-        //        var response = await _userService.RegistrationUser(request);
-        //        if (response == null)
-        //        {
-        //            return BadRequest(new { errorText = "User is exist." });
-        //        }
-
-        //        return Ok(response);
-
-
-        //}
-
-        //private async Task<bool> CheckEmailUser(string userEmail)
-        //{
-        //    return await _chatDbContext.Users.AnyAsync(x => x.Email.ToLower() == userEmail.ToLower());
-        //}  
-        //private async Task<bool> CheckUserName(string username)
-        //{
-        //    return await _chatDbContext.Users.AnyAsync(x => x.Username == username);
-        //}
-
     }
 }
