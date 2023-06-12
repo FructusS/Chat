@@ -11,13 +11,13 @@
 
 	<ContentControl Content="{Binding CurrentPage}">
 		<ContentControl.DataTemplates>
-			<DataTemplate DataType="{x:Type TypeName=viewModels:LoginViewModel}">
+			<DataTemplate DataType="{x:Type viewModels:LoginViewModel}">
 				<views:LoginPage/>
 			</DataTemplate>
-			<DataTemplate DataType="{x:Type TypeName=viewModels:RegistrationViewModel}">
+			<DataTemplate DataType="{x:Type viewModels:RegistrationViewModel}">
 				<views:RegistrationPage/>
 			</DataTemplate>
-			<DataTemplate DataType="{x:Type TypeName=viewModels:ChatViewModel}">
+			<DataTemplate DataType="{x:Type viewModels:ChatViewModel}">
 				<views:ChatPage/>
 			</DataTemplate>
 		</ContentControl.DataTemplates>
