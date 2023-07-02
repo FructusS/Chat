@@ -1,29 +1,44 @@
-﻿using AvaloniaChat.Backend.Models;
+﻿using AvaloniaChat.Application.DTO.Message;
+using AvaloniaChat.Backend.Hubs;
 using AvaloniaChat.Backend.Services.Interfaces;
+using AvaloniaChat.Domain.Models;
+using AvaloniaChat.Infrastructure.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
-namespace AvaloniaChat.Backend.Controllers
+namespace AvaloniaChat.Backend.Controllers;
+
+[Route("api/[controller]")]
+[ApiController]
+public class MessagesController : ControllerBase
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class MessagesController : ControllerBase
+    private readonly IMessageService _messageService;
+    private readonly IHubContext<ChatHub> _hubContext;
+    public MessagesController(IMessageService messageService, IHubContext<ChatHub> hubContext)
     {
-        private readonly IMessageService _messageService;
+        _messageService = messageService;
+        _hubContext = hubContext;
+    }
 
-        public MessagesController(IMessageService messageService)
+    [HttpGet("{groupId}")]
+    public async Task<List<MessageDto>> GetMessages(int groupId)
+    {
+        return await _messageService.GetMessages(groupId);
+    }
+
+
+
+    [HttpPost("create")]
+    public async Task<IActionResult> CreateMessage(CreateMessageDto createMessageDto)
+    {
+        if (createMessageDto is null)
         {
-            _messageService = messageService;
+            return BadRequest();
         }
-
-        [HttpGet("{groupId}")]
-        public async Task<List<Message>> GetMessages(int groupId)
-        {
-
-            return await _messageService.GetMessages(groupId);
-        }
-
-       
+        var message = await _messageService.CreateMessage(createMessageDto);
+        await _hubContext.Clients.All.SendAsync("ReceiveMessage", message);
+        return Ok(message); 
     }
 }

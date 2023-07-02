@@ -25,7 +25,7 @@ namespace AvaloniaChat.Desktop.ViewModels
 
         public MainWindowViewModel(IEventAggregator eventAggregator)
         {
-            CurrentPage = new LoginViewModel(eventAggregator);
+            CurrentPage = new ChatViewModel();
             eventAggregator.GetEvent<NavigateToRegistrationEvent>().Subscribe(ToRegistration);
             eventAggregator.GetEvent<LoginEvent>().Subscribe(ToLogin);
 

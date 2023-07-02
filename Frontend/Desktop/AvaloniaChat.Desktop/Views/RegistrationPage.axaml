@@ -28,8 +28,11 @@
             <TextBox HorizontalAlignment="Stretch"
                      Watermark="Логин"
                      Grid.Column="1"
-                     Text="{Binding Login}"
-                     Grid.Row="0"/>
+                     Grid.Row="0">
+                <TextBox.Text>
+                    <Binding Path="Login"></Binding>
+                </TextBox.Text>
+            </TextBox>
             <TextBox Text="{Binding Password}"
                      Watermark="Пароль"
                      PasswordChar="*"

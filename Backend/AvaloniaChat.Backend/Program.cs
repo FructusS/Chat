@@ -1,10 +1,13 @@
-using AvaloniaChat.Backend.Configs;
-using AvaloniaChat.Backend.Context;
+
+using AvaloniaChat.Application.Configs;
+using AvaloniaChat.Application.Mapping;
 using AvaloniaChat.Backend.Hubs;
-using AvaloniaChat.Backend.Interfaces;
-using AvaloniaChat.Backend.Mapping;
-using AvaloniaChat.Backend.Services.Implimentations;
 using AvaloniaChat.Backend.Services.Interfaces;
+using AvaloniaChat.Infrastructure;
+using AvaloniaChat.Infrastructure.Repository.Implimentations;
+using AvaloniaChat.Infrastructure.Repository.Interfaces;
+using AvaloniaChat.Infrastructure.Services.Implimentations;
+using AvaloniaChat.Infrastructure.Services.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -18,15 +21,27 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddSignalR();
 
-builder.Services.AddDbContext<ChatDbContext>(options => options.UseNpgsql(builder.Configuration.GetConnectionString("PostgreSQL")));
+builder.Services.AddDbContext<ChatDbContext>(options =>
+{
+    options.UseNpgsql(builder.Configuration.GetConnectionString("PostgreSQL"));
+
+    options.UseLazyLoadingProxies(true);
+});
 
 builder.Services.AddAutoMapper(typeof(MappingProfile));
 
-builder.Services.AddTransient<IUserService, UserService>();
-builder.Services.AddTransient<IAuthService, AuthService>();
-builder.Services.AddTransient<IGroupService, GroupService>();
-builder.Services.AddTransient<IUserGroupService, UserGroupService>();
-builder.Services.AddTransient<IMessageService, MessageService>();
+
+// repository
+
+builder.Services.AddScoped<IGroupRepository, GroupRepository>();
+builder.Services.AddScoped<IMessageRepository, MessageRepository>();
+
+// services
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IGroupService, GroupService>();
+builder.Services.AddScoped<IUserGroupService, UserGroupService>();
+builder.Services.AddScoped<IMessageService, MessageService>();
 
 
 var getJwtSection = builder.Configuration.GetSection(JwtConfig.Position);

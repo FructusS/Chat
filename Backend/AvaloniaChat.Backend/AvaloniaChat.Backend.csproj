@@ -5,6 +5,7 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UserSecretsId>99e5e67c-20d2-4dbf-801c-1ba53c12a2d2</UserSecretsId>
+    <RootNamespace>AvaloniaChat.Backend</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
@@ -28,11 +29,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Models\UserGroupModels\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\..\Shared\ViewModels\AvaloniaChat.ViewModels.csproj" />
+    <ProjectReference Include="..\AvaloniaChat.Application\AvaloniaChat.Application.csproj" />
+    <ProjectReference Include="..\AvaloniaChat.Infrastructure\AvaloniaChat.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>
