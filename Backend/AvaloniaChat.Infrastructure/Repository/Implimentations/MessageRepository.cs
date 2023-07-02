@@ -28,8 +28,8 @@ namespace AvaloniaChat.Infrastructure.Repository.Implimentations
                 Username = x.Usergroup.User.Username,
                 SendDate = x.SendDate,
                 UsergroupId = x.UsergroupId,
-                MessageText = x.Usergroup.User.Username
-            }).Take(20).ToListAsync();
+                MessageText = x.MessageText
+            }).ToListAsync();
         }
 
         public async Task<MessageDto> CreateMessage(CreateMessageDto createMessageDto)
