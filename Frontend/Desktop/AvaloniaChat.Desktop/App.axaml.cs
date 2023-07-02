@@ -7,7 +7,7 @@ using Prism.Events;
 
 namespace AvaloniaChat.Desktop
 {
-    public partial class App : Application
+    public partial class App : Avalonia.Application
     {
         public override void Initialize()
         {
