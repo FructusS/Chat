@@ -1,6 +1,7 @@
-﻿using AvaloniaChat.Backend.Context;
-using AvaloniaChat.Backend.Models;
-using Microsoft.AspNetCore.Authorization;
+﻿
+using AvaloniaChat.Infrastructure;
+using AvaloniaChat.Domain;
+using AvaloniaChat.Domain.Models;
 using Microsoft.AspNetCore.SignalR;
 
 
@@ -25,28 +26,32 @@ namespace AvaloniaChat.Backend.Hubs
             return Groups.RemoveFromGroupAsync(Context.ConnectionId, groupname);
         }
 
-        public async Task SendMessage(string user, string message, int groupId, int userId)
+        public async Task SendMessage(string user, string message, Guid groupId)
         {
             await Clients.Group(groupId.ToString()).SendAsync("ReceiveMessage", user, message);
-            _chatDbContext.Messages.Add(new Message
-            {
-                MessageText = message,
-                UsergroupId = groupId,
-                UserId = userId
-                
-            });
+            await Clients.Group(Context.ConnectionId).SendAsync("ReceiveMessage", user, message);
+            await Clients.All.SendAsync("ReceiveMessage", user, message);
+
         }
+
+        /// <summary>
+        /// when the user enters the chat for the first time
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
+
         public async Task JoinChat(string user)
         {
-
             await Clients.Group(groupname).SendAsync("Join", user);
-
         }
+        /// <summary>
+        ///  when the user leave the chat
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
         public async Task LeaveChat(string user)
         {
-
             await Clients.Group(groupname).SendAsync("Leave", user);
-
         }
     }
 }
