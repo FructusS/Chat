@@ -10,6 +10,8 @@
   <ItemGroup>
     <AvaloniaResource Include="Assets\**" />
     <None Remove=".gitignore" />
+    <None Remove="Assets\send_ic.svg" />
+    <None Remove="Assets\send_icon.png" />
   </ItemGroup>
   <ItemGroup>
     <!--This helps with theme dll-s trimming.
@@ -40,5 +42,10 @@
   <ItemGroup>
     <ProjectReference Include="..\..\..\Backend\AvaloniaChat.Application\AvaloniaChat.Application.csproj" />
     <ProjectReference Include="..\..\..\Backend\AvaloniaChat.Domain\AvaloniaChat.Domain.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <AvaloniaResource Update="Assets\send_ic.svg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </AvaloniaResource>
   </ItemGroup>
 </Project>
