@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.SignalR;
 
 namespace AvaloniaChat.Backend.Hubs
 {
-   
+    
     public class ChatHub : Hub
     {
         private string groupname = "tets";
@@ -26,14 +26,14 @@ namespace AvaloniaChat.Backend.Hubs
             return Groups.RemoveFromGroupAsync(Context.ConnectionId, groupname);
         }
 
-        public async Task SendMessage(string user, string message, Guid groupId)
-        {
-            await Clients.Group(groupId.ToString()).SendAsync("ReceiveMessage", user, message);
-            await Clients.Group(Context.ConnectionId).SendAsync("ReceiveMessage", user, message);
-            await Clients.All.SendAsync("ReceiveMessage", user, message);
+        //public async Task SendMessage(string user, string message, Guid groupId)
+        //{
+        //    await Clients.Group(groupId.ToString()).SendAsync("ReceiveMessage", user, message);
+        //    await Clients.Group(Context.ConnectionId).SendAsync("ReceiveMessage", user, message);
+        //    await Clients.All.SendAsync("ReceiveMessage", user, message);
 
-        }
-
+        //}
+        
         /// <summary>
         /// when the user enters the chat for the first time
         /// </summary>
@@ -52,6 +52,12 @@ namespace AvaloniaChat.Backend.Hubs
         public async Task LeaveChat(string user)
         {
             await Clients.Group(groupname).SendAsync("Leave", user);
+        }
+
+        public override Task OnConnectedAsync()
+        {
+            Groups.AddToGroupAsync(Context.ConnectionId, groupname);
+            return base.OnConnectedAsync();
         }
     }
 }
