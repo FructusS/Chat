@@ -38,7 +38,7 @@ public class MessagesController : ControllerBase
             return BadRequest();
         }
         var message = await _messageService.CreateMessage(createMessageDto);
-        await _hubContext.Clients.All.SendAsync("ReceiveMessage", message);
+        await _hubContext.Clients.Group(message.UsergroupId.ToString()).SendAsync("ReceiveMessage", message);
         return Ok(message); 
     }
 }
