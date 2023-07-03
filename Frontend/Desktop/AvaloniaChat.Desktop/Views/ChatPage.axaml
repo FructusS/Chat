@@ -12,17 +12,26 @@
             <ScrollViewer HorizontalScrollBarVisibility="Disabled"
                           VerticalScrollBarVisibility="Auto">
                 <ItemsControl Items="{Binding Messages}"
+                              
                               Background="Transparent">
-
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <Border Padding="10">
                                 <Grid RowDefinitions="Auto * Auto">
-                                    <TextBlock Grid.Row="0" Text="{Binding Username}"
+                                    <TextBlock Grid.Row="0"
+                                               Text="{Binding Username}"
+                                               FontSize="18"
                                                TextWrapping="WrapWithOverflow" />
-									<TextBlock Grid.Row="1" Text="{Binding MessageText}"
+									<TextBlock Grid.Row="1" 
+                                               Text="{Binding MessageText}"
+                                               FontSize="18"
                                                TextWrapping="WrapWithOverflow" />
-									<TextBlock Text="{Binding SendDate}" Grid.Row="2" HorizontalAlignment="Right" FontSize="10" FontWeight="SemiBold" Foreground="LightGray"></TextBlock>
+									<TextBlock Text="{Binding SendDate}"
+                                               Grid.Row="2" 
+                                               HorizontalAlignment="Right" 
+                                               FontSize="14" 
+                                               FontWeight="SemiBold" 
+                                               Foreground="LightGray"></TextBlock>
 								</Grid>
 
 
@@ -41,14 +50,20 @@
             <TextBox TextWrapping="Wrap"
                      AcceptsReturn="True"
                      AcceptsTab="True"
+                     FontSize="20"
                      Text="{Binding MessageText}"
                      Watermark="Введите сообщение..." />
-            <Button Grid.Column="1"
+			<Button Grid.Column="1"
                     VerticalAlignment="Stretch"
                     VerticalContentAlignment="Center"
                     Margin="10 0 0 0"
-                    Command="{Binding SendCommand}"
-                    Content="Отправить" />
+                  Background="Transparent"
+
+                  BorderBrush="Transparent"
+                  BorderThickness="0"
+                    Command="{Binding SendCommand}">
+				<Image Source="../Assets/send_icon.png"></Image>
+            </Button>
         </Grid>
 
     </Grid>
