@@ -8,7 +8,6 @@ namespace AvaloniaChat.Domain.Models
     {
         public UserGroup()
         {
-            Messages = new HashSet<Message>();
         }
 
         public int? UserId { get; set; }
@@ -16,6 +15,5 @@ namespace AvaloniaChat.Domain.Models
         public int UsergroupId { get; set; }
         public virtual Group? Group { get; set; }
         public virtual User? User { get; set; }
-        public virtual ICollection<Message> Messages { get; set; }
     }
 }
