@@ -28,18 +28,14 @@
 			<TextBox HorizontalAlignment="Stretch"
 					 Watermark="Логин"
 					 Grid.Column="1"
-					 Text="{Binding Login}"
+					 Text="{Binding Username}"
 					 Grid.Row="0"/>
-			<TextBox Text="{Binding Email}"
-					 Watermark="Почта"
-					 Grid.Column="1"
-					 Grid.Row="1"/>
-			<TextBox Text="{Binding Password}"
-					 Watermark="Пароль"
-					 PasswordChar="*"
-					 VerticalContentAlignment="Center"
-					 Grid.Column="1"
-					 Grid.Row="2"/>
+            <TextBox Text="{Binding Password}"
+                     Watermark="Пароль"
+                     PasswordChar="*"
+                     VerticalContentAlignment="Center"
+                     Grid.Column="1"
+                     Grid.Row="2"/>
 			</Grid>
 			<Grid ColumnDefinitions="* * * * * *"
 				  RowDefinitions="* *"
