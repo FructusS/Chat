@@ -3,6 +3,8 @@ using AvaloniaChat.Application.Configs;
 using AvaloniaChat.Application.DTO.Auth;
 using AvaloniaChat.Backend.Services.Interfaces;
 using AvaloniaChat.Infrastructure;
+using AvaloniaChat.Infrastructure.Services.Implimentations;
+using AvaloniaChat.Infrastructure.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 
@@ -13,14 +15,12 @@ namespace AvaloniaChat.Backend.Controllers;
 public class AuthController : ControllerBase
 {
     private readonly IAuthService _authService;
-    private readonly ChatDbContext _chatDbContext;
-    private readonly JwtConfig _jwtConfig;
+    private readonly IUserService _userService;
 
-    public AuthController(ChatDbContext userContext, IAuthService tokenService, IOptions<JwtConfig> jwtConfig)
+    public AuthController(IAuthService authService, IUserService userService)
     {
-        _jwtConfig = jwtConfig.Value;
-        _chatDbContext = userContext;
-        _authService = tokenService;
+        _authService = authService;
+        _userService = userService;
     }
 
 
@@ -29,9 +29,11 @@ public class AuthController : ControllerBase
     public async Task<IActionResult> Login([FromBody] AuthRequest loginModel)
     {
         if (loginModel is null) return BadRequest("Invalid client request");
-        var user = _chatDbContext.Users.FirstOrDefault(x =>
-            x.Username == loginModel.Username);
-        if (user is null || !BCrypt.Net.BCrypt.Verify(loginModel.Password, user.PasswordHash))
+        var user = await _userService.GetUserByUsername(loginModel.Username);
+
+        if (user == null) return BadRequest("User not found");
+
+        if (!BCrypt.Net.BCrypt.Verify(loginModel.Password, user.PasswordHash))
             return Unauthorized();
 
         var claims = new List<Claim>
@@ -40,7 +42,7 @@ public class AuthController : ControllerBase
             new(ClaimsIdentity.DefaultRoleClaimType, "user")
         };
         var accessToken = _authService.GenerateAccessToken(claims);
-        return Ok(new AuthResponse { AccessToken = accessToken });
+        return Ok(new AuthResponse { AccessToken = accessToken, UserId = user.UserId});
     }
 
     //[HttpPost]
