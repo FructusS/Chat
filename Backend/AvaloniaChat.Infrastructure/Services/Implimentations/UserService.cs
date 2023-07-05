@@ -1,5 +1,6 @@
 ﻿using AvaloniaChat.Application.DTO.User;
 using AvaloniaChat.Domain.Models;
+using AvaloniaChat.Infrastructure.Repository.Interfaces;
 using AvaloniaChat.Infrastructure.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
@@ -7,63 +8,44 @@ namespace AvaloniaChat.Infrastructure.Services.Implimentations
 {
     public class UserService : IUserService
     {
-        private readonly ChatDbContext _chatDbContext;
-        public UserService(ChatDbContext chatDbContext)
+        private readonly IUserRepository _repository;
+
+        public UserService(IUserRepository repository)
         {
-            _chatDbContext = chatDbContext;        
+            _repository = repository;
         }
         
-        public async Task<User> CreateUser(CreateUserDto createUser)
+        public async Task<UserDto> CreateUser(CreateUserDto createUser)
         {
-            if (await GetUserByLoginEmail(createUser.Username))
-            {
-                return null;
-            }
-           
-            User userCreated =  new User
-            {
-                Username = createUser.Username,
-                PasswordHash = BCrypt.Net.BCrypt.HashPassword(createUser.Password)
-            }; 
-            await  _chatDbContext.Users.AddAsync(userCreated);
-            await _chatDbContext.SaveChangesAsync();
-            return userCreated;
-
+            return await _repository.CreateUser(createUser);
         }
 
-        public async Task DeleteUser(int id)
+
+        public async Task<UserDto> UpdateUser(UpdateUserDto updateDataUser)
         {
-            _chatDbContext.Users.Remove( await GetUserById(id));
-           await _chatDbContext.SaveChangesAsync();
+            //var user = await GetUserById(userId);
+
+            //if (!await CheckUserName(updateDataUser.Username))
+            //{
+            //    user.Username = updateDataUser.Username;
+            //}
+            //user.FirstName = updateDataUser.FirstName ?? user.FirstName;
+            //user.LastName = updateDataUser.LastName ?? user.LastName;
+            //user.Logo = string.IsNullOrEmpty(updateDataUser.Logo.ToString()) ? user.Logo : updateDataUser.Logo;
+            //await _chatDbContext.SaveChangesAsync();
+            //return user;
+            return await _repository.UpdateUser(updateDataUser);
         }
 
-        public async Task<User> UpdateUser(int userId,User updateDataUser)
+        public async Task DeleteUser(string username)
         {
-            var user = await GetUserById(userId);
-
-            if (!await CheckUserName(updateDataUser.Username))
-            {
-                user.Username = updateDataUser.Username;
-            }
-            user.FirstName = updateDataUser.FirstName ?? user.FirstName;
-            user.LastName = updateDataUser.LastName ?? user.LastName;
-            user.Logo = string.IsNullOrEmpty(updateDataUser.Logo.ToString()) ? user.Logo : updateDataUser.Logo;
-            await _chatDbContext.SaveChangesAsync();
-            return user;
-
+            await _repository.DeleteUser(username);
         }
 
-        public async Task<bool> GetUserByLoginEmail(string username)
+        public async Task<User?> GetUserByUsername(string username)
         {
-            return await _chatDbContext.Users.AnyAsync(x => x.Username == username);
+            return await _repository.GetUserByUsername(username);   
         }
-        public async Task<User> GetUserById(int id)
-        {
-            return await _chatDbContext.Users.SingleAsync(x => x.UserId == id);
-        }
-        private async Task<bool> CheckUserName(string username)
-        {
-            return await _chatDbContext.Users.AnyAsync(x => x.Username == username);
-        }
+
     }
 }
