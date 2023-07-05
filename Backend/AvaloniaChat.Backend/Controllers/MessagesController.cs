@@ -23,7 +23,7 @@ public class MessagesController : ControllerBase
     }
 
     [HttpGet("{groupId}")]
-    public async Task<List<MessageDto>> GetMessages(int groupId)
+    public async Task<List<MessageDto>> GetMessages(Guid groupId)
     {
         return await _messageService.GetMessages(groupId);
     }
@@ -38,7 +38,7 @@ public class MessagesController : ControllerBase
             return BadRequest();
         }
         var message = await _messageService.CreateMessage(createMessageDto);
-        await _hubContext.Clients.Group(message.UsergroupId.ToString()).SendAsync("ReceiveMessage", message);
+        await _hubContext.Clients.Group(message.GroupId.ToString()).SendAsync("ReceiveMessage", message);
         return Ok(message); 
     }
 }
