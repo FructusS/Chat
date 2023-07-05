@@ -18,10 +18,11 @@ using AvaloniaChat.Desktop.Models;
 using AvaloniaChat.Domain.Models;
 using AvaloniaEdit.Editing;
 using ReactiveUI;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace AvaloniaChat.Desktop.ViewModels
 {
-    public class ChatViewModel : ViewModelBase 
+    public class ChatViewModel : ViewModelBase
     {
 
         private const string baseUrl = "http://localhost:5000/api";
@@ -30,21 +31,9 @@ namespace AvaloniaChat.Desktop.ViewModels
         {
             BaseAddress = new Uri(baseUrl),
         };
-        private ObservableCollection<MessageDto> _messages = new();
-        public ObservableCollection<MessageDto> Messages
-        {
-            get { return _messages; }
-            set { _messages = value; OnPropertyChanged(); }
-        }
 
 
-        private ObservableCollection<GroupDto> _userGroup = new();
-        public ObservableCollection<GroupDto> UserGroups
-        {
-            get { return _userGroup; }
-            set { _userGroup = value; OnPropertyChanged(); }
-        }
-
+        #region fields
 
         private string _messageText;
 
@@ -53,7 +42,44 @@ namespace AvaloniaChat.Desktop.ViewModels
             get { return _messageText; }
             set { _messageText = value; OnPropertyChanged(); }
         }
-        
+        private int _selectedUserGroupIndex;
+
+        public int SelectedUserGroupIndex
+        {
+            get { return _selectedUserGroupIndex; }
+            set { _selectedUserGroupIndex = value; OnPropertyChanged(); }
+        }
+
+
+        #region Messages
+
+        private ObservableCollection<MessageDto> _messages = new();
+        public ObservableCollection<MessageDto> Messages
+        {
+            get { return _messages; }
+            set { _messages = value; OnPropertyChanged(); }
+        }
+
+        #endregion
+
+        #region User group
+
+        private ObservableCollection<GroupDto> _userGroup = new();
+        public ObservableCollection<GroupDto> UserGroups
+        {
+            get { return _userGroup; }
+            set { _userGroup = value; OnPropertyChanged(); }
+        }
+
+        #endregion
+
+        #endregion
+
+
+
+
+
+
         private UserModel _userModel;
         public DelegateCommand SendCommand { get; }
         public ChatViewModel(UserModel userModel)
@@ -71,7 +97,7 @@ namespace AvaloniaChat.Desktop.ViewModels
                 .Build();
             Task.Run(() =>
             {
-                Connect(); 
+                Connect();
                 LoadUserGroups();
 
             });
@@ -81,7 +107,7 @@ namespace AvaloniaChat.Desktop.ViewModels
             {
                 Messages.Add(message);
             });
-            
+
 
 
             Selection = new SelectionModel<GroupDto>();
@@ -106,6 +132,8 @@ namespace AvaloniaChat.Desktop.ViewModels
 
             UserGroups = new ObservableCollection<GroupDto>(userGroup);
 
+            SelectedUserGroupIndex = 0;
+
             LoadMessageHistory();
 
         }
@@ -124,7 +152,7 @@ namespace AvaloniaChat.Desktop.ViewModels
             {
                 messages = await _httpClient.GetFromJsonAsync<List<MessageDto>>($"{baseUrl}/Messages/{Selection.SelectedItem.GroupId}");
             }
-           
+
             Messages = new ObservableCollection<MessageDto>(messages);
         }
         public async Task Connect()
