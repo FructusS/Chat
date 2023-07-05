@@ -1,4 +1,5 @@
-﻿using Prism.Events;
+﻿using AvaloniaChat.Desktop.Models;
+using Prism.Events;
 
 namespace AvaloniaChat.Desktop.Events
 {
@@ -8,7 +9,7 @@ namespace AvaloniaChat.Desktop.Events
     internal class NavigateToLoginEvent : PubSubEvent
     {
     }
-    internal class LoginEvent : PubSubEvent
+    internal class LoginEvent : PubSubEvent<UserModel>
     {
     } 
     internal class RegistrationEvent : PubSubEvent
