@@ -10,7 +10,7 @@ namespace AvaloniaChat.Application.DTO.Message
     {
         
         public Guid MessageId { get; set; }
-        public int UsergroupId { get; set; }
+        public Guid GroupId { get; set; }
         public string MessageText { get; set; } = null!;
         public string Username { get; set; }
 

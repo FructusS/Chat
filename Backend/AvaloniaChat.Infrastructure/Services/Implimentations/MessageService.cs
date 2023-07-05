@@ -11,14 +11,12 @@ namespace AvaloniaChat.Infrastructure.Services.Implimentations
     public class MessageService : IMessageService
     {
         private readonly IMessageRepository _repository;
-        private readonly IMapper _mapper;
-        public MessageService(IMessageRepository repository, IMapper mapper)
+        public MessageService(IMessageRepository repository)
         {
             _repository = repository;
-            _mapper = mapper;
         }
 
-        public async Task<List<MessageDto>> GetMessages(int userGroupId)
+        public async Task<List<MessageDto>> GetMessages(Guid userGroupId)
         {
             return await _repository.GetMessages(userGroupId);    
         }
