@@ -10,7 +10,7 @@ namespace AvaloniaChat.Infrastructure.Repository.Interfaces
 {
     public interface IMessageRepository
     {
-        public Task<List<MessageDto>> GetMessages(int userGroupId);
+        public Task<List<MessageDto>> GetMessages(Guid userGroupId);
         public Task<MessageDto> CreateMessage(CreateMessageDto  createMessageDto);
     }
 }
