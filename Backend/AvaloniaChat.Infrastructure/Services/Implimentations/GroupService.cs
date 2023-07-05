@@ -1,4 +1,6 @@
-﻿using AvaloniaChat.Backend.Services.Interfaces;
+﻿using AvaloniaChat.Application.DTO.Group;
+using AvaloniaChat.Application.DTO.UserGroup;
+using AvaloniaChat.Backend.Services.Interfaces;
 using AvaloniaChat.Domain.Models;
 using AvaloniaChat.Infrastructure.Repository.Implimentations;
 using AvaloniaChat.Infrastructure.Repository.Interfaces;
@@ -14,19 +16,25 @@ namespace AvaloniaChat.Infrastructure.Services.Implimentations
             _repository = repository;
         }
 
-        public async Task CreateGroup(Group group)
+        public async Task<GroupDto> CreateGroup(CreateGroupDto group)
         { 
-            await _repository.CreateGroup(group);
+            return await _repository.CreateGroup(group);
         }
 
-        public async Task DeleteGroup(Group group)
+
+        public async Task DeleteGroup(Guid groupId)
         {
-            await _repository.DeleteGroup(group);
+            await _repository.DeleteGroup(groupId);
         }
 
-        public async Task UpdateGroup(Group group)
+        public async Task<GroupDto> UpdateGroup(UpdateGroupDto group)
         {
-           await _repository.UpdateGroup(group);
+            return await _repository.UpdateGroup(group);
+        }
+
+        public async Task<List<GroupDto>> GetUserGroup(int userId)
+        {
+            return await _repository.GetUserGroup(userId);
         }
     }
 }
