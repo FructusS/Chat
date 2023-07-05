@@ -10,6 +10,7 @@ using AvaloniaChat.Infrastructure.Services.Implimentations;
 using AvaloniaChat.Infrastructure.Services.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -21,12 +22,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddSignalR();
 
-builder.Services.AddDbContext<ChatDbContext>(options =>
-{
-    options.UseNpgsql(builder.Configuration.GetConnectionString("PostgreSQL"));
-
-    options.UseLazyLoadingProxies(true);
-});
+builder.Services.AddDbContext<ChatDbContext>(options => options.UseLazyLoadingProxies().UseNpgsql(builder.Configuration.GetConnectionString("PostgreSQL")));
 
 builder.Services.AddAutoMapper(typeof(MappingProfile));
 
@@ -34,6 +30,7 @@ builder.Services.AddAutoMapper(typeof(MappingProfile));
 // repository
 
 builder.Services.AddScoped<IGroupRepository, GroupRepository>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IMessageRepository, MessageRepository>();
 
 // services
