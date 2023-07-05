@@ -6,6 +6,7 @@ using ReactiveUI;
 using System;
 using System.Reactive;
 using System.Reactive.Linq;
+using AvaloniaChat.Desktop.Models;
 
 namespace AvaloniaChat.Desktop.ViewModels
 {
@@ -25,15 +26,16 @@ namespace AvaloniaChat.Desktop.ViewModels
 
         public MainWindowViewModel(IEventAggregator eventAggregator)
         {
-            CurrentPage = new ChatViewModel();
+            CurrentPage = new LoginViewModel(eventAggregator);
             eventAggregator.GetEvent<NavigateToRegistrationEvent>().Subscribe(ToRegistration);
             eventAggregator.GetEvent<LoginEvent>().Subscribe(ToLogin);
 
         }
 
-        private void ToLogin()
+        private void ToLogin(UserModel userModel)
         {
-            CurrentPage = new ChatViewModel();
+            CurrentPage = new ChatViewModel(userModel);
+
         }
 
         private void ToRegistration()
