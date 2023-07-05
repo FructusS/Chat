@@ -1,11 +1,12 @@
-﻿using AvaloniaChat.Backend.Services.Interfaces;
+﻿using AvaloniaChat.Application.DTO.Group;
+using AvaloniaChat.Application.DTO.UserGroup;
+using AvaloniaChat.Backend.Services.Interfaces;
 using AvaloniaChat.Domain.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AvaloniaChat.Backend.Controllers;
 
-[Authorize]
 [Route("api/[controller]")]
 [ApiController]
 public class GroupController : ControllerBase
@@ -19,22 +20,31 @@ public class GroupController : ControllerBase
 
     [HttpPost]
     [Route("create")]
-    public async Task CreateGroup(Group group)
+    public async Task CreateGroup(CreateGroupDto group)
     { 
         await _groupService.CreateGroup(group);
     }
 
     [HttpPost]
     [Route("update")]
-    public async Task UpdateGroup(Group group)
+    public async Task UpdateGroup(UpdateGroupDto group)
     {
         await _groupService.UpdateGroup(group);
     }
 
     [HttpPost]
     [Route("delete")]
-    public async Task DeleteGroup(Group group)
+    public async Task DeleteGroup(Guid groupId)
     {
-        await _groupService.DeleteGroup(group);
+        await _groupService.DeleteGroup(groupId);
+    }
+
+    [HttpGet]
+    [Route("{userId}")]
+
+    public async Task<List<GroupDto>> GetUserGroups(int userId)
+    {
+        return await _groupService.GetUserGroup(userId);
     }
 }
+
