@@ -37,9 +37,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Models\" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\..\..\Backend\AvaloniaChat.Application\AvaloniaChat.Application.csproj" />
     <ProjectReference Include="..\..\..\Backend\AvaloniaChat.Domain\AvaloniaChat.Domain.csproj" />
   </ItemGroup>
