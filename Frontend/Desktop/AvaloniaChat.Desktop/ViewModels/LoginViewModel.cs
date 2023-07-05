@@ -11,30 +11,35 @@ using System;
 using System.Collections.Generic;
 using System.Drawing.Imaging;
 using System.Linq;
+using System.Net.Http;
+using System.Net.Http.Json;
 using System.Reactive;
 using System.Reactive.Linq;
 using System.Reflection.Metadata;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using AvaloniaChat.Application.DTO.Auth;
+using AvaloniaChat.Desktop.Models;
 
 namespace AvaloniaChat.Desktop.ViewModels
 {
     public class LoginViewModel : ViewModelBase
     {
-        private readonly IEventAggregator _eventAggregator;
-        private string _login;
-        public string Login
-        {
-            get => _login;
-            set { value = _login; OnPropertyChanged(); }
-        }
-        private string _email;
 
-        public string Email
+        private const string url = "http://localhost:5000/api/Auth";
+        private static readonly HttpClient _httpClient = new()
         {
-            get { return _email; }
-            set { value = _email; OnPropertyChanged(); }
+            BaseAddress = new Uri(url),
+        };
+        private readonly IEventAggregator _eventAggregator;
+
+        private string _username;
+        public string Username
+        {
+            get => _username;
+            set {_username = value; OnPropertyChanged(); }
         }
 
         private string _password;
@@ -42,7 +47,7 @@ namespace AvaloniaChat.Desktop.ViewModels
         public string Password
         {
             get { return _password; }
-            set { value = _password; OnPropertyChanged(); }
+            set { _password = value; OnPropertyChanged(); }
         }
 
         public DelegateCommand LoginCommand { get; }
@@ -52,13 +57,51 @@ namespace AvaloniaChat.Desktop.ViewModels
         {
 
             _eventAggregator = eventAggregator;
-            LoginCommand = new DelegateCommand(OnLogin);
+            LoginCommand = new DelegateCommand(async () =>  OnLogin());
             NavigateToRegistrationCommand = new DelegateCommand(onNavigateToRegistration);
         }
 
-        private void OnLogin()
+        private async void OnLogin()
         {
-            _eventAggregator.GetEvent<LoginEvent>().Publish();
+
+            if (string.IsNullOrEmpty(Password) || string.IsNullOrEmpty(Username))
+            {
+                return;
+            }
+
+            using StringContent jsonContent = new(
+
+                JsonSerializer.Serialize(new AuthRequest()
+                {
+                    Username = Username,
+                    Password = Password
+                }),
+                Encoding.UTF8,
+                "application/json");
+            try
+            {
+                using HttpResponseMessage response = await _httpClient.PostAsync($"{url}/login", jsonContent);
+                if (response.IsSuccessStatusCode)
+                {
+                    var authResponse = await response.Content.ReadFromJsonAsync<AuthResponse>();
+                    if (authResponse == null)
+                    {
+                        return;
+                    }
+
+                    _eventAggregator.GetEvent<LoginEvent>().Publish(new UserModel
+                    {
+                        Token = authResponse.AccessToken,
+                        UserId = authResponse.UserId
+                    });
+
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+
         }
         private void onNavigateToRegistration()
         {
