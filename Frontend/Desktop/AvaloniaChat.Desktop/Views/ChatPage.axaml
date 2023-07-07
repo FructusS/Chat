@@ -3,8 +3,14 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:views="clr-namespace:AvaloniaChat.Desktop.Views"
+             xmlns:desktop="clr-namespace:AvaloniaChat.Desktop"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="AvaloniaChat.Desktop.Views.ChatPage">
+
+    <UserControl.Resources>
+        <desktop:BitmapValueConverter x:Key="BitmapValueConverter"/>
+    </UserControl.Resources>
+
 	<Grid
           ShowGridLines="True"
           ColumnDefinitions="250 *">
@@ -29,7 +35,8 @@
             <Grid RowDefinitions="50 * Auto" Grid.RowSpan="3" IsVisible="{Binding  !IsProgressMessageVisisble}">
 				<Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  Background="{DynamicResource GroupBackground}">
 					<Label Content="{Binding GroupTitle}" Foreground="Gray" FontWeight="Medium" VerticalAlignment="Center" Margin="10 0 0 0"></Label>
-
+    
+					<Button HorizontalAlignment="Right" Background="Transparent" BorderBrush="Transparent" ></Button>
 				</Grid>
 
 				<ScrollViewer Grid.Row="1" HorizontalScrollBarVisibility="Disabled"
@@ -96,14 +103,16 @@
 
 		</Grid>
 
-		<!--GROUP-->
+		<!--LEFT MENU (GROUPS)-->
 
 		<Grid Grid.Column="0"
               Grid.Row="0"
               IsVisible="{Binding  !IsProgressVisisble}"
               RowDefinitions="50 * 60"
               Background="{DynamicResource GroupBackground}">
-			<Grid ColumnDefinitions="* Auto">
+
+			<!--LABEL GROUP-->
+            <Grid ColumnDefinitions="* Auto">
 
 				<Label Content="Groups"
 					   Foreground="Gray"
@@ -120,6 +129,8 @@
 						FontSize="25" Background="Transparent"
 						BorderBrush="Transparent"></Button>
 			</Grid>
+
+			<!--LIST GROUPS-->
 			<ListBox Items="{Binding UserGroups}"
                      Grid.Row="1"
                      SelectedIndex="{Binding SelectedUserGroupIndex}"
@@ -134,17 +145,36 @@
 				<ListBox.ItemTemplate>
 					<DataTemplate>
 						<DockPanel>
-							<Image DockPanel.Dock="Left" Source="../Assets/send_icon.png" Width="50"></Image>
+							<Border CornerRadius="10" 
+                                    ClipToBounds="True"
+                                    Margin="0"
+									Height="50"
+                                    Width="50"
+                                    DockPanel.Dock="Left">
+                                <Image UseLayoutRounding="True"
+                                       Source="{Binding GroupLogo,
+								   Converter={StaticResource BitmapValueConverter}}"></Image>
+                            </Border>
+                          
 							<TextBlock Text="{Binding GroupName}"></TextBlock>
 						</DockPanel>
 					</DataTemplate>
 				</ListBox.ItemTemplate>
 			</ListBox>
+            
+            
+            
+            <!--USER PROFILE-->
 			<StackPanel Grid.Row="2" Orientation="Horizontal">
-				<Image></Image>
+                <Border CornerRadius="15"   
+                        ClipToBounds="True">
+                    <Image DockPanel.Dock="Left"
+                           Source="{Binding UserProfile.Logo,Converter={StaticResource BitmapValueConverter}}"
+                           Width="70"></Image>
+				</Border>
+                <TextBlock Text="{Binding UserProfile.Username}" 
+                           VerticalAlignment="Center"></TextBlock>
 			</StackPanel>
 		</Grid>
-
-	</Grid>
-
+    </Grid>
 </UserControl>
