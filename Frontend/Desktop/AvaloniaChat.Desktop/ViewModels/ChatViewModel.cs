@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 using Avalonia.Controls;
 using Avalonia.Controls.Selection;
 using AvaloniaChat.Application.DTO.Group;
+using AvaloniaChat.Application.DTO.User;
 using AvaloniaChat.Desktop.Models;
 using AvaloniaChat.Domain.Models;
 using AvaloniaEdit.Editing;
@@ -99,12 +100,22 @@ namespace AvaloniaChat.Desktop.ViewModels
 
         #endregion
 
+
+        #region User profile
+
+        private UserDto _userProfile;
+
+        public UserDto UserProfile
+        {
+            get => _userProfile;
+            set
+            {
+                _userProfile = value; OnPropertyChanged();
+            }
+        }
+
         #endregion
-
-
-
-
-
+        #endregion
 
         private UserModel _userModel;
         private readonly IEventAggregator _eventAggregator;
@@ -160,9 +171,15 @@ namespace AvaloniaChat.Desktop.ViewModels
                 Connect();
                 LoadUserGroups();
                 LoadMessageHistory();
+                LoadUserProfile();
 
             });
             IsProgressVisisble = false;
+        }
+
+        private async Task LoadUserProfile()
+        {
+            UserProfile = await _httpClient.GetFromJsonAsync<UserDto>($"{baseUrl}/User/{_userModel.UserId}");
         }
 
         public SelectionModel<GroupDto> Selection { get; set; }
