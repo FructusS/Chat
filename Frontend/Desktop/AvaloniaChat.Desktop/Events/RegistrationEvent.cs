@@ -1,4 +1,5 @@
-﻿using AvaloniaChat.Desktop.Models;
+﻿using AvaloniaChat.Application.DTO.Group;
+using AvaloniaChat.Desktop.Models;
 using Prism.Events;
 
 namespace AvaloniaChat.Desktop.Events
@@ -13,6 +14,10 @@ namespace AvaloniaChat.Desktop.Events
     {
     } 
     internal class RegistrationEvent : PubSubEvent
+    {
+    }
+
+    internal class NavigateToGroupEvent : PubSubEvent
     {
     }
 }
