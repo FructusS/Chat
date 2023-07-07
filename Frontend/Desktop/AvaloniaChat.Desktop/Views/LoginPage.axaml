@@ -43,10 +43,11 @@
 				<Button Content="Войти"
 						VerticalAlignment="Top"
 						Grid.Column="2"
+						HotKey="Enter"
 						HorizontalAlignment="Stretch"
 						HorizontalContentAlignment="Center"
 						Command="{Binding LoginCommand}"/>
-				<Button Content="Зарегестрироваться"
+				<Button Content="Зарегистрироваться"
 						VerticalAlignment="Top"
 						Grid.Column="3"
 						HorizontalAlignment="Stretch"
