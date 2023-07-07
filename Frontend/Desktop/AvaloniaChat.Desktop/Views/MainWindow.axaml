@@ -21,6 +21,9 @@
 			<DataTemplate DataType="{x:Type viewModels:ChatViewModel}">
 				<views:ChatPage/>
 			</DataTemplate>
+            <DataTemplate DataType="{x:Type viewModels:GroupViewModel}">
+				<views:GroupPage/>
+			</DataTemplate>
 		</ContentControl.DataTemplates>
 	</ContentControl>
 	
