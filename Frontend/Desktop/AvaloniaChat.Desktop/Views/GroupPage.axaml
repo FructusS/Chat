@@ -4,8 +4,18 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="AvaloniaChat.Desktop.Views.GroupPage">
-	<Grid HorizontalAlignment="Center" VerticalAlignment="Center">
-        <TextBox Text="{Binding GroupName}"></TextBox>
+	<Grid RowDefinitions="Auto * Auto" Margin="15">
+        <Grid>
+            <TextBox Text="{Binding GroupName}" Watermark="Group title"></TextBox>
+            <!--<Button Content="Изменить">
+			
+            </Button>-->
+        </Grid>
+       
+        <Grid Row="2">
+            <Button Content="Save" HorizontalAlignment="Right" Background="Transparent" BorderBrush="Transparent"></Button>
+            <Button Content="Back" Background="Transparent" BorderBrush="Transparent" HorizontalAlignment="Left"></Button>
+        </Grid>
 
     </Grid>
 </UserControl>
