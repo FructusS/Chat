@@ -10,6 +10,7 @@ using System.Net.Http;
 using System.Net.Http.Json;
 using System.Text;
 using System.Text.Json;
+using System.Threading;
 using System.Threading.Tasks;
 using Avalonia.Controls;
 using Avalonia.Controls.Selection;
@@ -17,8 +18,10 @@ using AvaloniaChat.Application.DTO.Group;
 using AvaloniaChat.Desktop.Models;
 using AvaloniaChat.Domain.Models;
 using AvaloniaEdit.Editing;
+using Prism.Events;
 using ReactiveUI;
 using static System.Net.Mime.MediaTypeNames;
+using AvaloniaChat.Desktop.Events;
 
 namespace AvaloniaChat.Desktop.ViewModels
 {
@@ -50,6 +53,21 @@ namespace AvaloniaChat.Desktop.ViewModels
             set { _selectedUserGroupIndex = value; OnPropertyChanged(); }
         }
 
+        private bool _isProgressVisisble;
+
+        public bool IsProgressVisisble
+        {
+            get => _isProgressVisisble;
+            set { _isProgressVisisble = value; OnPropertyChanged(); }
+        }
+
+        private bool _isProgressMessageVisisble;
+
+        public bool IsProgressMessageVisisble
+        {
+            get => _isProgressMessageVisisble;
+            set { _isProgressMessageVisisble = value; OnPropertyChanged(); }
+        }
 
         #region Messages
 
@@ -63,6 +81,14 @@ namespace AvaloniaChat.Desktop.ViewModels
         #endregion
 
         #region User group
+
+        private string _groupTitle;
+
+        public string GroupTitle
+        {
+            get => _groupTitle;
+            set { _groupTitle = value; OnPropertyChanged(); }
+        }
 
         private ObservableCollection<GroupDto> _userGroup = new();
         public ObservableCollection<GroupDto> UserGroups
@@ -81,13 +107,22 @@ namespace AvaloniaChat.Desktop.ViewModels
 
 
         private UserModel _userModel;
+        private readonly IEventAggregator _eventAggregator;
         public DelegateCommand SendCommand { get; }
-        public ChatViewModel(UserModel userModel)
+        public DelegateCommand CreateGroup { get; }
+
+
+
+        public ChatViewModel(UserModel userModel, IEventAggregator eventAggregator)
         {
+
+
             SendCommand = new DelegateCommand(OnSend);
+            CreateGroup = new DelegateCommand(OnCreateGroup);
 
 
             _userModel = userModel;
+            _eventAggregator = eventAggregator;
             _hubConnection = new HubConnectionBuilder()
                 .WithAutomaticReconnect()
                 .WithUrl($"http://localhost:5000/chatHub", opt =>
@@ -95,13 +130,8 @@ namespace AvaloniaChat.Desktop.ViewModels
                     opt.AccessTokenProvider = () => Task.FromResult(_userModel.Token);
                 })
                 .Build();
-            Task.Run(() =>
-            {
-                Connect();
-                LoadUserGroups();
 
-            });
-
+            LoadUI();
 
             _hubConnection.On<MessageDto>("ReceiveMessage", (message) =>
             {
@@ -116,13 +146,37 @@ namespace AvaloniaChat.Desktop.ViewModels
 
         }
 
+        private void OnCreateGroup()
+        {
+            _eventAggregator.GetEvent<NavigateToGroupEvent>().Publish();
+        }
+
+        private async Task LoadUI()
+        {
+            IsProgressVisisble = true;
+
+            await Task.Run(() =>
+            {
+                Connect();
+                LoadUserGroups();
+                LoadMessageHistory();
+
+            });
+            IsProgressVisisble = false;
+        }
+
         public SelectionModel<GroupDto> Selection { get; set; }
 
-        private void SelectionChanged(object? sender, SelectionModelSelectionChangedEventArgs<GroupDto> e)
+        private async void SelectionChanged(object? sender, SelectionModelSelectionChangedEventArgs<GroupDto> e)
         {
             if (Selection.SelectedItem != null)
             {
-                LoadMessageHistory();
+                IsProgressMessageVisisble = true;
+                await Task.Run(() =>
+                {
+                    LoadMessageHistory();
+                });
+                IsProgressMessageVisisble = false;
             }
         }
 
@@ -134,11 +188,10 @@ namespace AvaloniaChat.Desktop.ViewModels
 
             SelectedUserGroupIndex = 0;
 
-            LoadMessageHistory();
 
         }
 
-        private async void LoadMessageHistory()
+        private async Task LoadMessageHistory()
         {
             List<MessageDto?> messages = new();
             Messages.Clear();
@@ -146,11 +199,12 @@ namespace AvaloniaChat.Desktop.ViewModels
             if (Selection.SelectedItem == null)
             {
                 messages = await _httpClient.GetFromJsonAsync<List<MessageDto>>($"{baseUrl}/Messages/{UserGroups[0].GroupId}");
-
+                GroupTitle = UserGroups[0].GroupName;
             }
             else
             {
                 messages = await _httpClient.GetFromJsonAsync<List<MessageDto>>($"{baseUrl}/Messages/{Selection.SelectedItem.GroupId}");
+                GroupTitle = Selection.SelectedItem.GroupName;
             }
 
             Messages = new ObservableCollection<MessageDto>(messages);
@@ -211,4 +265,6 @@ namespace AvaloniaChat.Desktop.ViewModels
 
         }
     }
+
+  
 }
