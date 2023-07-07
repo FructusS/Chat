@@ -20,6 +20,11 @@ namespace AvaloniaChat.Infrastructure.Services.Implimentations
             return await _repository.CreateUser(createUser);
         }
 
+        public async Task<UserDto> GetUser(int userId)
+        {
+            return await _repository.GetUser(userId);
+        }
+
 
         public async Task<UserDto> UpdateUser(UpdateUserDto updateDataUser)
         {

@@ -58,4 +58,21 @@ public class UserController : ControllerBase
         await _userService.DeleteUser(username);
         return Ok();
     }
+
+
+
+    [HttpGet("{userId}")]
+
+    public async Task<IActionResult> GetUser(int userId)
+    {
+        if (userId == null)
+        {
+            return BadRequest();
+
+        }
+        
+        var user = await _userService.GetUser(userId);
+
+        return Ok(user);
+    }
 }
