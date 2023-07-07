@@ -45,6 +45,10 @@ namespace AvaloniaChat.Infrastructure.Repository.Implimentations
             return _mapper.Map<UserDto>(updatedUser);
         }
 
+        public async Task<UserDto> GetUser(int userId)
+        {
+            return await GetUserById(userId);
+        }
         public async Task DeleteUser(string username)
         {
             var user = await GetUserByUsername(username);
@@ -60,6 +64,11 @@ namespace AvaloniaChat.Infrastructure.Repository.Implimentations
         public async Task<User?> GetUserByUsername(string username)
         {
             return await _context.Users.SingleOrDefaultAsync(x => x.Username == username);
+        }
+        private async Task<UserDto> GetUserById(int userId)
+        {
+            var user = await _context.Users.SingleOrDefaultAsync(x => x.UserId == userId);
+            return _mapper.Map<UserDto>(user);
         }
     }
 }
