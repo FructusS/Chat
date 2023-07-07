@@ -3,8 +3,8 @@
 	<Style.Resources>
 
 
-        <Color x:Key="MainBackground">#313338</Color>
-        <Color x:Key="GroupBackground">#1e1f22</Color>
+        <Color x:Key="MainBackground">#FFFFFF</Color>
+        <Color x:Key="GroupBackground">#F2F3F5</Color>
 
 
 
