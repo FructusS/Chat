@@ -9,5 +9,6 @@
     <Application.Styles>
         <FluentTheme Mode="Light"/>
         <StyleInclude Source="/Styles/Colors.axaml"/>
+        <StyleInclude Source="/Styles/ImageButtonStyle.axaml"/>
     </Application.Styles>
 </Application>
