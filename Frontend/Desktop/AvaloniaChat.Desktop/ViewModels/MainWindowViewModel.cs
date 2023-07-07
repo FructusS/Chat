@@ -6,6 +6,7 @@ using ReactiveUI;
 using System;
 using System.Reactive;
 using System.Reactive.Linq;
+using AvaloniaChat.Application.DTO.Group;
 using AvaloniaChat.Desktop.Models;
 
 namespace AvaloniaChat.Desktop.ViewModels
@@ -23,18 +24,36 @@ namespace AvaloniaChat.Desktop.ViewModels
             }
         }
 
+        private readonly IEventAggregator _eventAggregator;
 
         public MainWindowViewModel(IEventAggregator eventAggregator)
         {
-            CurrentPage = new LoginViewModel(eventAggregator);
-            eventAggregator.GetEvent<NavigateToRegistrationEvent>().Subscribe(ToRegistration);
-            eventAggregator.GetEvent<LoginEvent>().Subscribe(ToLogin);
+            _eventAggregator = eventAggregator;
+            CurrentPage = new LoginViewModel(_eventAggregator);
+            _eventAggregator.GetEvent<NavigateToRegistrationEvent>().Subscribe(ToRegistration);
+            _eventAggregator.GetEvent<LoginEvent>().Subscribe(ToLogin);
+            _eventAggregator.GetEvent<NavigateToGroupEvent>().Subscribe(ToCreateGroup);
+        }
 
+        private void ToCreateGroup()
+        {
+            CurrentPage = new GroupViewModel();
+        }
+
+
+        //private void ToDeleteGroup(Guid groupDtoId)
+        //{
+        //    CurrentPage = new GroupViewMdel(groupDtoId);
+        //}
+
+        private void ToUpdateGroup(UpdateGroupDto updateGroupDto)
+        {
+            CurrentPage = new GroupViewModel(updateGroupDto);
         }
 
         private void ToLogin(UserModel userModel)
         {
-            CurrentPage = new ChatViewModel(userModel);
+            CurrentPage = new ChatViewModel(userModel, _eventAggregator);
 
         }
 
