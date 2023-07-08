@@ -2,19 +2,35 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:desktop="clr-namespace:AvaloniaChat.Desktop"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="AvaloniaChat.Desktop.Views.GroupPage">
-	<Grid RowDefinitions="Auto * Auto" Margin="15">
-        <Grid>
-            <TextBox Text="{Binding GroupName}" Watermark="Group title"></TextBox>
-            <!--<Button Content="Изменить">
-			
-            </Button>-->
+
+
+    <UserControl.Resources>
+        <desktop:BitmapValueConverter x:Key="BitmapValueConverter"/>
+    </UserControl.Resources>
+    <Grid RowDefinitions="Auto * Auto" Margin="15">
+        <Grid Grid.ColumnDefinitions="Auto *">
+            <Button  Command="{Binding ChangeGroupLogoCommand}" Background="Transparent" BorderBrush="Transparent">
+                <Image Source="{Binding GroupLogo , Converter={StaticResource BitmapValueConverter}}" Width="100"></Image>
+            </Button>
+			<TextBox Grid.Column="1" Text="{Binding GroupName}" Watermark="Group title"></TextBox>
+
+		</Grid>
+        <Grid Grid.Row="1">
+            
         </Grid>
-       
         <Grid Row="2">
-            <Button Content="Save" HorizontalAlignment="Right" Background="Transparent" BorderBrush="Transparent"></Button>
-            <Button Content="Back" Background="Transparent" BorderBrush="Transparent" HorizontalAlignment="Left"></Button>
+            <Button Content="Save"
+                    HorizontalAlignment="Right" 
+                    Background="Transparent"
+                    BorderBrush="Transparent"></Button>
+            <Button Content="Back" 
+                    Background="Transparent" 
+                    Command="{Binding BackCommand}"
+                    BorderBrush="Transparent" 
+                    HorizontalAlignment="Left"></Button>
         </Grid>
 
     </Grid>
