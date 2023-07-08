@@ -31,13 +31,13 @@ namespace AvaloniaChat.Desktop.ViewModels
             _eventAggregator = eventAggregator;
             CurrentPage = new LoginViewModel(_eventAggregator);
             _eventAggregator.GetEvent<NavigateToRegistrationEvent>().Subscribe(ToRegistration);
-            _eventAggregator.GetEvent<LoginEvent>().Subscribe(ToLogin);
+            _eventAggregator.GetEvent<NavigateToChatEvent>().Subscribe(ToLogin);
             _eventAggregator.GetEvent<NavigateToGroupEvent>().Subscribe(ToCreateGroup);
         }
 
         private void ToCreateGroup()
         {
-            CurrentPage = new GroupViewModel();
+            CurrentPage = new GroupViewModel(_eventAggregator);
         }
 
 
@@ -48,12 +48,12 @@ namespace AvaloniaChat.Desktop.ViewModels
 
         private void ToUpdateGroup(UpdateGroupDto updateGroupDto)
         {
-            CurrentPage = new GroupViewModel(updateGroupDto);
+            CurrentPage = new GroupViewModel(updateGroupDto, _eventAggregator);
         }
 
-        private void ToLogin(UserModel userModel)
+        private void ToLogin()
         {
-            CurrentPage = new ChatViewModel(userModel, _eventAggregator);
+            CurrentPage = new ChatViewModel(_eventAggregator);
 
         }
 
