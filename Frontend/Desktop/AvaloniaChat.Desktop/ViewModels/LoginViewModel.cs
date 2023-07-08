@@ -59,6 +59,7 @@ namespace AvaloniaChat.Desktop.ViewModels
             _eventAggregator = eventAggregator;
             LoginCommand = new DelegateCommand(async () =>  OnLogin());
             NavigateToRegistrationCommand = new DelegateCommand(onNavigateToRegistration);
+            OnLogin();
         }
 
         private async void OnLogin()
@@ -89,11 +90,9 @@ namespace AvaloniaChat.Desktop.ViewModels
                         return;
                     }
 
-                    _eventAggregator.GetEvent<LoginEvent>().Publish(new UserModel
-                    {
-                        Token = authResponse.AccessToken,
-                        UserId = authResponse.UserId
-                    });
+                    UserModel.Token = authResponse.AccessToken;
+                    UserModel.UserId = authResponse.UserId;
+                    _eventAggregator.GetEvent<NavigateToChatEvent>().Publish();
 
                 }
             }
