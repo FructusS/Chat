@@ -53,8 +53,7 @@ namespace AvaloniaChat.Backend.Hubs
 
             foreach (var group in userGroup)
             {
-            Groups.AddToGroupAsync(Context.ConnectionId, group);
-
+                Groups.AddToGroupAsync(Context.ConnectionId, group);
             }
             return base.OnConnectedAsync();
         }
