@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace AvaloniaChat.Desktop.Models
 {
-    public class UserModel
+    public static class UserModel
     {
-        public int UserId { get; set; }
-        public string Token { get; set; }
+        public static int UserId { get; set; }
+        public static string Token { get; set; }
     }
 }
