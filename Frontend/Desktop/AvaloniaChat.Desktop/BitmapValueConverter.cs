@@ -12,6 +12,7 @@ using Avalonia.Data.Converters;
 using System.IO;
 using Avalonia.Controls;
 using Avalonia.Media;
+using ExCSS;
 
 namespace AvaloniaChat.Desktop
 {
@@ -22,7 +23,12 @@ namespace AvaloniaChat.Desktop
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value is null)
-                return null;
+            {
+                string assemblyName = Assembly.GetEntryAssembly().GetName().Name;
+                var uri = new Uri($"avares://{assemblyName}/Assets/avatar_icon.png");
+                var assets = AvaloniaLocator.Current.GetService<IAssetLoader>();
+                return new Bitmap(assets.Open(uri));
+            }
             if (value is byte[] rawBytes && targetType == typeof(IImage))
             {
                 if (rawBytes.Length > 0)
@@ -30,10 +36,14 @@ namespace AvaloniaChat.Desktop
                     MemoryStream ms = new MemoryStream(rawBytes);
                     return new Bitmap(ms);
                 }
-
-                return null;
-
-            }
+                else
+                {
+                    string assemblyName = Assembly.GetEntryAssembly().GetName().Name;
+                    var uri = new Uri($"avares://{assemblyName}/Assets/avatar_icon.png");
+                    var assets = AvaloniaLocator.Current.GetService<IAssetLoader>();
+                    return new Bitmap(assets.Open(uri));
+                }
+            }   
 
             return null;
         }
