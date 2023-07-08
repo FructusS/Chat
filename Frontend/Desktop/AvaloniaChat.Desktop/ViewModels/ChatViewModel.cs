@@ -117,14 +117,13 @@ namespace AvaloniaChat.Desktop.ViewModels
         #endregion
         #endregion
 
-        private UserModel _userModel;
         private readonly IEventAggregator _eventAggregator;
         public DelegateCommand SendCommand { get; }
         public DelegateCommand CreateGroup { get; }
 
 
 
-        public ChatViewModel(UserModel userModel, IEventAggregator eventAggregator)
+        public ChatViewModel(IEventAggregator eventAggregator)
         {
 
 
@@ -132,13 +131,13 @@ namespace AvaloniaChat.Desktop.ViewModels
             CreateGroup = new DelegateCommand(OnCreateGroup);
 
 
-            _userModel = userModel;
+          
             _eventAggregator = eventAggregator;
             _hubConnection = new HubConnectionBuilder()
                 .WithAutomaticReconnect()
                 .WithUrl($"http://localhost:5000/chatHub", opt =>
                 {
-                    opt.AccessTokenProvider = () => Task.FromResult(_userModel.Token);
+                    opt.AccessTokenProvider = () => Task.FromResult(UserModel.Token);
                 })
                 .Build();
 
@@ -149,11 +148,8 @@ namespace AvaloniaChat.Desktop.ViewModels
                 Messages.Add(message);
             });
 
-
-
             Selection = new SelectionModel<GroupDto>();
             Selection.SelectionChanged += SelectionChanged;
-
 
         }
 
@@ -165,47 +161,35 @@ namespace AvaloniaChat.Desktop.ViewModels
         private async Task LoadUI()
         {
             IsProgressVisisble = true;
-
-            await Task.Run(() =>
-            {
-                Connect();
-                LoadUserGroups();
-                LoadMessageHistory();
-                LoadUserProfile();
-
-            });
+            await Connect();
+            await LoadUserGroups();
+            await LoadMessageHistory();
+            await LoadUserProfile();
             IsProgressVisisble = false;
         }
 
         private async Task LoadUserProfile()
         {
-            UserProfile = await _httpClient.GetFromJsonAsync<UserDto>($"{baseUrl}/User/{_userModel.UserId}");
+            UserProfile = await _httpClient.GetFromJsonAsync<UserDto>($"{baseUrl}/User/{UserModel.UserId}");
         }
 
         public SelectionModel<GroupDto> Selection { get; set; }
-
+            
         private async void SelectionChanged(object? sender, SelectionModelSelectionChangedEventArgs<GroupDto> e)
         {
-            if (Selection.SelectedItem != null)
-            {
-                IsProgressMessageVisisble = true;
-                await Task.Run(() =>
-                {
-                    LoadMessageHistory();
-                });
-                IsProgressMessageVisisble = false;
-            }
+            if (Selection.SelectedItem == null) return;
+            IsProgressMessageVisisble = true;
+            await LoadMessageHistory();
+            IsProgressMessageVisisble = false;
         }
 
         private async Task LoadUserGroups()
         {
-            var userGroup = await _httpClient.GetFromJsonAsync<List<GroupDto>>($"{baseUrl}/Group/{_userModel.UserId}");
+            var userGroup = await _httpClient.GetFromJsonAsync<List<GroupDto>>($"{baseUrl}/Group/{UserModel.UserId}");
 
             UserGroups = new ObservableCollection<GroupDto>(userGroup);
 
             SelectedUserGroupIndex = 0;
-
-
         }
 
         private async Task LoadMessageHistory()
@@ -249,7 +233,7 @@ namespace AvaloniaChat.Desktop.ViewModels
                 SendDate = DateTime.Now,
                 MessageText = MessageText,
                 GroupId = Selection.SelectedItem.GroupId,
-                UserId = _userModel.UserId
+                UserId = UserModel.UserId
             };
 
             using StringContent jsonContent = new(
@@ -268,10 +252,9 @@ namespace AvaloniaChat.Desktop.ViewModels
                 switch (e)
                 {
                     case IOException:
-
                         break;
-                    case TimeoutException:
 
+                    case TimeoutException:
                         break;
 
                     default:
@@ -279,9 +262,6 @@ namespace AvaloniaChat.Desktop.ViewModels
                 }
 
             }
-
         }
     }
-
-  
 }
