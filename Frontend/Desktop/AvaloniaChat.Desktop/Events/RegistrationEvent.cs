@@ -10,7 +10,7 @@ namespace AvaloniaChat.Desktop.Events
     internal class NavigateToLoginEvent : PubSubEvent
     {
     }
-    internal class LoginEvent : PubSubEvent<UserModel>
+    internal class NavigateToChatEvent : PubSubEvent
     {
     } 
     internal class RegistrationEvent : PubSubEvent
