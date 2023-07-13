@@ -10,9 +10,5 @@ namespace AvaloniaChat.Desktop.Views
         {
             InitializeComponent();
         }
-        private void InitializeComponent()
-        {
-            AvaloniaXamlLoader.Load(obj:this);
-        }
     }
 }
