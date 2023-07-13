@@ -6,11 +6,14 @@ using System.Net.Http;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Avalonia.Controls;
 using Avalonia.Media.Imaging;
 using AvaloniaChat.Application.DTO.Auth;
 using AvaloniaChat.Application.DTO.Group;
 using AvaloniaChat.Desktop.Events;
+using AvaloniaChat.Desktop.Views;
 using DynamicData.Tests;
+using Microsoft.IdentityModel.Tokens;
 using Prism.Commands;
 using Prism.Events;
 
@@ -25,6 +28,8 @@ namespace AvaloniaChat.Desktop.ViewModels
             BaseAddress = new Uri(url),
         };
         public DelegateCommand BackCommand { get; }
+        public DelegateCommand ChangeGroupLogoCommand { get; }
+        public DelegateCommand SaveGroupCommand { get; }
 
 
         private string _groupName;
@@ -37,14 +42,14 @@ namespace AvaloniaChat.Desktop.ViewModels
                 _groupName = value; OnPropertyChanged();
             }
         }
-        private Bitmap _groupLogo;
+        private byte[] _groupImage;
 
-        public Bitmap GroupLogo
+        public byte[] GroupImage
         {
-            get => _groupLogo;
+            get => _groupImage;
             set
             {
-                _groupLogo = value; OnPropertyChanged();
+                _groupImage = value; OnPropertyChanged();
             }
         }
 
@@ -59,6 +64,33 @@ namespace AvaloniaChat.Desktop.ViewModels
         {
             _eventAggregator = eventAggregator;
             BackCommand = new DelegateCommand(OnBackButtonClick);
+            ChangeGroupLogoCommand = new DelegateCommand(OnChangeGroupLogo);
+            SaveGroupCommand = new DelegateCommand(OnSaveGroup);
+        }
+
+        private void OnSaveGroup()
+        {
+            var group = new CreateGroupDto
+            {
+                GroupId = Guid.NewGuid(),
+                GroupTitle = GroupName,
+                GroupImage = GroupImage
+            };
+            
+        }
+
+        private async void OnChangeGroupLogo()
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+
+            string[]? result = await openFileDialog.ShowAsync(new MainWindow());
+            if (result == null)
+            {
+                return;
+            }
+          
+            GroupImage = ImageToByteArrayFromFilePath(result[0]);
+
         }
 
         /// <summary>
@@ -71,6 +103,8 @@ namespace AvaloniaChat.Desktop.ViewModels
         {
             _eventAggregator = eventAggregator;
             BackCommand = new DelegateCommand(OnBackButtonClick);
+            ChangeGroupLogoCommand = new DelegateCommand(OnChangeGroupLogo);
+            SaveGroupCommand = new DelegateCommand(OnSaveGroup);
         }
         /// <summary>
         /// create group constructor
@@ -81,8 +115,9 @@ namespace AvaloniaChat.Desktop.ViewModels
         {
             _eventAggregator = eventAggregator;
             BackCommand = new DelegateCommand(OnBackButtonClick);
-
-           // GroupLogo = new Bitmap("../")
+            ChangeGroupLogoCommand = new DelegateCommand(OnChangeGroupLogo);
+            SaveGroupCommand = new DelegateCommand(OnSaveGroup);
+            // GroupLogo = new Bitmap("../")
         }
 
         private async void Test()
