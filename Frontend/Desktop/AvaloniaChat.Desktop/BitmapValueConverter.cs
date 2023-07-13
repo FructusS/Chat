@@ -43,8 +43,11 @@ namespace AvaloniaChat.Desktop
                     var assets = AvaloniaLocator.Current.GetService<IAssetLoader>();
                     return new Bitmap(assets.Open(uri));
                 }
-            }   
-
+            }
+            else
+            {
+                return value;
+            }
             return null;
         }
 
