@@ -59,7 +59,7 @@ namespace AvaloniaChat.Desktop.ViewModels
 
         private void ToRegistration()
         {
-            CurrentPage = new RegistrationViewModel();
+            CurrentPage = new RegistrationViewModel(_eventAggregator);
         }
 
     }
