@@ -9,6 +9,8 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using AvaloniaChat.Application.DTO.User;
 using AvaloniaChat.Desktop.Events;
+using AvaloniaChat.Desktop.Models;
+using AvaloniaChat.Desktop.Services;
 using Prism.Commands;
 using Prism.Events;
 
@@ -17,11 +19,7 @@ namespace AvaloniaChat.Desktop.ViewModels
     public class RegistrationViewModel : ViewModelBase
     {
         private readonly IEventAggregator _eventAggregator;
-        private const string url = "http://localhost:5000/api/User";
-        private static readonly HttpClient _httpClient = new()
-        {
-            BaseAddress = new Uri(url),
-        };
+        private UserService _userService;
 
         private string _username;
         public string Username
@@ -50,42 +48,27 @@ namespace AvaloniaChat.Desktop.ViewModels
         public DelegateCommand NavigateToLoginCommand { get; }
         public DelegateCommand RegistrationCommand { get; }
 
-        public RegistrationViewModel(IEventAggregator eventAggregator)
+        public RegistrationViewModel(IEventAggregator eventAggregator, UserService userService)
         {
             _eventAggregator = eventAggregator;
+            _userService = userService;
             NavigateToLoginCommand = new DelegateCommand(OnNavigateToLoginCommand);
             RegistrationCommand = new DelegateCommand(async () => await OnRegistrationCommand());
         }
 
         private async Task OnRegistrationCommand()
         {
-            using StringContent jsonContent = new(
-                JsonSerializer.Serialize(new CreateUserDto()
-                {
-                    Username = Username,
-                    Password = Password,
-                    ConfirmPassword = ConfirmPassword
-                }),
-                Encoding.UTF8,
-                "application/json");
-            try
+            var createUser = new CreateUserDto()
             {
-                using HttpResponseMessage response = await _httpClient.PostAsync($"{url}/registration", jsonContent);
-                if (response.IsSuccessStatusCode)
-                {
-                    var authResponse = await response.Content.ReadFromJsonAsync<UserDto>();
-                    if (authResponse == null)
-                    {
-                        return;
-                    }
+                Username = Username,
+                Password = Password,
+                ConfirmPassword = ConfirmPassword
+            };
 
-                    _eventAggregator.GetEvent<NavigateToLoginEvent>().Publish();
-
-                }
-            }
-            catch (Exception ex)
+            var user = await _userService.RegistrationUser(createUser);
+            if (user.IsError == false)
             {
-
+                _eventAggregator.GetEvent<NavigateToLoginEvent>().Publish();
             }
         }
 
