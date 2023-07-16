@@ -1,0 +1,79 @@
+﻿<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:desktop="clr-namespace:AvaloniaChat.Desktop">
+
+    <Styles.Resources>
+        <desktop:BitmapValueConverter x:Key="BitmapValueConverter"/>
+        
+    </Styles.Resources>
+    <Style Selector="Button.ImageButton:pointerover">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderBrush" Value="Transparent" />
+        <Setter Property="Cursor" Value="Hand"></Setter>
+    </Style>
+
+    <Style Selector="Button.HyperLink">
+        <Setter Property="Foreground" Value="Blue" />
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Template">
+            <ControlTemplate>
+                <ContentPresenter Content="{TemplateBinding Content}">
+                    <ContentPresenter.Styles>
+                        <Style Selector="TextBlock">
+                            <Setter Property="Foreground" Value="{TemplateBinding Foreground}"/>
+                            <Setter Property="FontSize" Value="{TemplateBinding FontSize}"/>
+                            <Setter Property="TextDecorations" Value="Underline"/>
+                            <Setter Property="TextWrapping" Value="WrapWithOverflow"/>
+                        </Style>
+                    </ContentPresenter.Styles>
+                </ContentPresenter>
+            </ControlTemplate>
+        </Setter>
+    </Style>
+    <Style Selector="Button.TextButton">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderBrush" Value="Transparent" />
+        <Setter Property="Cursor" Value="Hand"></Setter>
+    </Style>
+	<Style Selector="Button.TextButton:pressed">
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="BorderBrush" Value="Transparent" />
+		<Setter Property="Background" Value="Transparent" />
+    </Style>
+	<Style Selector="Button.TextButton:pointerover">
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="BorderBrush" Value="Transparent" />
+        <Setter Property="Background" Value="Transparent" />
+    </Style>	
+
+
+    <Style Selector="Button.HoverImageButtonText:pointerover">
+        <Setter Property="Cursor" Value="Hand" />
+        <!--<Setter Property="BorderBrush" Value="Transparent" />-->
+        <!--<Setter Property="Text" Value="Change image"></Setter>-->
+        <Setter Property="MaxWidth" Value="120"></Setter>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate >
+					<Grid>
+                        <ContentControl Content="{TemplateBinding Button.Content}" Opacity="0.6" ></ContentControl>
+                        <!-- <ContentPresenter Content="{TemplateBinding Button.Content}"   -->
+                        <!--                   HorizontalContentAlignment="Center" -->
+                        <!--                   VerticalContentAlignment="Center" -->
+                        <!--                   Opacity="0.4"/> -->
+						 <TextBlock Text="Change"  
+                                    FontWeight="SemiBold"
+                                    FontSize="22"
+                                    Margin="0"  
+                                    Padding="0"  
+                                    VerticalAlignment="Center" 
+                                    HorizontalAlignment="Center"></TextBlock> 
+					</Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</Styles>
