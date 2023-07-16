@@ -64,7 +64,6 @@
 
         </Grid>
         <Grid ColumnDefinitions="* * *"
-              ShowGridLines="True"
               HorizontalAlignment="Center"
               Grid.Column="1"
               Grid.Row="1">
