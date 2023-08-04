@@ -30,6 +30,8 @@
     <PackageReference Include="Avalonia.Xaml.Interactivity" Version="0.10.19" />
     <PackageReference Include="MessageBox.Avalonia" Version="2.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="7.0.5" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="7.0.1" />
     <PackageReference Include="Prism.Core" Version="8.1.97" />
     <PackageReference Include="Svg.Skia" Version="1.0.0" />
     <PackageReference Include="XamlNameReferenceGenerator" Version="1.6.1" />
