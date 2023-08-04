@@ -74,6 +74,7 @@
                 </ListBox>
         <Grid Row="2">
             <Button Content="Save"
+                    Command="{Binding SaveGroupCommand}"
                     Classes="TextButton"
                     HorizontalAlignment="Right" 
                     Background="Transparent"
