@@ -1,12 +1,12 @@
-﻿using System.Security.Claims;
-using AvaloniaChat.Application.Configs;
-using AvaloniaChat.Application.DTO.Auth;
+﻿using AvaloniaChat.Application.DTO.Auth;
+using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 using AvaloniaChat.Backend.Services.Interfaces;
-using AvaloniaChat.Infrastructure;
+using AvaloniaChat.Domain.Models;
+using AvaloniaChat.Infrastructure.Services;
 using AvaloniaChat.Infrastructure.Services.Implimentations;
 using AvaloniaChat.Infrastructure.Services.Interfaces;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Options;
+using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace AvaloniaChat.Backend.Controllers;
 
@@ -26,27 +26,65 @@ public class AuthController : ControllerBase
 
     [HttpPost]
     [Route("login")]
-    public async Task<IActionResult> Login([FromBody] AuthRequest loginModel)
+    public async Task<ActionResult<BaseResponse>> Login([FromBody] AuthRequest loginModel)
     {
-        if (loginModel is null) return BadRequest("Invalid client request");
+        if (loginModel is null)
+            return Unauthorized(new BaseResponse
+            {
+                Success = false,
+                Data = null,
+                Error = new ErrorInfoResponse
+                {
+                    ErrorCode = 400,
+                    Message = "Invalid user"
+                }
+            });
+
         var user = await _userService.GetUserByUsername(loginModel.Username);
 
-        if (user == null) return BadRequest("User not found");
+        if (user == null)
+        {
+            return Unauthorized(new BaseResponse
+            {
+                Success = false,
+                Data = null,
+                Error = new ErrorInfoResponse
+                {
+                    ErrorCode = 401,
+                    Message = "Username or password is incorrect"
+                }
+            });
+
+        }
 
         if (!BCrypt.Net.BCrypt.Verify(loginModel.Password, user.PasswordHash))
-            return Unauthorized();
+            return Unauthorized(new BaseResponse
+            {
+                Success = false,
+                Data = null,
+                Error = new ErrorInfoResponse
+                {
+                    ErrorCode = 401,
+                    Message = "Username or password is incorrect"
+                }
+            });
 
-        var claims = new List<Claim>
+
+        var accessToken = _authService.GenerateAccessToken(loginModel);
+        return Ok(new BaseResponse
         {
-            new(ClaimTypes.Name, loginModel.Username),
-            new(ClaimsIdentity.DefaultRoleClaimType, "user")
-        };
-        var accessToken = _authService.GenerateAccessToken(claims);
-        return Ok(new AuthResponse { AccessToken = accessToken, UserId = user.UserId});
+            Success = true,
+            Data = new
+            {
+                AccessToken = accessToken,
+                UserId = user.UserId
+            },
+            Error = null
+        });
     }
 
     //[HttpPost]
-    //[Route("refresh")]
+    //[Route("refresh")]        
     //public async Task<IActionResult> Refresh(TokenModel tokenModel)
     //{
     //    if (tokenModel is null)
