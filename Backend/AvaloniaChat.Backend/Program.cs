@@ -2,15 +2,17 @@
 using AvaloniaChat.Application.Configs;
 using AvaloniaChat.Application.Mapping;
 using AvaloniaChat.Backend.Hubs;
+using AvaloniaChat.Backend.Middleware;
 using AvaloniaChat.Backend.Services.Interfaces;
 using AvaloniaChat.Infrastructure;
 using AvaloniaChat.Infrastructure.Repository.Implimentations;
 using AvaloniaChat.Infrastructure.Repository.Interfaces;
+using AvaloniaChat.Infrastructure.Services;
 using AvaloniaChat.Infrastructure.Services.Implimentations;
 using AvaloniaChat.Infrastructure.Services.Interfaces;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -26,9 +28,14 @@ builder.Services.AddDbContext<ChatDbContext>(options => options.UseLazyLoadingPr
 
 builder.Services.AddAutoMapper(typeof(MappingProfile));
 
+builder.Services.AddCors(options => options.AddDefaultPolicy(builder =>
+{
+    builder.AllowAnyOrigin()
+        .AllowAnyHeader()
+        .AllowAnyMethod();
+}));
 
-// repository
-
+// services
 builder.Services.AddScoped<IGroupRepository, GroupRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IMessageRepository, MessageRepository>();
@@ -66,13 +73,13 @@ var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
-{
+{       
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI();     
 }
 
 app.UseHttpsRedirection();
-
+app.UseCors();
 app.UseAuthentication();
 app.UseAuthorization();
 
