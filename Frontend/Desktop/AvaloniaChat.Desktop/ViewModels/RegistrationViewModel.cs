@@ -13,13 +13,21 @@ using AvaloniaChat.Desktop.Models;
 using AvaloniaChat.Desktop.Services;
 using Prism.Commands;
 using Prism.Events;
+using Microsoft.AspNetCore.SignalR.Client;
 
 namespace AvaloniaChat.Desktop.ViewModels
 {
     public class RegistrationViewModel : ViewModelBase
     {
         private readonly IEventAggregator _eventAggregator;
-        private UserService _userService;
+        
+
+        private const string baseUrl = "http://localhost:5000/api/User";
+        private readonly HubConnection _hubConnection;
+        private static readonly HttpClient _httpClient = new()
+        {
+            BaseAddress = new Uri(baseUrl),
+        };
 
         private string _username;
         public string Username
@@ -48,10 +56,9 @@ namespace AvaloniaChat.Desktop.ViewModels
         public DelegateCommand NavigateToLoginCommand { get; }
         public DelegateCommand RegistrationCommand { get; }
 
-        public RegistrationViewModel(IEventAggregator eventAggregator, UserService userService)
+        public RegistrationViewModel(IEventAggregator eventAggregator)
         {
             _eventAggregator = eventAggregator;
-            _userService = userService;
             NavigateToLoginCommand = new DelegateCommand(OnNavigateToLoginCommand);
             RegistrationCommand = new DelegateCommand(async () => await OnRegistrationCommand());
         }
@@ -64,12 +71,30 @@ namespace AvaloniaChat.Desktop.ViewModels
                 Password = Password,
                 ConfirmPassword = ConfirmPassword
             };
-
-            var user = await _userService.RegistrationUser(createUser);
-            if (user.IsError == false)
+            using StringContent jsonContent = new(
+                JsonSerializer.Serialize(createUser),
+                Encoding.UTF8,
+                "application/json");
+            try
             {
-                _eventAggregator.GetEvent<NavigateToLoginEvent>().Publish();
+                using HttpResponseMessage
+                    response = await _httpClient.PostAsync($"{baseUrl}/registration", jsonContent);
+                if (response.IsSuccessStatusCode)
+                {
+                    var authResponse = await response.Content.ReadFromJsonAsync<UserDto>();
+                    if (authResponse != null)
+                    {
+                        _eventAggregator.GetEvent<NavigateToLoginEvent>().Publish();
+
+                    }
+                }
+               
             }
+            catch (Exception ex)
+            {
+
+            }
+      
         }
 
         private void OnNavigateToLoginCommand()
