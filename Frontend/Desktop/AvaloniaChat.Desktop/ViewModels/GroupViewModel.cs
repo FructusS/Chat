@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Json;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -10,7 +11,9 @@ using Avalonia.Controls;
 using Avalonia.Media.Imaging;
 using AvaloniaChat.Application.DTO.Auth;
 using AvaloniaChat.Application.DTO.Group;
+using AvaloniaChat.Application.DTO.User;
 using AvaloniaChat.Desktop.Events;
+using AvaloniaChat.Desktop.Models;
 using AvaloniaChat.Desktop.Views;
 using DynamicData.Tests;
 using Microsoft.IdentityModel.Tokens;
@@ -22,10 +25,10 @@ namespace AvaloniaChat.Desktop.ViewModels
     public class GroupViewModel : ViewModelBase
     {
         private readonly IEventAggregator _eventAggregator;
-        private const string url = "http://localhost:5000/api/Group";
+        private const string baseUrl = "http://localhost:5000/api/Group";
         private static readonly HttpClient _httpClient = new()
         {
-            BaseAddress = new Uri(url),
+            BaseAddress = new Uri(baseUrl),
         };
         public DelegateCommand BackCommand { get; }
         public DelegateCommand ChangeGroupLogoCommand { get; }
@@ -65,18 +68,47 @@ namespace AvaloniaChat.Desktop.ViewModels
             _eventAggregator = eventAggregator;
             BackCommand = new DelegateCommand(OnBackButtonClick);
             ChangeGroupLogoCommand = new DelegateCommand(OnChangeGroupLogo);
-            SaveGroupCommand = new DelegateCommand(OnSaveGroup);
+            SaveGroupCommand = new DelegateCommand(async () => OnSaveGroup());
         }
 
-        private void OnSaveGroup()
+        private async void OnSaveGroup()
         {
-            var group = new CreateGroupDto
+            var createGroup = new CreateGroupDto
             {
                 GroupId = Guid.NewGuid(),
                 GroupTitle = GroupName,
                 GroupImage = GroupImage
             };
-            
+
+            using StringContent jsonContent = new(
+                JsonSerializer.Serialize(createGroup),
+                Encoding.UTF8,
+                "application/json");
+            try
+            {
+                using HttpResponseMessage
+                    response = await _httpClient.PostAsync($"{baseUrl}/create", jsonContent);
+                if (response.IsSuccessStatusCode)
+                {
+                    var group = await response.Content.ReadFromJsonAsync<GroupDto>();
+                    if (group != null)
+                    {
+                        _eventAggregator.GetEvent<NavigateToChatEvent>().Publish();
+
+                        //var userGroup = new CreateUserGroup()
+                        //{
+
+                        //};
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+            }
+
+
         }
 
         private async void OnChangeGroupLogo()
@@ -120,22 +152,7 @@ namespace AvaloniaChat.Desktop.ViewModels
             // GroupLogo = new Bitmap("../")
         }
 
-        private async void Test()
-        {
-            var group = new CreateGroupDto()
-            {
-                GroupId = Guid.NewGuid(),
-                GroupImage = ImageToByteArrayFromFilePath("seats.jpg"),
-                GroupTitle = "group with image"
-            };
-            using StringContent jsonContent = new(
-
-                JsonSerializer.Serialize(group),
-                Encoding.UTF8,
-                "application/json");
-            using HttpResponseMessage response = await _httpClient.PostAsync($"{url}/create", jsonContent);
-        }
-
+       
         private void OnBackButtonClick()
         {
             _eventAggregator.GetEvent<NavigateToChatEvent>().Publish();
