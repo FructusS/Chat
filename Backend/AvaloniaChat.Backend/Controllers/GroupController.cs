@@ -20,9 +20,15 @@ public class GroupController : ControllerBase
 
     [HttpPost]
     [Route("create")]
-    public async Task CreateGroup(CreateGroupDto group)
-    { 
-        await _groupService.CreateGroup(group);
+    public async Task<IActionResult> CreateGroup(CreateGroupDto group)
+    {
+        if (group == null)
+        {
+            return BadRequest();
+        }
+       var createdGroup = await _groupService.CreateGroup(group);
+
+       return Ok(createdGroup);
     }
 
     [HttpPost]
