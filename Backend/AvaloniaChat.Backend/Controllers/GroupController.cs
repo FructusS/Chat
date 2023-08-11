@@ -45,12 +45,6 @@ public class GroupController : ControllerBase
         await _groupService.DeleteGroup(groupId);
     }
 
-    [HttpGet]
-    [Route("{userId}")]
 
-    public async Task<List<GroupDto>> GetUserGroups(int userId)
-    {
-        return await _groupService.GetUserGroup(userId);
-    }
 }
 
