@@ -24,10 +24,14 @@ export const LoginPage = () => {
                 password: password,
             })
             .then(function (response) {
-                if (response.status == 200) {
+                if (response.status === 200) {
                     localStorage.setItem(
-                        "user",
-                        JSON.stringify(response.data.data)
+                        "userId",
+                        response.data.data.userId
+                    );
+                    localStorage.setItem(
+                        "accessToken",
+                        response.data.data.accessToken
                     );
                     navigate("/chat");
                 } else {
