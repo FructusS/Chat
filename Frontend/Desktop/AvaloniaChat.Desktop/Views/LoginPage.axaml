@@ -6,58 +6,65 @@
              x:Class="AvaloniaChat.Desktop.Views.LoginPage">
 	<UserControl.Styles>
 		<Style Selector="TextBox">
-			<Setter Property="Margin" 
+			<Setter Property="Margin"
 					Value="0 0 0 10">
 			</Setter>
 		</Style>
-	<Style Selector="Button">
-			<Setter Property="Margin" 
+		<Style Selector="Button">
+			<Setter Property="Margin"
 					Value="5 0">
 			</Setter>
 		</Style>
 	</UserControl.Styles>
-<Grid RowDefinitions="* * *">
+	<Grid RowDefinitions="* Auto *">
 		<TextBlock Text="Авторизация"
 				   FontSize="32"
 				   HorizontalAlignment="Center"
 				   VerticalAlignment="Bottom"
 				   Margin="0 0 0 25"/>
-			<Grid RowDefinitions="auto auto auto"
-				  ColumnDefinitions="* * *"
-				  Grid.Row="1">
+		<Grid RowDefinitions="auto auto"
+			  ColumnDefinitions="* * *"
+			  Grid.Row="1">
 			<TextBox HorizontalAlignment="Stretch"
 					 Watermark="Логин"
 					 Grid.Column="1"
 					 Text="{Binding Username}"
 					 Grid.Row="0"/>
-            <TextBox Text="{Binding Password}"
+			<TextBox Text="{Binding Password}"
                      Watermark="Пароль"
                      PasswordChar="*"
                      VerticalContentAlignment="Center"
                      Grid.Column="1"
                      Grid.Row="2"/>
-			</Grid>
-			<Grid ColumnDefinitions="* * * * * *"
-				  RowDefinitions="* *"
-				  Grid.Row="2">
-				<Button Content="Войти"
-						VerticalAlignment="Top"
-						Grid.Column="2"
-						HotKey="Enter"
-						HorizontalAlignment="Stretch"
-						HorizontalContentAlignment="Center"
-						Command="{Binding LoginCommand}"/>
-				<Button Content="Зарегистрироваться"
-						VerticalAlignment="Top"
-						Grid.Column="3"
-						HorizontalAlignment="Stretch"
-						HorizontalContentAlignment="Center"
-						Command="{Binding NavigateToRegistrationCommand}"/>
-			<TextBlock Name="ErrorBox"
-					   Grid.Column="2"
-					   Grid.ColumnSpan="2"
-				       Grid.Row="1"
-					   Margin="10"/>
-			</Grid>
-</Grid>
+		</Grid>
+		<Grid ColumnDefinitions="* * * * * *"
+			  RowDefinitions="* *"
+			  ShowGridLines="True"
+			  Grid.Row="2">
+			<Button Content="Войти"
+					VerticalAlignment="Top"
+					Grid.Column="2"
+					HotKey="Enter"
+					HorizontalAlignment="Stretch"
+					HorizontalContentAlignment="Center"
+					Command="{Binding LoginCommand}"/>
+			<Button Content="Зарегистрироваться"
+					VerticalAlignment="Top"
+					Grid.Column="3"
+					HorizontalAlignment="Stretch"
+					HorizontalContentAlignment="Center"
+					Command="{Binding NavigateToRegistrationCommand}"/>
+			<StackPanel     Grid.Row="0"      Grid.Column="2"
+                            Grid.ColumnSpan="2">
+				<TextBlock Text="dsasadsadasdassd"
+                   
+                           VerticalAlignment="Bottom"
+                           Foreground="OrangeRed"
+                           HorizontalAlignment="Center"
+                           Grid.Row="0"
+                           Margin="10"/>
+			</StackPanel>
+
+		</Grid>
+	</Grid>
 </UserControl>
