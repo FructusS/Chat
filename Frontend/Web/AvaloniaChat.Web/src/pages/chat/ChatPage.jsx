@@ -1,9 +1,8 @@
 import { useCookies } from "react-cookie";
-export const ChatPage = () =>{
+import UserGroupsList from "../../components/UserGroupsList";
 
- //   const userId = 
+export const ChatPage = () => {
+  //   const userId =
 
-    return(
-        <>123</>
-    )
-}
+  return <UserGroupsList></UserGroupsList>;
+};
