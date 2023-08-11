@@ -32,9 +32,5 @@ namespace AvaloniaChat.Infrastructure.Services.Implimentations
             return await _repository.UpdateGroup(group);
         }
 
-        public async Task<List<GroupDto>> GetUserGroup(int userId)
-        {
-            return await _repository.GetUserGroup(userId);
-        }
     }
 }

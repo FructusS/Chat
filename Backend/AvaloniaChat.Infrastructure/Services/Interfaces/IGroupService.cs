@@ -10,6 +10,5 @@ namespace AvaloniaChat.Backend.Services.Interfaces
         Task DeleteGroup(Guid groupId);
         Task<GroupDto> UpdateGroup(UpdateGroupDto group);
 
-        Task<List<GroupDto>> GetUserGroup(int userId);
     }
 }
