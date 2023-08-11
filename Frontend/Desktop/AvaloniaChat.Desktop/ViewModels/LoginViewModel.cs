@@ -21,6 +21,7 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using AvaloniaChat.Application.DTO.Auth;
+using AvaloniaChat.Backend.Controllers;
 using AvaloniaChat.Desktop.Models;
 
 namespace AvaloniaChat.Desktop.ViewModels
@@ -40,6 +41,12 @@ namespace AvaloniaChat.Desktop.ViewModels
         {
             get => _username;
             set {_username = value; OnPropertyChanged(); }
+        } 
+        private string _errorText;
+        public string ErrorText
+        {
+            get => _errorText;
+            set { _errorText = value; OnPropertyChanged(); }
         }
 
         private string _password;
@@ -57,6 +64,7 @@ namespace AvaloniaChat.Desktop.ViewModels
         {
 
             _eventAggregator = eventAggregator;
+            ErrorText = "1212321312";
             LoginCommand = new DelegateCommand(async () =>  OnLogin());
             NavigateToRegistrationCommand = new DelegateCommand(onNavigateToRegistration);
             OnLogin();
@@ -65,6 +73,7 @@ namespace AvaloniaChat.Desktop.ViewModels
         private async void OnLogin()
         {
 
+            ErrorText = string.Empty;
             if (string.IsNullOrEmpty(Password) || string.IsNullOrEmpty(Username))
             {
                 return;
@@ -82,18 +91,33 @@ namespace AvaloniaChat.Desktop.ViewModels
             try
             {
                 using HttpResponseMessage response = await _httpClient.PostAsync($"{url}/login", jsonContent);
+                var authResponse = await response.Content.ReadFromJsonAsync<BaseResponse>();
+
                 if (response.IsSuccessStatusCode)
                 {
-                    var authResponse = await response.Content.ReadFromJsonAsync<AuthResponse>();
                     if (authResponse == null)
                     {
                         return;
                     }
+                    var bodyResponse = authResponse.Data as AuthResponse;
 
-                    UserModel.Token = authResponse.AccessToken;
-                    UserModel.UserId = authResponse.UserId;
-                    _eventAggregator.GetEvent<NavigateToChatEvent>().Publish();
+                    if (authResponse.Success && bodyResponse != null)
+                    {
 
+                        UserModel.Token = bodyResponse.AccessToken;
+                        UserModel.UserId = bodyResponse.UserId;
+                        _eventAggregator.GetEvent<NavigateToChatEvent>().Publish();
+                    }
+                    else
+                    {
+                        ErrorText = authResponse.Error.Message;
+                    }
+
+
+                }
+                else
+                {
+                    ErrorText = authResponse.Error.Message;
                 }
             }
             catch (Exception ex)
