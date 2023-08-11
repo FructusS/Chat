@@ -185,7 +185,7 @@ namespace AvaloniaChat.Desktop.ViewModels
 
         private async Task LoadUserGroups()
         {
-            var userGroup = await _httpClient.GetFromJsonAsync<List<GroupDto>>($"{baseUrl}/Group/{UserModel.UserId}");
+            var userGroup = await _httpClient.GetFromJsonAsync<List<GroupDto>>($"{baseUrl}/UserGroup/{UserModel.UserId}");
 
             UserGroups = new ObservableCollection<GroupDto>(userGroup);
 
