@@ -60,6 +60,7 @@ namespace AvaloniaChat.Application.Mapping
 
             CreateMap<CreateGroupDto, Group>();
             CreateMap<GroupDto, Group>();
+            CreateMap<Group, GroupDto>();
             CreateMap<Group, UpdateGroupDto>();
 
             #endregion
