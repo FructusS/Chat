@@ -1,5 +1,7 @@
-﻿using AvaloniaChat.Backend.Services.Interfaces;
+﻿using AvaloniaChat.Application.DTO.Group;
+using AvaloniaChat.Backend.Services.Interfaces;
 using AvaloniaChat.Domain.Models;
+using AvaloniaChat.Infrastructure.Services.Implimentations;
 using AvaloniaChat.Infrastructure.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -29,4 +31,14 @@ public class UserGroupController : ControllerBase
     {
         await _userGroupService.DeleteUserFromGroup(userId, groupId);
     }
+
+
+    [HttpGet]
+    [Route("{userId}")]
+
+    public async Task<List<GroupDto>> GetUserGroups(int userId)
+    {
+        return await _userGroupService.GetUserGroup(userId);
+    }
+
 }
