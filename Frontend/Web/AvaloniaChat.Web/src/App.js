@@ -2,8 +2,7 @@ import logo from "./logo.svg";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Navigate } from "react-router-dom";
-import Chat from "./components/chat/Chat";
-import Login from "./components/login/Login";
+import { LoginPage, ChatPage } from "./pages";
 import { Routes, Route, BrowserRouter as Router } from "react-router-dom";
 function App() {
     return (
@@ -11,8 +10,8 @@ function App() {
             <Router>
                 <div>
                     <Routes>
-                        <Route path="/login" element={<Login />} />
-                        <Route path="/chat" element={<Chat />} />
+                        <Route path="/login" element={<LoginPage />} />
+                        <Route path="/chat" element={<ChatPage />} />
 
                         <Route
                             path="*"
