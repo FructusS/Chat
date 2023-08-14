@@ -8,6 +8,7 @@ namespace AvaloniaChat.Domain.Models
         public Guid MessageId { get; set; }
         public Guid GroupId { get; set; }
         public string MessageText { get; set; } = null!;
+        public bool IsRead { get; set; }
         public int UserId { get; set; }
 
         public DateTime SendDate { get; set; }
