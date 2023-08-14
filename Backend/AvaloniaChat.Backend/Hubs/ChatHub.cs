@@ -3,6 +3,7 @@ using AvaloniaChat.Infrastructure;
 using AvaloniaChat.Domain;
 using AvaloniaChat.Domain.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.SignalR;
 
 
@@ -56,6 +57,18 @@ namespace AvaloniaChat.Backend.Hubs
                 Groups.AddToGroupAsync(Context.ConnectionId, group);
             }
             return base.OnConnectedAsync();
+        }
+
+
+        public override Task OnDisconnectedAsync(Exception? exception)
+        {
+            var userGroup = _chatDbContext.UserGroups.Where(x => x.User.Username == Context.User.Identity.Name).Select(x => x.GroupId.ToString()).ToList();
+
+            foreach (var group in userGroup)
+            {
+                Groups.RemoveFromGroupAsync(Context.ConnectionId, group);
+            }
+            return base.OnDisconnectedAsync(exception);
         }
     }
 }
