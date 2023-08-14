@@ -28,12 +28,7 @@ builder.Services.AddDbContext<ChatDbContext>(options => options.UseLazyLoadingPr
 
 builder.Services.AddAutoMapper(typeof(MappingProfile));
 
-builder.Services.AddCors(options => options.AddDefaultPolicy(builder =>
-{
-    builder.AllowAnyOrigin()
-        .AllowAnyHeader()
-        .AllowAnyMethod();
-}));
+builder.Services.AddCors();
 
 // services
 builder.Services.AddScoped<IGroupRepository, GroupRepository>();
@@ -73,16 +68,19 @@ var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
-{       
+{
     app.UseSwagger();
-    app.UseSwaggerUI();     
+    app.UseSwaggerUI();
 }
 
 app.UseHttpsRedirection();
-app.UseCors();
+
+app.UseCors(builder =>
+{
+    builder.WithOrigins("http://localhost:3000").AllowAnyHeader().AllowAnyMethod().AllowCredentials();
+});
 app.UseAuthentication();
 app.UseAuthorization();
-
 app.MapControllers();
 app.MapHub<ChatHub>("/chatHub");
 app.Run();
