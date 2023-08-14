@@ -2,15 +2,17 @@ import axios from "axios";
 import { BASE_URL } from "../../constants";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useCookies } from "react-cookie";
 export const LoginPage = () => {
     axios.defaults.baseURL = BASE_URL;
     const navigate = useNavigate();
-    const [username, setUsername] = useState("");
-    const [password, setPassword] = useState("");
+    const [username, setUsername] = useState("string");
+    const [password, setPassword] = useState("string");
+
     const [isValidUsername, setIsValidUsername] = useState(false);
     const [isValidPassword, setIsValidPassword] = useState(false);
-    const [cookies, setCookie] = useCookies(["access_token", "user_id"]);
+   
+    // setUsername("")
+    // setPassword("string")
     const onLogin = async (e) => {
         e.preventDefault();
         if (username.trim().length === 0 && password.trim().length === 0) {
@@ -25,11 +27,11 @@ export const LoginPage = () => {
             })
             .then(function (response) {
                 if (response.status === 200) {
-                    localStorage.setItem(
+                    sessionStorage.setItem(
                         "userId",
                         response.data.data.userId
                     );
-                    localStorage.setItem(
+                    sessionStorage.setItem(
                         "accessToken",
                         response.data.data.accessToken
                     );
