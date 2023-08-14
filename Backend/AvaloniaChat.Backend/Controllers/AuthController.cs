@@ -42,7 +42,7 @@ public class AuthController : ControllerBase
 
         var user = await _userService.GetUserByUsername(loginModel.Username);
 
-        if (user == null)
+        if (user is null)
         {
             return Unauthorized(new BaseResponse
             {
