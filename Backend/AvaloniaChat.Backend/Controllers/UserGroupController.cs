@@ -19,14 +19,14 @@ public class UserGroupController : ControllerBase
     }
 
     [HttpPost]
-    [Route("adduser")]
+    [Route("add")]
     public async Task<UserGroup> AddUserFromGroup([FromQuery] int userId, [FromQuery] Guid groupId)
     {
         return await _userGroupService.AddUserFromGroup(userId, groupId);
     }
 
     [HttpPost]
-    [Route("deleteuser")]
+    [Route("delete")]
     public async Task DeleteUserFromGroup([FromQuery] int userId, [FromQuery] Guid groupId)
     {
         await _userGroupService.DeleteUserFromGroup(userId, groupId);
@@ -36,9 +36,28 @@ public class UserGroupController : ControllerBase
     [HttpGet]
     [Route("{userId}")]
 
-    public async Task<List<GroupDto>> GetUserGroups(int userId)
+    public async Task<ActionResult<List<GroupDto>>> GetUserGroups(int userId)
     {
-        return await _userGroupService.GetUserGroup(userId);
+        if (userId == null)
+        {
+            return BadRequest(new BaseResponse
+            {
+                Data = null,
+                Success = false,
+                Error = new ErrorInfoResponse
+                {
+                    ErrorCode = 400,
+                    Message = "user id is null"
+                }
+            });
+        }
+        var groupList = await _userGroupService.GetUserGroup(userId);
+        return Ok(new BaseResponse
+        {
+            Data = groupList,
+            Success = true,
+            Error = null
+        });
     }
 
 }
