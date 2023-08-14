@@ -23,9 +23,29 @@ public class MessagesController : ControllerBase
     }
 
     [HttpGet("{groupId}")]
-    public async Task<List<MessageDto>> GetMessages(Guid groupId)
+    public async Task<ActionResult<List<MessageDto>>> GetMessages(Guid groupId)
     {
-        return await _messageService.GetMessages(groupId);
+        if (groupId == null)
+        {
+            return BadRequest(new BaseResponse
+            {
+                Data = null,
+                Success = false,
+                Error = new ErrorInfoResponse
+                {
+                    ErrorCode = 400,
+                    Message = "group id is null"
+                }
+            });
+        }
+
+        var messagesList =  await _messageService.GetMessages(groupId);
+        return Ok(new BaseResponse
+        {
+            Data = messagesList,
+            Error = null,
+            Success = true,
+        });
     }
 
 
