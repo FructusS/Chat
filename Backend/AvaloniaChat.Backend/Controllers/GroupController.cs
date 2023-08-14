@@ -20,29 +20,77 @@ public class GroupController : ControllerBase
 
     [HttpPost]
     [Route("create")]
-    public async Task<IActionResult> CreateGroup(CreateGroupDto group)
+    public async Task<ActionResult<BaseResponse>> CreateGroup(CreateGroupDto group)
     {
         if (group == null)
         {
-            return BadRequest();
+            return BadRequest(new BaseResponse
+            {
+                Data = null,
+                Success = false,
+                Error = new ErrorInfoResponse
+                {
+                    ErrorCode = 400,
+                    Message = "Group is null"
+                }
+            });
         }
-       var createdGroup = await _groupService.CreateGroup(group);
+        var createdGroup = await _groupService.CreateGroup(group);
 
-       return Ok(createdGroup);
+        return Ok(new BaseResponse
+        {
+            Data = createdGroup,
+            Error = null,
+            Success = true,
+        });
     }
 
     [HttpPost]
     [Route("update")]
-    public async Task UpdateGroup(UpdateGroupDto group)
+    public async Task<ActionResult> UpdateGroup(UpdateGroupDto group)
     {
-        await _groupService.UpdateGroup(group);
+        if (group == null)
+        {
+            return BadRequest(new BaseResponse
+            {
+                Data = null,
+                Success = false,
+                Error = new ErrorInfoResponse
+                {
+                    ErrorCode = 400,
+                    Message = "Group is null"
+                }
+            });
+        }
+        var updatedGroup = await _groupService.UpdateGroup(group);
+
+        return Ok(new BaseResponse
+        {
+            Data = updatedGroup,
+            Error = null,
+            Success = true,
+        });
     }
 
     [HttpPost]
     [Route("delete")]
-    public async Task DeleteGroup(Guid groupId)
+    public async Task<ActionResult> DeleteGroup(Guid groupId)
     {
+        if (groupId == null)
+        {
+            return BadRequest(new BaseResponse
+            {
+                Data = null,
+                Success = false,
+                Error = new ErrorInfoResponse
+                {
+                    ErrorCode = 400,
+                    Message = "Group id is null"
+                }
+            });
+        }
         await _groupService.DeleteGroup(groupId);
+        return NoContent();
     }
 
 
