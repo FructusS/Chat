@@ -1,5 +1,6 @@
 ﻿using AvaloniaChat.Domain.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ValueGeneration;
 
 namespace AvaloniaChat.Infrastructure;
 
@@ -7,13 +8,13 @@ public partial class ChatDbContext : DbContext
 {
     public ChatDbContext()
     {
-       
+
     }
 
     public ChatDbContext(DbContextOptions<ChatDbContext> options)
         : base(options)
     {
-        Database.EnsureCreated();
+
     }
 
 
@@ -32,6 +33,10 @@ public partial class ChatDbContext : DbContext
                 .HasColumnType("timestamp(0)")
                 .HasColumnName("SendDate");
         });
+        modelBuilder
+            .Entity<Group>()
+            .Property(b => b.GroupId)
+            .HasValueGenerator<GuidValueGenerator>();
     }
 
 }
