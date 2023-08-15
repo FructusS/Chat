@@ -23,7 +23,7 @@ public class MessagesController : ControllerBase
     }
 
     [HttpGet("{groupId}")]
-    public async Task<ActionResult<List<MessageDto>>> GetMessages(Guid groupId)
+    public async Task<IActionResult> GetMessages(Guid groupId)
     {
         if (groupId == null)
         {
@@ -34,12 +34,12 @@ public class MessagesController : ControllerBase
                 Error = new ErrorInfoResponse
                 {
                     ErrorCode = 400,
-                    Message = "group id is null"
+                    Message = "Invalid data"
                 }
             });
         }
 
-        var messagesList =  await _messageService.GetMessages(groupId);
+        var messagesList = await _messageService.GetMessages(groupId);
         return Ok(new BaseResponse
         {
             Data = messagesList,
@@ -50,15 +50,29 @@ public class MessagesController : ControllerBase
 
 
 
-    [HttpPost("create")]
+    [HttpPost]
     public async Task<IActionResult> CreateMessage(CreateMessageDto createMessageDto)
     {
         if (createMessageDto is null)
         {
-            return BadRequest();
+            return BadRequest(new BaseResponse
+            {
+                Data = null,
+                Success = false,
+                Error = new ErrorInfoResponse
+                {
+                    ErrorCode = 400,
+                    Message = "Invalid data"
+                }
+            });
         }
         var message = await _messageService.CreateMessage(createMessageDto);
         await _hubContext.Clients.Group(message.GroupId.ToString()).SendAsync("ReceiveMessage", message);
-        return Ok(message); 
+        return Ok(new BaseResponse
+        {
+            Data = message,
+            Success = true,
+            Error = null
+        });
     }
 }
