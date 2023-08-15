@@ -20,6 +20,7 @@ namespace AvaloniaChat.Domain.Models
         public string? RefreshToken { get; set; }
         public long? ExpiresIn { get; set; }
         public virtual ICollection<Message> Messages { get; set; } = new List<Message>();
+        public virtual ICollection<Group> Groups { get; set; } = new List<Group>();
         public virtual ICollection<UserGroup> UserGroups { get; set; } = new List<UserGroup>();
     }
 }
