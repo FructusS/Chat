@@ -200,12 +200,12 @@ namespace AvaloniaChat.Desktop.ViewModels
             if (Selection.SelectedItem == null)
             {
                 messages = await _httpClient.GetFromJsonAsync<List<MessageDto>>($"{baseUrl}/Messages/{UserGroups[0].GroupId}");
-                GroupTitle = UserGroups[0].GroupName;
+                GroupTitle = UserGroups[0].GroupTitle;
             }
             else
             {
                 messages = await _httpClient.GetFromJsonAsync<List<MessageDto>>($"{baseUrl}/Messages/{Selection.SelectedItem.GroupId}");
-                GroupTitle = Selection.SelectedItem.GroupName;
+                GroupTitle = Selection.SelectedItem.GroupTitle;
             }
 
             Messages = new ObservableCollection<MessageDto>(messages);
