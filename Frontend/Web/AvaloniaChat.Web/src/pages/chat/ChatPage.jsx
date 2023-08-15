@@ -80,13 +80,17 @@ export const ChatPage = () => {
     }
     return (
         <div className="row">
-            <div className="col-2" data-mdb-perfect-scrollbar="true" data-mdb-suppress-scroll-x="true" style={{height: '400px'}}>
-                
+            <div
+                className="col-2"
+                data-mdb-perfect-scrollbar="true"
+                data-mdb-suppress-scroll-x="true"
+                style={{ height: "400px" }}
+            >
                 <UserGroupsList onGroupClick={onGroupClick}></UserGroupsList>
             </div>
 
-            <div className="col-10"  >
-                <Messages messages={messages} ></Messages>
+            <div className="col-10">
+                <Messages messages={messages}></Messages>
             </div>
         </div>
     );
