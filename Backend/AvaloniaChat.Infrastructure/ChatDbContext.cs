@@ -1,4 +1,5 @@
 ﻿using AvaloniaChat.Domain.Models;
+using AvaloniaChat.Infrastructure.Configurations;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ValueGeneration;
 
@@ -18,7 +19,6 @@ public partial class ChatDbContext : DbContext
     }
 
 
-
     public virtual DbSet<Group> Groups { get; set; } = null!;
     public virtual DbSet<Message> Messages { get; set; } = null!;
     public virtual DbSet<User> Users { get; set; } = null!;
@@ -27,16 +27,11 @@ public partial class ChatDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Message>(entity =>
-        {
-            entity.Property(e => e.SendDate)
-                .HasColumnType("timestamp(0)")
-                .HasColumnName("SendDate");
-        });
-        modelBuilder
-            .Entity<Group>()
-            .Property(b => b.GroupId)
-            .HasValueGenerator<GuidValueGenerator>();
+        modelBuilder.ApplyConfiguration(new UserConfiguration());
+        modelBuilder.ApplyConfiguration(new GroupConfiguration());
+        modelBuilder.ApplyConfiguration(new UserGroupConfiguration());
+        modelBuilder.ApplyConfiguration(new MessagesConfiguration());
     }
 
 }
+
