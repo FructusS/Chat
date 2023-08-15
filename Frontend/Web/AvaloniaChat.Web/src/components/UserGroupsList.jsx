@@ -22,19 +22,13 @@ export default function UserGroupsList({onGroupClick}) {
                 return;
             });
     }, []);
-
+    
     return (
-        {groups?.map(
-            (group) => (
-                <Group
-                    onGroupClick={onGroupClick}
-                    key={group.groupId}
-                    group={group}
-                />
-            )
-        )
+        <div className="messages-wrapper">
+          {groups?.map((group) => (
+            <Group onGroupClick={onGroupClick} key={group.id} group={group} />
+          ))}
+        </div>
+      );
 }
-</div>
-)
-    ;
-}
+
