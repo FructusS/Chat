@@ -7,8 +7,10 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AvaloniaChat.Backend.Controllers;
 
+[Authorize]
 [Route("api/[controller]")]
 [ApiController]
+
 public class GroupController : ControllerBase
 {
     private readonly IGroupService _groupService;
@@ -19,8 +21,7 @@ public class GroupController : ControllerBase
     }
 
     [HttpPost]
-    [Route("create")]
-    public async Task<ActionResult<BaseResponse>> CreateGroup(CreateGroupDto group)
+    public async Task<IActionResult> CreateGroup(CreateGroupDto group)
     {
         if (group == null)
         {
@@ -31,7 +32,7 @@ public class GroupController : ControllerBase
                 Error = new ErrorInfoResponse
                 {
                     ErrorCode = 400,
-                    Message = "Group is null"
+                    Message = "Invalid data"
                 }
             });
         }
@@ -45,9 +46,8 @@ public class GroupController : ControllerBase
         });
     }
 
-    [HttpPost]
-    [Route("update")]
-    public async Task<ActionResult> UpdateGroup(UpdateGroupDto group)
+    [HttpPatch]
+    public async Task<IActionResult> UpdateGroup(UpdateGroupDto group)
     {
         if (group == null)
         {
@@ -58,7 +58,7 @@ public class GroupController : ControllerBase
                 Error = new ErrorInfoResponse
                 {
                     ErrorCode = 400,
-                    Message = "Group is null"
+                    Message = "Invalid data"
                 }
             });
         }
@@ -72,9 +72,8 @@ public class GroupController : ControllerBase
         });
     }
 
-    [HttpPost]
-    [Route("delete")]
-    public async Task<ActionResult> DeleteGroup(Guid groupId)
+    [HttpDelete("{groupId}")]
+    public async Task<IActionResult> DeleteGroup(Guid groupId)
     {
         if (groupId == null)
         {
@@ -85,7 +84,7 @@ public class GroupController : ControllerBase
                 Error = new ErrorInfoResponse
                 {
                     ErrorCode = 400,
-                    Message = "Group id is null"
+                    Message = "Invalid data"
                 }
             });
         }

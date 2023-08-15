@@ -1,6 +1,7 @@
 ﻿using AvaloniaChat.Application.DTO.Auth;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
+using AvaloniaChat.Backend.Attributes;
 using AvaloniaChat.Backend.Services.Interfaces;
 using AvaloniaChat.Domain.Models;
 using AvaloniaChat.Infrastructure.Services;
@@ -9,7 +10,7 @@ using AvaloniaChat.Infrastructure.Services.Interfaces;
 using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace AvaloniaChat.Backend.Controllers;
-
+[Authorize]
 [Route("api/[controller]")]
 [ApiController]
 public class AuthController : ControllerBase
@@ -23,10 +24,9 @@ public class AuthController : ControllerBase
         _userService = userService;
     }
 
-
+    [AllowAnonymous]
     [HttpPost]
-    [Route("login")]
-    public async Task<ActionResult<BaseResponse>> Login([FromBody] AuthRequest loginModel)
+    public async Task<IActionResult> Login([FromBody] AuthRequest loginModel)
     {
         if (loginModel is null)
             return Unauthorized(new BaseResponse
@@ -36,7 +36,7 @@ public class AuthController : ControllerBase
                 Error = new ErrorInfoResponse
                 {
                     ErrorCode = 400,
-                    Message = "Invalid user"
+                    Message = "Invalid data"
                 }
             });
 
