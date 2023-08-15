@@ -6,10 +6,9 @@ using AvaloniaChat.Infrastructure.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-
 namespace AvaloniaChat.Backend.Controllers;
 
+[Authorize]
 [Route("api/[controller]")]
 [ApiController]
 public class UserController : ControllerBase
@@ -22,57 +21,117 @@ public class UserController : ControllerBase
         _userService = userService;
     }
 
-
+    [AllowAnonymous]
     [HttpPost]
-    [Route("registraion")]
     public async Task<IActionResult> CreateUser([FromBody] CreateUserDto createUserModel)
     {
-        if (createUserModel is null) return BadRequest("Invalid data");
+        if (createUserModel is null) return BadRequest(new BaseResponse
+        {
+            Data = null,
+            Error = new ErrorInfoResponse
+            {
+                ErrorCode = 400,
+                Message = "Invalid data"
+            },
+            Success = false
+        });
 
         if (await _userService.GetUserByUsername(createUserModel.Username) != null)
         {
-            return BadRequest("User already exist");
+            return BadRequest(new BaseResponse
+            {
+                Data = null,
+                Error = new ErrorInfoResponse
+                {
+                    ErrorCode = 400,
+                    Message = "User already exist"
+                },
+                Success = false
+            });
         }
 
         var registraionResponse = await _userService.CreateUser(createUserModel);
-        
-        return Ok(registraionResponse);
+
+        return Ok(new BaseResponse
+        {
+            Data = registraionResponse,
+            Error = null,
+            Success = true
+        });
     }
 
     [HttpPatch("{userId}")]
     public async Task<IActionResult> UpdateUser(int userId, [FromBody] UpdateUserDto updateUserModel)
     {
-        if (updateUserModel is null) return BadRequest("Invalid data");
+
+        if (updateUserModel is null) return BadRequest(new BaseResponse
+        {
+            Data = null,
+            Error = new ErrorInfoResponse
+            {
+                ErrorCode = 400,
+                Message = "Invalid data"
+            },
+            Success = false
+        });
 
 
         var updateResponse = await _userService.UpdateUser(updateUserModel);
+        return Ok(new BaseResponse
+        {
+            Data = updateResponse,
+            Error = null,
+            Success = true
+        });
 
-        return Ok(updateResponse);
     }
 
     [Authorize(Roles = "Administrator")]
-    [HttpPost]
-    [Route("delete")]
+    [HttpDelete("{username}")]
     public async Task<IActionResult> DeleteUser(string username)
     {
+        if (username == null)
+        {
+            return BadRequest(new BaseResponse
+            {
+                Data = null,
+                Error = new ErrorInfoResponse
+                {
+                    ErrorCode = 400,
+                    Message = "Invalid data"
+                },
+                Success = false
+            });
+        }
         await _userService.DeleteUser(username);
-        return Ok();
+        return NoContent();
     }
 
 
-
     [HttpGet("{userId}")]
-
     public async Task<IActionResult> GetUser(int userId)
     {
         if (userId == null)
         {
-            return BadRequest();
-
+            return BadRequest(new BaseResponse
+            {
+                Data = null,
+                Error = new ErrorInfoResponse
+                {
+                    ErrorCode = 400,
+                    Message = "Invalid data"
+                },
+                Success = false
+            });
         }
-        
+
         var user = await _userService.GetUser(userId);
 
-        return Ok(user);
+        return Ok(new BaseResponse
+        {
+            Data = user,
+            Error = null,
+            Success = true
+        });
     }
 }

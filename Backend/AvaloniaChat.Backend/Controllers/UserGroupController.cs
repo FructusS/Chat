@@ -19,24 +19,55 @@ public class UserGroupController : ControllerBase
     }
 
     [HttpPost]
-    [Route("add")]
-    public async Task<UserGroup> AddUserFromGroup([FromQuery] int userId, [FromQuery] Guid groupId)
+    public async Task<IActionResult> AddUserFromGroup([FromQuery] int userId, [FromQuery] Guid groupId)
     {
-        return await _userGroupService.AddUserFromGroup(userId, groupId);
+        if (userId == null || groupId == null)
+        {
+            return BadRequest(new BaseResponse
+            {
+                Success = false,
+                Data = null,
+                Error = new ErrorInfoResponse
+                {
+                    ErrorCode = 400,
+                    Message = "Invalid data"
+                }
+            });
+        }
+        var addedUserInGroup = await _userGroupService.AddUserFromGroup(userId, groupId);
+        return Ok(new BaseResponse
+        {
+            Data = new { addedUserInGroup.GroupId, addedUserInGroup.UserId },
+            Success = true,
+            Error = null
+        });
     }
 
-    [HttpPost]
-    [Route("delete")]
-    public async Task DeleteUserFromGroup([FromQuery] int userId, [FromQuery] Guid groupId)
+    [HttpDelete("{groupId}/{userId}")]
+    public async Task<IActionResult> DeleteUserFromGroup(int userId,Guid groupId)
     {
+        if (userId == null || groupId == null)
+        {
+            return BadRequest(new BaseResponse
+            {
+                Success = false,
+                Data = null,
+                Error = new ErrorInfoResponse
+                {
+                    ErrorCode = 400,
+                    Message = "Invalid data"
+                }
+            });
+        }
         await _userGroupService.DeleteUserFromGroup(userId, groupId);
+        return NoContent();
     }
 
 
     [HttpGet]
     [Route("{userId}")]
 
-    public async Task<ActionResult<List<GroupDto>>> GetUserGroups(int userId)
+    public async Task<IActionResult> GetUserGroups(int userId)
     {
         if (userId == null)
         {
@@ -47,7 +78,7 @@ public class UserGroupController : ControllerBase
                 Error = new ErrorInfoResponse
                 {
                     ErrorCode = 400,
-                    Message = "user id is null"
+                    Message = "Invalid data"
                 }
             });
         }
