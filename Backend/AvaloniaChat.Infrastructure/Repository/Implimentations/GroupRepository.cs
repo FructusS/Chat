@@ -26,7 +26,7 @@ public class GroupRepository : IGroupRepository
         var group = _mapper.Map<Group>(createGroupDto);
         var createdGroup = await _context.Groups.AddAsync(group);
         await _context.SaveChangesAsync();
-        return _mapper.Map<GroupDto>(createdGroup);
+        return _mapper.Map<GroupDto>(createdGroup.Entity);
     }
 
     public async Task DeleteGroup(Guid groupId)
@@ -49,9 +49,9 @@ public class GroupRepository : IGroupRepository
         return await _context.UserGroups.Where(x => x.UserId == userId).Select(x => new GroupDto()
         {
             GroupId = x.Group.GroupId,
-            UserGroupId = x.UsergroupId,
+            UserGroupId = x.UserGroupId,
             GroupLogo = x.Group.GroupImage,
-            GroupName = x.Group.GroupTitle
+            GroupTitle = x.Group.GroupTitle
         }).ToListAsync();
     }
 

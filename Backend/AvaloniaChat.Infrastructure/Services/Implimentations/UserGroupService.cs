@@ -25,24 +25,18 @@ namespace AvaloniaChat.Infrastructure.Services.Implimentations
 
         public async Task DeleteUserFromGroup(int userId, Guid groupId)
         {
-            var useringroup = _chatDbContext.UserGroups.First(x => x.UserId == userId && x.GroupId == groupId);
-            _chatDbContext.UserGroups.Remove(useringroup);
+            var userInGroup = _chatDbContext.UserGroups.First(x => x.UserId == userId && x.GroupId == groupId);
+            _chatDbContext.UserGroups.Remove(userInGroup);
             await _chatDbContext.SaveChangesAsync();
         }
-
-        //public async Task<List<GroupDto>> GetUserGroup(int userId)
-        //{
-        //    return await _repository.GetUserGroup(userId);
-          
-        //}
         public async Task<List<GroupDto>> GetUserGroup(int userId)
         {
             return await _chatDbContext.UserGroups.Where(x => x.UserId == userId).Select(x => new GroupDto()
             {
                 GroupId = x.Group.GroupId,
-                UserGroupId = x.UsergroupId,
-                GroupLogo = x.Group.GroupImage,
-                GroupName = x.Group.GroupTitle
+                UserGroupId = x.UserGroupId,
+                GroupLogo = _chatDbContext.UserGroups.Count(x => x.UserId == userId) > 1 ? x.Group.GroupImage : x.User.Logo,
+                GroupTitle = x.Group.GroupTitle
             }).ToListAsync();
         }
     }
