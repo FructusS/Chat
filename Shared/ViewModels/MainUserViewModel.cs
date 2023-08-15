@@ -1,4 +1,4 @@
-﻿namespace ViewModels
+﻿namespace AvaloniaChat.ViewModels
 {
     public class MainUserViewModel
     {
