@@ -26,7 +26,7 @@ public class AuthController : ControllerBase
 
     [AllowAnonymous]
     [HttpPost]
-    public async Task<IActionResult> Login([FromBody] AuthRequest loginModel)
+    public async Task<IActionResult> Post([FromBody] AuthRequest loginModel)
     {
         if (loginModel is null)
             return Unauthorized(new BaseResponse
@@ -42,7 +42,7 @@ public class AuthController : ControllerBase
 
         var user = await _userService.GetUserByUsername(loginModel.Username);
 
-        if (user is null)
+        if (user is null || !BCrypt.Net.BCrypt.Verify(loginModel.Password, user.PasswordHash))
         {
             return Unauthorized(new BaseResponse
             {
@@ -57,17 +57,6 @@ public class AuthController : ControllerBase
 
         }
 
-        if (!BCrypt.Net.BCrypt.Verify(loginModel.Password, user.PasswordHash))
-            return Unauthorized(new BaseResponse
-            {
-                Success = false,
-                Data = null,
-                Error = new ErrorInfoResponse
-                {
-                    ErrorCode = 401,
-                    Message = "Username or password is incorrect"
-                }
-            });
 
 
         var accessToken = _authService.GenerateAccessToken(loginModel);
