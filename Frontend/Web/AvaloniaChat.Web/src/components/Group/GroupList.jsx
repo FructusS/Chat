@@ -3,25 +3,19 @@ import axios from "axios";
 import { useState } from "react";
 import { BASE_URL } from "../../constants";
 import { GroupItem } from "./GroupItem";
+import { getGroups } from "../../services/GroupService";
 
 export const GroupList = ({ onGroupClick }) => {
     const [groups, setGroups] = useState([]);
     useEffect(() => {
-        axios
-            .get(`${BASE_URL}UserGroup/${sessionStorage.getItem("userId")}`)
-            .then(function (response) {
-                if (response.status === 200) {
-                    setGroups(response.data.data);
-                    return;
-                } else {
-                    return;
-                }
-            })
-            .catch(function (error) {
-                console.log(error);
-                return;
-            });
-    }, []);
+        async function getUserGroups() {
+            try {
+                const result = await getGroups();
+                setGroups(result.data.data);
+            } catch (e) {}
+        }
+        getUserGroups()
+    }, [groups]);
 
     return (
         <div className="messages-wrapper">
