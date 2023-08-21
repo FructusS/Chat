@@ -1,4 +1,5 @@
-import logo from "../../logo.svg"
+import logo from "../../logo.svg";
+import { Link } from 'react-router-dom';
 export const GroupItem = ({ onGroupClick, group }) => {
     return (
         //   <div
@@ -14,11 +15,9 @@ export const GroupItem = ({ onGroupClick, group }) => {
         //     // </div>
         //   </div>
 
-        <div class="d-flex justify-content-between">
-            <div class="d-flex flex-row"  onClick={() => {
-                        onGroupClick(group.groupId);
-                    }} style={{cursor : "pointer"}}>
-
+        <Link>
+            <div className="d-flex justify-content-between">
+                <div className="d-flex flex-row">
                     <img
                         src={
                             group.groupLogo != null
@@ -26,15 +25,15 @@ export const GroupItem = ({ onGroupClick, group }) => {
                                 : logo
                         }
                         alt="avatar"
-                        class="rounded-circle d-flex align-self-center me-3 shadow-1-strong"
+                        className="rounded-circle d-flex align-self-center me-3 shadow-1-strong"
                         width="54"
                         height="54"
                     ></img>
-                    <p class="justify-content-center mb-0 align-baseline">
+                    <p className="justify-content-center mb-0 align-baseline">
                         {group.groupTitle}
                     </p>
-                
+                </div>
             </div>
-        </div>
+        </Link>
     );
-}
+};
