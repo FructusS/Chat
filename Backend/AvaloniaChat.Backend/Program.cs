@@ -105,7 +105,7 @@ app.UseHttpsRedirection();
 
 app.UseCors(builder =>
 {
-    builder.WithOrigins("http://localhost:3000").AllowAnyHeader().AllowAnyMethod().AllowCredentials();
+    builder.WithOrigins("http://localhost:3001", "http://localhost:3000").AllowAnyHeader().AllowAnyMethod().AllowCredentials();
 });
 app.UseAuthentication();
 app.UseAuthorization();
