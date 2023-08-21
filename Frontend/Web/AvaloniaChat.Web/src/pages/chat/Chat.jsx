@@ -1,7 +1,6 @@
-import axios from "axios";
-import { BASE_URL } from "../../constants";
+import { getMessages } from "../../services/MessageService";
 import { HubConnectionBuilder, LogLevel } from "@microsoft/signalr";
-import { MessageList, GroupList} from "../../components"
+import { MessageList, GroupList } from "../../components";
 import { useState, useEffect } from "react";
 export const Chat = () => {
     const [connection, setConnection] = useState();
@@ -57,26 +56,17 @@ export const Chat = () => {
     };
 
     async function onGroupClick(groupId) {
-        await loadMessages(groupId);
-        await joinRoom(groupId);
+        try {
+            const result = await getMessages(groupId);
+            console.log(result)
+            setMessages(result.data.data);
+        } catch (e) {
+            //  setError(e?.response?.data?.error?.message || e?.message);
+            console.log(e?.response?.data?.error?.message || e?.message);
+        }
+        await joinRoom();
     }
-    async function loadMessages(groupId) {
-        axios
-            .get(`${BASE_URL}Messages/${groupId}`)
-            .then(function (response) {
-                if (response.status === 200) {
-                    console.log(response.data.data);
-                    setMessages(response.data.data);
-                    return;
-                } else {
-                    return;
-                }
-            })
-            .catch(function (error) {
-                console.log(error);
-                return;
-            });
-    }
+
     return (
         <div className="row">
             <div
