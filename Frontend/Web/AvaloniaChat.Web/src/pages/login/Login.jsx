@@ -1,12 +1,12 @@
-import axios from "axios";
-import { BASE_URL } from "../../constants";
 import { useState } from "react";
+import "./login.css";
 import { useNavigate } from "react-router-dom";
+import { login } from "../../services/AuthService";
 export const Login = () => {
-    axios.defaults.baseURL = BASE_URL;
     const navigate = useNavigate();
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    const [error, setError] = useState();
 
     const [isValidUsername, setIsValidUsername] = useState(false);
     const [isValidPassword, setIsValidPassword] = useState(false);
@@ -14,61 +14,37 @@ export const Login = () => {
     const onLogin = async (e) => {
         e.preventDefault();
 
-        if (isValidPassword == false || isValidUsername == false) {
+        if (isValidPassword === false || isValidUsername === false) {
             return;
         }
-        
-        axios
-            .post("/Auth", {
-                username: username,
-                password: password,
-            })
-            .then(function (response) {
-                if (response.status === 200) {
-                    sessionStorage.setItem("userId", response.data.data.userId);
-                    sessionStorage.setItem(
-                        "accessToken",
-                        response.data.data.accessToken
-                    );
-                    navigate("/chat");
-                } else {
-                }
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
-
-        // else if(){
-        //     setIsValidPassword(false);
-        // }
-        // if(isValidPassword && isValidUsername == false){
-        //     return;
-        // }
+        try {
+            const result = await login(username, password);
+            sessionStorage.setItem(
+                "accessToken",
+                result.data.data.accessToken
+            );
+            sessionStorage.setItem("userId", result.data.data.userId);
+            navigate("/chat");
+        } catch (e) {
+            setError(e?.response?.data?.error?.message || e?.message);
+        }
     };
 
     function validateUsername(username) {
         setUsername(username);
-
-        if (username.trim().length >= 5) {
-            setIsValidUsername(true);
-        } else {
-            setIsValidUsername(false);
-        }
+        setIsValidUsername(username.trim().length >= 5);
     }
 
     function validatePassword(password) {
         setPassword(password);
-        if (password.trim().length >= 5) {
-            setIsValidPassword(true);
-        } else {
-            setIsValidPassword(false);
-        }
+        setIsValidPassword(password.trim().length >= 5);
     }
 
     return (
         <form>
             <div className="container col-3">
                 <h3>Sign in</h3>
+                <span className="errorMessage">{error}</span>
                 <div className="form-floating mb-3">
                     <input
                         className={`form-control ${
