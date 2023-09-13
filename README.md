@@ -11,19 +11,19 @@ Chat - chat application on C# that uses SignalR for real-time communication.
 #### Desktop 
   Avalonia UI
 ## Installation 
-  git clone https://github.com/FructusS/Chat.git
+    git clone https://github.com/FructusS/Chat.git
 
 ### Installation backend
     cd Backend/AvaloniaChat.Backend/
 
-    dotnet run dotnet run AvaloniaChat.Backend.csproj
+    dotnet run AvaloniaChat.Backend.csproj
 
 Backend started on http://localhost:5000
 
 ### Installation web
-  cd Frontend/Web/AvaloniaChat.Web/
+    cd Frontend/Web/AvaloniaChat.Web/
 
-  npm start
+    npm start
   
 Web started on http://localhost:3000
 
