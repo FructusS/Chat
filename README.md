@@ -2,9 +2,11 @@
 Chat - chat application on C# that uses SignalR for real-time communication.
 ### Backend
 1. SignalR
-2. Entity Framework Core and LINQ
-3. PostgreSQL
-4. Jwt Authentication
+2. Entity Framework Core
+3. LINQ
+4. PostgreSQL
+5. Jwt Authentication
+6. Mapping
 ### Frontend
 #### Web
   React js
