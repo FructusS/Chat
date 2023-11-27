@@ -22,8 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\AvaloniaChat.Application\AvaloniaChat.Application.csproj" />
-    <ProjectReference Include="..\AvaloniaChat.Domain\AvaloniaChat.Domain.csproj" />
+    <ProjectReference Include="..\AvaloniaChat.Application\AvaloniaChat.Business.csproj" />
   </ItemGroup>
 
 </Project>

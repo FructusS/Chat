@@ -12,8 +12,4 @@
       <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="6.15.1" />
     </ItemGroup>
 
-    <ItemGroup>
-      <ProjectReference Include="..\AvaloniaChat.Domain\AvaloniaChat.Domain.csproj" />
-    </ItemGroup>
-
 </Project>

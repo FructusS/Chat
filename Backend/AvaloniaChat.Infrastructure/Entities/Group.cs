@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Text.Json.Serialization;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using AvaloniaChat.Domain.Models;
 
-namespace AvaloniaChat.Domain.Models
+namespace AvaloniaChat.Data.Models
 {
     public partial class Group
     {
