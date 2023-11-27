@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using AvaloniaChat.Application.DTO.Message;
 using AvaloniaChat.Backend.Services.Interfaces;
+using AvaloniaChat.Business.Repository.Interfaces;
 using AvaloniaChat.Domain.Models;
 using AvaloniaChat.Infrastructure.Repository.Interfaces;
 using AvaloniaChat.Infrastructure.Services.Interfaces;

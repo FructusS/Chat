@@ -1,14 +1,13 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
-using System.Text;
 using AvaloniaChat.Application.Configs;
 using AvaloniaChat.Application.DTO.Auth;
 using AvaloniaChat.Backend.Services.Interfaces;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 
-namespace AvaloniaChat.Infrastructure.Services.Implimentations
+namespace AvaloniaChat.Business.Services.Implimentations
 {
     public class AuthService : IAuthService
     {

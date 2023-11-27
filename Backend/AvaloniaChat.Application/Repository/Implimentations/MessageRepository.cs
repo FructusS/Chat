@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using AvaloniaChat.Application.DTO.Message;
-using AvaloniaChat.Application.DTO.User;
+using AvaloniaChat.Business.Repository.Interfaces;
+using AvaloniaChat.Data;
 using AvaloniaChat.Domain.Models;
 using AvaloniaChat.Infrastructure.Repository.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
-namespace AvaloniaChat.Infrastructure.Repository.Implimentations
+namespace AvaloniaChat.Business.Repository.Implimentations
 {
     public class MessageRepository : IMessageRepository
     {

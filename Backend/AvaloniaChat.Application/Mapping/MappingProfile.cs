@@ -2,9 +2,10 @@
 using AvaloniaChat.Application.DTO.Group;
 using AvaloniaChat.Application.DTO.Message;
 using AvaloniaChat.Application.DTO.User;
+using AvaloniaChat.Data.Models;
 using AvaloniaChat.Domain.Models;
 
-namespace AvaloniaChat.Application.Mapping
+namespace AvaloniaChat.Business.Mapping
 {
     public class MappingProfile : Profile
     {

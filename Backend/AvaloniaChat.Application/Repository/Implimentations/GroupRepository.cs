@@ -1,14 +1,12 @@
 ﻿
-
 using AutoMapper;
 using AvaloniaChat.Application.DTO.Group;
-using AvaloniaChat.Application.DTO.UserGroup;
-using AvaloniaChat.Infrastructure;
-using AvaloniaChat.Domain.Models;
+using AvaloniaChat.Data;
+using AvaloniaChat.Data.Models;
 using AvaloniaChat.Infrastructure.Repository.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
-namespace AvaloniaChat.Infrastructure.Repository.Implimentations;
+namespace AvaloniaChat.Business.Repository.Implimentations;
 
 public class GroupRepository : IGroupRepository
 {

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using AvaloniaChat.Data.Models;
 
 namespace AvaloniaChat.Domain.Models
 {

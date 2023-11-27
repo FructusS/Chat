@@ -2,7 +2,6 @@
 using AvaloniaChat.Application.DTO.UserGroup;
 using AvaloniaChat.Backend.Services.Interfaces;
 using AvaloniaChat.Domain.Models;
-using AvaloniaChat.Infrastructure.Repository.Implimentations;
 using AvaloniaChat.Infrastructure.Repository.Interfaces;
 
 namespace AvaloniaChat.Infrastructure.Services.Implimentations

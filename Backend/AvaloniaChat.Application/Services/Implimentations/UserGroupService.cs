@@ -1,5 +1,6 @@
 ﻿using AvaloniaChat.Application.DTO.Group;
 using AvaloniaChat.Backend.Services.Interfaces;
+using AvaloniaChat.Data;
 using AvaloniaChat.Domain.Models;
 using AvaloniaChat.Infrastructure.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;

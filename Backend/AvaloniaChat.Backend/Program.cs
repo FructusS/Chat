@@ -1,11 +1,14 @@
 
 using AvaloniaChat.Application.Configs;
-using AvaloniaChat.Application.Mapping;
 using AvaloniaChat.Backend.Hubs;
 using AvaloniaChat.Backend.Middleware;
 using AvaloniaChat.Backend.Services.Interfaces;
+using AvaloniaChat.Business.Mapping;
+using AvaloniaChat.Business.Repository.Implimentations;
+using AvaloniaChat.Business.Repository.Interfaces;
+using AvaloniaChat.Business.Services.Implimentations;
+using AvaloniaChat.Data;
 using AvaloniaChat.Infrastructure;
-using AvaloniaChat.Infrastructure.Repository.Implimentations;
 using AvaloniaChat.Infrastructure.Repository.Interfaces;
 using AvaloniaChat.Infrastructure.Services;
 using AvaloniaChat.Infrastructure.Services.Implimentations;

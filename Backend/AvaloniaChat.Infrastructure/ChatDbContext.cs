@@ -1,9 +1,9 @@
-﻿using AvaloniaChat.Domain.Models;
+﻿using AvaloniaChat.Data.Models;
+using AvaloniaChat.Domain.Models;
 using AvaloniaChat.Infrastructure.Configurations;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ValueGeneration;
 
-namespace AvaloniaChat.Infrastructure;
+namespace AvaloniaChat.Data;
 
 public partial class ChatDbContext : DbContext
 {

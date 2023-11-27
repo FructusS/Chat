@@ -1,4 +1,5 @@
 ﻿
+using AvaloniaChat.Data;
 using AvaloniaChat.Infrastructure;
 using AvaloniaChat.Domain;
 using AvaloniaChat.Domain.Models;
