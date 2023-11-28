@@ -1,7 +1,4 @@
-import { useEffect } from "react";
-import axios from "axios";
-import { useState } from "react";
-import { BASE_URL } from "../../constants";
+import { useEffect, useState } from "react";
 import { GroupItem } from "./GroupItem";
 import { getGroups } from "../../services/GroupService";
 
@@ -14,15 +11,15 @@ export const GroupList = ({ onGroupClick }) => {
                 setGroups(result.data.data);
             } catch (e) {}
         }
-        getUserGroups()
-    }, [groups]);
+        getUserGroups();
+    }, []);
 
     return (
-        <div className="messages-wrapper">
+        <div className="group-list">
             {groups?.map((group) => (
                 <GroupItem
                     onGroupClick={onGroupClick}
-                    key={group.id}
+                    key={group.groupId}
                     group={group}
                 />
             ))}
