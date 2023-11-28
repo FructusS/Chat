@@ -1,24 +1,28 @@
 import "./App.css";
-import "bootstrap/dist/css/bootstrap.min.css";
 import { Navigate } from "react-router-dom";
-import { Chat, Home } from "./pages";
+import { Chat, Home, Login } from "./pages";
 import { Routes, Route, BrowserRouter as Router } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 function App() {
-    // const [user,setUser] = useState()
-    // setUser(sessionStorage.getItem("accessToken"))
-    // console.log(user)
+    const [userId, setUserId] = useState();
+
+    useEffect(() => {
+        setUserId(sessionStorage.getItem("userId"));
+    }, []);
+
     return (
         <div className="App">
             <Router>
-                <div className="container-md py-5">
+                <section>
                     <Routes>
-                        <Route path="/" element={<Home />} />
-                        <Route path="/chat" element={<Chat />} />
-                        <Route path="*" element={ <div>Not found</div>}></Route>
+                        if(userId != null)
+                        {<Route path="/home" element={<Home />} />}
+                        else
+                        {<Route path="/" element={<Login></Login>}></Route>}
+                        <Route path="*" element={<Login></Login>}></Route>
                     </Routes>
-                </div>
+                </section>
             </Router>
         </div>
     );
