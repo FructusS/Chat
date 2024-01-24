@@ -43,7 +43,10 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\Backend\AvaloniaChat.Application\AvaloniaChat.Application.csproj" />
+    <ProjectReference Include="..\..\..\Backend\AvaloniaChat.Backend\AvaloniaChat.Api.csproj" />
     <ProjectReference Include="..\..\..\Backend\AvaloniaChat.Domain\AvaloniaChat.Domain.csproj" />
+    <ProjectReference Include="..\..\..\Backend\AvaloniaChat.Infrastructure\AvaloniaChat.Data.csproj" />
+    <ProjectReference Include="..\..\..\Models\AvaloniaChat.Models.csproj" />
   </ItemGroup>
   <ItemGroup>
     <AvaloniaResource Update="Assets\send_ic.svg">

@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using AvaloniaChat.Application.DTO.User;
+using AvaloniaChat.Backend.Business.Services.Interfaces;
 using AvaloniaChat.Backend.Services.Interfaces;
 using AvaloniaChat.Domain.Models;
 using AvaloniaChat.Infrastructure.Services.Interfaces;
@@ -25,64 +26,30 @@ public class UserController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> CreateUser([FromBody] CreateUserDto createUserModel)
     {
-        if (createUserModel is null) return BadRequest(new BaseResponse
-        {
-            Data = null,
-            Error = new ErrorInfoResponse
-            {
-                ErrorCode = 400,
-                Message = "Invalid data"
-            },
-            Success = false
-        });
+        if (createUserModel is null)
+            return BadRequest("Invalid data");
 
         if (await _userService.GetUserByUsername(createUserModel.Username) != null)
         {
-            return BadRequest(new BaseResponse
-            {
-                Data = null,
-                Error = new ErrorInfoResponse
-                {
-                    ErrorCode = 400,
-                    Message = "User already exist"
-                },
-                Success = false
-            });
+            return BadRequest("User already exist");
         }
 
-        var registraionResponse = await _userService.CreateUser(createUserModel);
+        var registrationResponse = await _userService.CreateUser(createUserModel);
 
-        return Ok(new BaseResponse
-        {
-            Data = registraionResponse,
-            Error = null,
-            Success = true
-        });
+
+        return Ok(registrationResponse);
     }
 
     [HttpPatch("{userId}")]
     public async Task<IActionResult> UpdateUser(int userId, [FromBody] UpdateUserDto updateUserModel)
     {
 
-        if (updateUserModel is null) return BadRequest(new BaseResponse
-        {
-            Data = null,
-            Error = new ErrorInfoResponse
-            {
-                ErrorCode = 400,
-                Message = "Invalid data"
-            },
-            Success = false
-        });
+        if (updateUserModel is null)
+            return BadRequest("Invalid data");
 
 
-        var updateResponse = await _userService.UpdateUser(updateUserModel);
-        return Ok(new BaseResponse
-        {
-            Data = updateResponse,
-            Error = null,
-            Success = true
-        });
+        var updateUser = await _userService.UpdateUser(updateUserModel);
+        return Ok(updateUser);
 
     }
 
@@ -92,16 +59,7 @@ public class UserController : ControllerBase
     {
         if (username == null)
         {
-            return BadRequest(new BaseResponse
-            {
-                Data = null,
-                Error = new ErrorInfoResponse
-                {
-                    ErrorCode = 400,
-                    Message = "Invalid data"
-                },
-                Success = false
-            });
+            return BadRequest("Invalid data");
         }
         await _userService.DeleteUser(username);
         return NoContent();
@@ -111,27 +69,12 @@ public class UserController : ControllerBase
     [HttpGet("{userId}")]
     public async Task<IActionResult> GetUser(int userId)
     {
+
         if (userId == null)
         {
-            return BadRequest(new BaseResponse
-            {
-                Data = null,
-                Error = new ErrorInfoResponse
-                {
-                    ErrorCode = 400,
-                    Message = "Invalid data"
-                },
-                Success = false
-            });
+            return BadRequest("Invalid data");
         }
-
         var user = await _userService.GetUser(userId);
-
-        return Ok(new BaseResponse
-        {
-            Data = user,
-            Error = null,
-            Success = true
-        });
+        return Ok(user);
     }
 }

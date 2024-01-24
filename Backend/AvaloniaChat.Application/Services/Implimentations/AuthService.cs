@@ -4,6 +4,7 @@ using System.Security.Cryptography;
 using AvaloniaChat.Application.Configs;
 using AvaloniaChat.Application.DTO.Auth;
 using AvaloniaChat.Backend.Services.Interfaces;
+using AvaloniaChat.Business.Services.Interfaces;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 

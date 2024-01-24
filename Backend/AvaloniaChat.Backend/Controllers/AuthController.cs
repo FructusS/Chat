@@ -2,12 +2,16 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using AvaloniaChat.Backend.Attributes;
+using AvaloniaChat.Backend.Business.Services.Interfaces;
 using AvaloniaChat.Backend.Services.Interfaces;
+using AvaloniaChat.Business.Services.Interfaces;
 using AvaloniaChat.Domain.Models;
 using AvaloniaChat.Infrastructure.Services;
 using AvaloniaChat.Infrastructure.Services.Implimentations;
 using AvaloniaChat.Infrastructure.Services.Interfaces;
 using Microsoft.AspNetCore.Http.HttpResults;
+using AvaloniaChat.Business.Services.Implimentations;
+using AvaloniaChat.Data.DTO.Auth;
 
 namespace AvaloniaChat.Backend.Controllers;
 [Authorize]
@@ -26,50 +30,31 @@ public class AuthController : ControllerBase
 
     [AllowAnonymous]
     [HttpPost]
-    public async Task<IActionResult> Post([FromBody] AuthRequest loginModel)
+    public async Task<Response<AuthResponse>> Login([FromBody] AuthRequest loginModel)
     {
-        if (loginModel is null)
-            return Unauthorized(new BaseResponse
-            {
-                Success = false,
-                Data = null,
-                Error = new ErrorInfoResponse
-                {
-                    ErrorCode = 400,
-                    Message = "Invalid data"
-                }
-            });
 
-        var user = await _userService.GetUserByUsername(loginModel.Username);
 
-        if (user is null || !BCrypt.Net.BCrypt.Verify(loginModel.Password, user.PasswordHash))
-        {
-            return Unauthorized(new BaseResponse
-            {
-                Success = false,
-                Data = null,
-                Error = new ErrorInfoResponse
-                {
-                    ErrorCode = 401,
-                    Message = "Username or password is incorrect"
-                }
-            });
+        return _authService.AuthAsync(loginModel);
+        //if (loginModel is null)
+        //    return Unauthorized("Invalid data");
 
-        }
+        //var user = await _userService.GetUserByUsername(loginModel.Username);
+
+        //if (user is null || !BCrypt.Net.BCrypt.Verify(loginModel.Password, user.PasswordHash))
+        //{
+        //    return Unauthorized("Username or password is incorrect");
+
+        //}
+
+        //var accessToken = _authService.GenerateAccessToken(loginModel);
+        //return Ok(new
+        //{
+        //    AccessToken = accessToken,
+        //    UserId = user.UserId
+        //});
 
 
 
-        var accessToken = _authService.GenerateAccessToken(loginModel);
-        return Ok(new BaseResponse
-        {
-            Success = true,
-            Data = new
-            {
-                AccessToken = accessToken,
-                UserId = user.UserId
-            },
-            Error = null
-        });
     }
 
     //[HttpPost]
@@ -107,3 +92,4 @@ public class AuthController : ControllerBase
     //    return NoContent();
     //}
 }
+

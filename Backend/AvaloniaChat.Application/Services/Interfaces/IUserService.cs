@@ -1,7 +1,7 @@
 ﻿using AvaloniaChat.Application.DTO.User;
 using AvaloniaChat.Domain.Models;
 
-namespace AvaloniaChat.Infrastructure.Services.Interfaces
+namespace AvaloniaChat.Business.Services.Interfaces
 {
     public interface IUserService
     {

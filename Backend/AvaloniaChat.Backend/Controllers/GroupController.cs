@@ -25,25 +25,11 @@ public class GroupController : ControllerBase
     {
         if (group == null)
         {
-            return BadRequest(new BaseResponse
-            {
-                Data = null,
-                Success = false,
-                Error = new ErrorInfoResponse
-                {
-                    ErrorCode = 400,
-                    Message = "Invalid data"
-                }
-            });
+            return BadRequest("Invalid data");
         }
         var createdGroup = await _groupService.CreateGroup(group);
 
-        return Ok(new BaseResponse
-        {
-            Data = createdGroup,
-            Error = null,
-            Success = true,
-        });
+        return Ok(createdGroup);
     }
 
     [HttpPatch]
@@ -51,25 +37,11 @@ public class GroupController : ControllerBase
     {
         if (group == null)
         {
-            return BadRequest(new BaseResponse
-            {
-                Data = null,
-                Success = false,
-                Error = new ErrorInfoResponse
-                {
-                    ErrorCode = 400,
-                    Message = "Invalid data"
-                }
-            });
+            return BadRequest("Invalid data");
         }
         var updatedGroup = await _groupService.UpdateGroup(group);
 
-        return Ok(new BaseResponse
-        {
-            Data = updatedGroup,
-            Error = null,
-            Success = true,
-        });
+        return Ok(updatedGroup);
     }
 
     [HttpDelete("{groupId}")]
@@ -77,21 +49,10 @@ public class GroupController : ControllerBase
     {
         if (groupId == null)
         {
-            return BadRequest(new BaseResponse
-            {
-                Data = null,
-                Success = false,
-                Error = new ErrorInfoResponse
-                {
-                    ErrorCode = 400,
-                    Message = "Invalid data"
-                }
-            });
+            return BadRequest("Invalid data");
         }
         await _groupService.DeleteGroup(groupId);
         return NoContent();
     }
-
-
 }
 

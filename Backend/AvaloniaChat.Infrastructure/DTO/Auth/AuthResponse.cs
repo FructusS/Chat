@@ -1,4 +1,4 @@
-﻿namespace AvaloniaChat.Application.DTO.Auth;
+﻿namespace AvaloniaChat.Data.DTO.Auth;
 
 public class AuthResponse
 {

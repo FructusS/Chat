@@ -14,6 +14,7 @@ using AvaloniaChat.Desktop.Services;
 using Prism.Commands;
 using Prism.Events;
 using Microsoft.AspNetCore.SignalR.Client;
+using System.IO;
 
 namespace AvaloniaChat.Desktop.ViewModels
 {
@@ -85,16 +86,23 @@ namespace AvaloniaChat.Desktop.ViewModels
                     if (authResponse != null)
                     {
                         _eventAggregator.GetEvent<NavigateToLoginEvent>().Publish();
-
                     }
                 }
-               
+
+            }
+            catch (IOException ex)
+            {
+                throw new IOException($"{ex.Message}");
+
+            }
+            catch (TimeoutException ex)
+            {
+                throw new TimeoutException($"{ex.Message}");
             }
             catch (Exception ex)
             {
-
+                throw new Exception("Something went wrong. Try later");
             }
-      
         }
 
         private void OnNavigateToLoginCommand()

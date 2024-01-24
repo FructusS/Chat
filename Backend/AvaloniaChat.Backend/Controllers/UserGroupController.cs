@@ -23,24 +23,11 @@ public class UserGroupController : ControllerBase
     {
         if (userId == null || groupId == null)
         {
-            return BadRequest(new BaseResponse
-            {
-                Success = false,
-                Data = null,
-                Error = new ErrorInfoResponse
-                {
-                    ErrorCode = 400,
-                    Message = "Invalid data"
-                }
-            });
+
+            return BadRequest("Invalid data");
         }
         var addedUserInGroup = await _userGroupService.AddUserFromGroup(userId, groupId);
-        return Ok(new BaseResponse
-        {
-            Data = new { addedUserInGroup.GroupId, addedUserInGroup.UserId },
-            Success = true,
-            Error = null
-        });
+        return Ok(new { addedUserInGroup.GroupId, addedUserInGroup.UserId });
     }
 
     [HttpDelete("{groupId}/{userId}")]
@@ -48,16 +35,7 @@ public class UserGroupController : ControllerBase
     {
         if (userId == null || groupId == null)
         {
-            return BadRequest(new BaseResponse
-            {
-                Success = false,
-                Data = null,
-                Error = new ErrorInfoResponse
-                {
-                    ErrorCode = 400,
-                    Message = "Invalid data"
-                }
-            });
+            return BadRequest("Invalid data");
         }
         await _userGroupService.DeleteUserFromGroup(userId, groupId);
         return NoContent();
@@ -71,24 +49,10 @@ public class UserGroupController : ControllerBase
     {
         if (userId == null)
         {
-            return BadRequest(new BaseResponse
-            {
-                Data = null,
-                Success = false,
-                Error = new ErrorInfoResponse
-                {
-                    ErrorCode = 400,
-                    Message = "Invalid data"
-                }
-            });
+            return BadRequest("Invalid data");
         }
         var groupList = await _userGroupService.GetUserGroup(userId);
-        return Ok(new BaseResponse
-        {
-            Data = groupList,
-            Success = true,
-            Error = null
-        });
+        return Ok(groupList);
     }
 
 }

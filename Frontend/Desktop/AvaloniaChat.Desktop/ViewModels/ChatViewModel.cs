@@ -1,5 +1,4 @@
 ﻿using AvaloniaChat.Application.DTO.Message;
-using AvaloniaChat.Application.DTO.UserGroup;
 using Microsoft.AspNetCore.SignalR.Client;
 using Prism.Commands;
 using System;
@@ -10,18 +9,12 @@ using System.Net.Http;
 using System.Net.Http.Json;
 using System.Text;
 using System.Text.Json;
-using System.Threading;
 using System.Threading.Tasks;
-using Avalonia.Controls;
 using Avalonia.Controls.Selection;
 using AvaloniaChat.Application.DTO.Group;
 using AvaloniaChat.Application.DTO.User;
 using AvaloniaChat.Desktop.Models;
-using AvaloniaChat.Domain.Models;
-using AvaloniaEdit.Editing;
 using Prism.Events;
-using ReactiveUI;
-using static System.Net.Mime.MediaTypeNames;
 using AvaloniaChat.Desktop.Events;
 
 namespace AvaloniaChat.Desktop.ViewModels
@@ -246,21 +239,18 @@ namespace AvaloniaChat.Desktop.ViewModels
                 using HttpResponseMessage response = await _httpClient.PostAsync($"{baseUrl}/Messages/create", jsonContent);
                 MessageText = string.Empty;
             }
-            catch (Exception e)
+            catch (IOException ex)
             {
+                throw new IOException($"{ex.Message}");
 
-                switch (e)
-                {
-                    case IOException:
-                        break;
-
-                    case TimeoutException:
-                        break;
-
-                    default:
-                        break;
-                }
-
+            }
+            catch (TimeoutException ex)
+            {
+                throw new TimeoutException($"{ex.Message}");
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Something went wrong. Try later");
             }
         }
     }

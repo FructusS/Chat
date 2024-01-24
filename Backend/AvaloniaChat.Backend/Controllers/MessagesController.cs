@@ -27,25 +27,12 @@ public class MessagesController : ControllerBase
     {
         if (groupId == null)
         {
-            return BadRequest(new BaseResponse
-            {
-                Data = null,
-                Success = false,
-                Error = new ErrorInfoResponse
-                {
-                    ErrorCode = 400,
-                    Message = "Invalid data"
-                }
-            });
+            return BadRequest("Invalid data");
         }
 
+
         var messagesList = await _messageService.GetMessages(groupId);
-        return Ok(new BaseResponse
-        {
-            Data = messagesList,
-            Error = null,
-            Success = true,
-        });
+        return Ok(messagesList);
     }
 
 
@@ -55,24 +42,10 @@ public class MessagesController : ControllerBase
     {
         if (createMessageDto is null)
         {
-            return BadRequest(new BaseResponse
-            {
-                Data = null,
-                Success = false,
-                Error = new ErrorInfoResponse
-                {
-                    ErrorCode = 400,
-                    Message = "Invalid data"
-                }
-            });
+            return BadRequest("Invalid data");
         }
         var message = await _messageService.CreateMessage(createMessageDto);
         await _hubContext.Clients.Group(message.GroupId.ToString()).SendAsync("ReceiveMessage", message);
-        return Ok(new BaseResponse
-        {
-            Data = message,
-            Success = true,
-            Error = null
-        });
+        return Ok(message);
     }
 }

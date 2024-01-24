@@ -94,18 +94,22 @@ namespace AvaloniaChat.Desktop.ViewModels
                     if (group != null)
                     {
                         _eventAggregator.GetEvent<NavigateToChatEvent>().Publish();
-
-                        //var userGroup = new CreateUserGroup()
-                        //{
-
-                        //};
                     }
                 }
 
             }
+            catch (IOException ex)
+            {
+                throw new IOException($"{ex.Message}");
+
+            }
+            catch (TimeoutException ex)
+            {
+                throw new TimeoutException($"{ex.Message}");
+            }
             catch (Exception ex)
             {
-
+                throw new Exception("Something went wrong. Try later");
             }
 
 

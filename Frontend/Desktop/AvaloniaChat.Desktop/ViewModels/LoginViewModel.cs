@@ -1,28 +1,16 @@
-﻿using Avalonia.Collections;
-using Avalonia.Input;
-using Avalonia.Remote.Protocol.Viewport;
-using AvaloniaChat.Desktop.Commands;
-using AvaloniaChat.Desktop.Events;
-using AvaloniaChat.Desktop.Views;
+﻿using AvaloniaChat.Desktop.Events;
 using Prism.Commands;
 using Prism.Events;
-using ReactiveUI;
 using System;
-using System.Collections.Generic;
-using System.Drawing.Imaging;
-using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Json;
-using System.Reactive;
-using System.Reactive.Linq;
-using System.Reflection.Metadata;
 using System.Text;
 using System.Text.Json;
-using System.Threading.Tasks;
-using System.Windows.Input;
 using AvaloniaChat.Application.DTO.Auth;
 using AvaloniaChat.Backend.Controllers;
+using AvaloniaChat.Data.DTO.Auth;
 using AvaloniaChat.Desktop.Models;
+using AvaloniaChat.Models.Response;
 
 namespace AvaloniaChat.Desktop.ViewModels
 {
@@ -91,7 +79,7 @@ namespace AvaloniaChat.Desktop.ViewModels
             try
             {
                 using HttpResponseMessage response = await _httpClient.PostAsync($"{url}/login", jsonContent);
-                var authResponse = await response.Content.ReadFromJsonAsync<BaseResponse>();
+                var authResponse = await response.Content.ReadFromJsonAsync<LoginResponse>();
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -131,5 +119,8 @@ namespace AvaloniaChat.Desktop.ViewModels
             _eventAggregator.GetEvent<NavigateToRegistrationEvent>().Publish();
         }
     }
-    
+
+    record class LoginResponse{}
+    {
+    }
 }
