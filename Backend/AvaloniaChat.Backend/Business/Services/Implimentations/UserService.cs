@@ -1,5 +1,6 @@
 ﻿using AvaloniaChat.Application.DTO.User;
 using AvaloniaChat.Backend.Business.Services.Interfaces;
+using AvaloniaChat.Data.Entities;
 using AvaloniaChat.Domain.Models;
 using AvaloniaChat.Infrastructure.Repository.Interfaces;
 
@@ -21,23 +22,17 @@ namespace AvaloniaChat.Backend.Business.Services.Implimentations
 
         public async Task<UserDto> GetUser(int userId)
         {
-            return await _repository.GetUser(userId);
+            var user = await _repository.GetUser(userId);
+            if (user == null)
+            {
+                throw new NotFoundException($"{nameof(User)} not found");
+            }
+            return user;
         }
 
 
         public async Task<UserDto> UpdateUser(UpdateUserDto updateDataUser)
         {
-            //var user = await GetUserById(userId);
-
-            //if (!await CheckUserName(updateDataUser.Username))
-            //{
-            //    user.Username = updateDataUser.Username;
-            //}
-            //user.FirstName = updateDataUser.FirstName ?? user.FirstName;
-            //user.LastName = updateDataUser.LastName ?? user.LastName;
-            //user.Logo = string.IsNullOrEmpty(updateDataUser.Logo.ToString()) ? user.Logo : updateDataUser.Logo;
-            //await _chatDbContext.SaveChangesAsync();
-            //return user;
             return await _repository.UpdateUser(updateDataUser);
         }
 
@@ -48,7 +43,12 @@ namespace AvaloniaChat.Backend.Business.Services.Implimentations
 
         public async Task<User?> GetUserByUsername(string username)
         {
-            return await _repository.GetUserByUsername(username);   
+            var user = await _repository.GetUserByUsername(username);
+            if (user == null)
+            {
+                throw new NotFoundException($"{nameof(User)} not found");
+            }
+            return user;
         }
 
     }
