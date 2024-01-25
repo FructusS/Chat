@@ -4,7 +4,6 @@ using System.Security.Claims;
 using AvaloniaChat.Backend.Attributes;
 using AvaloniaChat.Backend.Business.Services.Interfaces;
 using AvaloniaChat.Backend.Services.Interfaces;
-using AvaloniaChat.Business.Services.Interfaces;
 using AvaloniaChat.Domain.Models;
 using AvaloniaChat.Infrastructure.Services;
 using AvaloniaChat.Infrastructure.Services.Implimentations;
@@ -20,41 +19,17 @@ namespace AvaloniaChat.Backend.Controllers;
 public class AuthController : ControllerBase
 {
     private readonly IAuthService _authService;
-    private readonly IUserService _userService;
 
-    public AuthController(IAuthService authService, IUserService userService)
+    public AuthController(IAuthService authService)
     {
         _authService = authService;
-        _userService = userService;
     }
 
     [AllowAnonymous]
     [HttpPost]
     public async Task<Response<AuthResponse>> Login([FromBody] AuthRequest loginModel)
     {
-
-
-        return _authService.AuthAsync(loginModel);
-        //if (loginModel is null)
-        //    return Unauthorized("Invalid data");
-
-        //var user = await _userService.GetUserByUsername(loginModel.Username);
-
-        //if (user is null || !BCrypt.Net.BCrypt.Verify(loginModel.Password, user.PasswordHash))
-        //{
-        //    return Unauthorized("Username or password is incorrect");
-
-        //}
-
-        //var accessToken = _authService.GenerateAccessToken(loginModel);
-        //return Ok(new
-        //{
-        //    AccessToken = accessToken,
-        //    UserId = user.UserId
-        //});
-
-
-
+        return  await _authService.AuthAsync(loginModel);
     }
 
     //[HttpPost]
