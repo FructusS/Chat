@@ -5,7 +5,7 @@ using AvaloniaChat.Data;
 using AvaloniaChat.Data.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace AvaloniaChat.Business.Repository.Implimentations
+namespace AvaloniaChat.Backend.Business.Repository.Implimentations
 {
     public class UserRepository : IUserRepository
     {
