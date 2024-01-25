@@ -44,6 +44,7 @@ builder.Services.AddScoped<IMessageRepository, MessageRepository>();
 
 // services
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IJwtService, JwtService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IGroupService, GroupService>();
 builder.Services.AddScoped<IUserGroupService, UserGroupService>();
