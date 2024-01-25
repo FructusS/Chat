@@ -1,5 +1,7 @@
 
 using AvaloniaChat.Application.Configs;
+using AvaloniaChat.Backend.Business.Repository.Implimentations;
+using AvaloniaChat.Backend.Business.Repository.Interfaces;
 using AvaloniaChat.Backend.Business.Services.Implimentations;
 using AvaloniaChat.Backend.Business.Services.Interfaces;
 using AvaloniaChat.Backend.Hubs;
@@ -140,3 +142,4 @@ app.UseAuthorization();
 app.MapControllers();
 app.MapHub<ChatHub>("/chatHub");
 app.Run();
+

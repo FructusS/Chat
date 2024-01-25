@@ -2,6 +2,7 @@
 using AvaloniaChat.Application.DTO.Group;
 using AvaloniaChat.Application.DTO.Message;
 using AvaloniaChat.Application.DTO.User;
+using AvaloniaChat.Data.Entities;
 using AvaloniaChat.Data.Models;
 using AvaloniaChat.Domain.Models;
 

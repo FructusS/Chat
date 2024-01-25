@@ -1,7 +1,4 @@
-﻿using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Security.Cryptography;
-using Application.Exceptions;
+﻿using Application.Exceptions;
 using AvaloniaChat.Application.Configs;
 using AvaloniaChat.Application.DTO.Auth;
 using AvaloniaChat.Backend.Business.Services.Interfaces;

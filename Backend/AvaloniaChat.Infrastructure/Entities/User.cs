@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text.Json.Serialization;
-using AvaloniaChat.Data.Models;
+﻿using AvaloniaChat.Data.Models;
+using AvaloniaChat.Domain.Models;
 
 namespace AvaloniaChat.Domain.Models
 {

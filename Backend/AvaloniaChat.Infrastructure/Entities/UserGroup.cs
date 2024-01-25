@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
+using AvaloniaChat.Data.Entities;
 using AvaloniaChat.Data.Models;
 
 namespace AvaloniaChat.Domain.Models

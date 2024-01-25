@@ -1,4 +1,5 @@
-﻿using AvaloniaChat.Domain.Models;
+﻿using AvaloniaChat.Data.Entities;
+using AvaloniaChat.Domain.Models;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc;
 

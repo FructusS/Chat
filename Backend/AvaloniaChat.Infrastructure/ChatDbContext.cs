@@ -1,4 +1,5 @@
-﻿using AvaloniaChat.Data.Models;
+﻿using AvaloniaChat.Data.Entities;
+using AvaloniaChat.Data.Models;
 using AvaloniaChat.Domain.Models;
 using AvaloniaChat.Infrastructure.Configurations;
 using Microsoft.EntityFrameworkCore;

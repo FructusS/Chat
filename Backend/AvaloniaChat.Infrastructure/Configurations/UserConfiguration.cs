@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AvaloniaChat.Data.Entities;
 using AvaloniaChat.Domain.Models;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

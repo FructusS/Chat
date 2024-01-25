@@ -1,4 +1,6 @@
-﻿using AvaloniaChat.Application.DTO.User;
+﻿using Application.Exceptions;
+using AvaloniaChat.Application.DTO.User;
+using AvaloniaChat.Backend.Business.Repository.Interfaces;
 using AvaloniaChat.Backend.Business.Services.Interfaces;
 using AvaloniaChat.Data.Entities;
 using AvaloniaChat.Domain.Models;

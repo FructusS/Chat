@@ -1,4 +1,5 @@
 ﻿using AvaloniaChat.Application.DTO.User;
+using AvaloniaChat.Data.Entities;
 using AvaloniaChat.Domain.Models;
 
 namespace AvaloniaChat.Backend.Business.Services.Interfaces

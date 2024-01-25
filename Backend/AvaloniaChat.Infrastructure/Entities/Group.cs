@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
+using AvaloniaChat.Data.Entities;
 using AvaloniaChat.Domain.Models;
 
 namespace AvaloniaChat.Data.Models
