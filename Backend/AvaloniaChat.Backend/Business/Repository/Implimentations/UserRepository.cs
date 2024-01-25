@@ -7,6 +7,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AvaloniaChat.Backend.Business.Repository.Implimentations
 {
+
+    // todo убрать мапперы в сервис + переписать их на методы расширения
     public class UserRepository : IUserRepository
     {
         private readonly ChatDbContext _context;
