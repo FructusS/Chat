@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using AvaloniaChat.Application.DTO.User;
+using AvaloniaChat.Backend.Business.Repository.Interfaces;
 using AvaloniaChat.Data;
-using AvaloniaChat.Domain.Models;
-using AvaloniaChat.Infrastructure.Repository.Interfaces;
+using AvaloniaChat.Data.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace AvaloniaChat.Business.Repository.Implimentations
