@@ -27,7 +27,7 @@ public class AuthController : ControllerBase
 
     [AllowAnonymous]
     [HttpPost]
-    public async Task<Response<AuthResponse>> Login([FromBody] AuthRequest loginModel)
+    public async Task<AuthResponse> Login([FromBody] AuthRequest loginModel)
     {
         return  await _authService.AuthAsync(loginModel);
     }
