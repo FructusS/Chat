@@ -89,7 +89,7 @@ namespace AvaloniaChat.Backend.Business.Services.Implimentations
             catch
             {
                 // return null if validation fails
-                return null;
+                throw new AuthException("couldn't check if it was you");
             }
         }
     }
