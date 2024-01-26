@@ -5,11 +5,7 @@ using AvaloniaChat.Data.DTO.Auth;
 namespace AvaloniaChat.Backend.Business.Services.Interfaces
 {
     public interface IAuthService
-    { 
-        string GenerateAccessToken(AuthRequest userModel);
-        string GenerateRefreshToken();
-        ClaimsPrincipal GetPrincipalFromExpiredToken(string token);
-        string ValidateJwtToken(string jwtToken);
-        Response<AuthResponse> AuthAsync(AuthRequest loginModel);
+    {
+        Task<AuthResponse> AuthAsync(AuthRequest loginModel);
     }
 }
