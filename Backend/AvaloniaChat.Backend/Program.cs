@@ -30,8 +30,12 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
-builder.Services.AddDbContext<ChatDbContext>(options => options.UseLazyLoadingProxies().UseNpgsql(builder.Configuration.GetConnectionString("PostgreSQL")));
+var connection = builder.Configuration.GetConnectionString("PostgreSQL");
+if (connection.IsNullOrEmpty())
+{
+    throw new InvalidOperationException("Connection string not found");
+}
+builder.Services.AddDbContext<ChatDbContext>(options => options.UseLazyLoadingProxies().UseNpgsql(connection));
 
 builder.Services.AddAutoMapper(typeof(MappingProfile));
 
