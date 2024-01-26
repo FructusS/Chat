@@ -29,7 +29,12 @@ public class AuthController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> Login([FromBody] AuthRequest? loginModel)
     {
-        return  await _authService.AuthAsync(loginModel);
+        if (loginModel is null)
+        {
+            return BadRequest("Invalid data");
+        }
+        var response = await _authService.AuthAsync(loginModel);
+        return Ok(response);
     }
 
     //[HttpPost]
