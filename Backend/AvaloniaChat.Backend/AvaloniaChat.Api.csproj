@@ -29,6 +29,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Models\AvaloniaChat.Models.csproj" />
     <ProjectReference Include="..\..\Shared\ViewModels\AvaloniaChat.ViewModels.csproj" />
     <ProjectReference Include="..\AvaloniaChat.Infrastructure\AvaloniaChat.Data.csproj" />
   </ItemGroup>
