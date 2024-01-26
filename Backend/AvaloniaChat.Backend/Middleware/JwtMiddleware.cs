@@ -16,7 +16,7 @@ namespace AvaloniaChat.Backend.Middleware
             _next = next;
             _jwtConfig = jwtConfig.Value;
         }
-        public async Task Invoke(HttpContext context, IUserService userService, IAuthService authService)
+        public async Task Invoke(HttpContext context, IUserService userService, IJwtService jwtService)
         {
             var token = context.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
             var username = authService.ValidateJwtToken(token);
