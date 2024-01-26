@@ -1,7 +1,7 @@
 ﻿using AvaloniaChat.Application.DTO.User;
 using AvaloniaChat.Data.Entities;
 
-namespace AvaloniaChat.Infrastructure.Repository.Interfaces;
+namespace AvaloniaChat.Backend.Business.Repository.Interfaces;
 
 public interface IUserRepository
 {
